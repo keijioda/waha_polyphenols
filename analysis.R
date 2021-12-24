@@ -89,7 +89,7 @@ lipinf <- lipid2 %>%
   inner_join(inflm2, by = "patient_id") %>%
   filter(!is.na(assigned_group)) %>% 
   mutate(group = factor(assigned_group, labels = c("Walnut", "Control")),
-         group = relevel(group, ref = "Ctrl"),
+         group = relevel(group, ref = "Control"),
          gender = factor(gender, labels = c("F", "M"))) %>% 
   select(-center, -dropout_visit) %>% 
   select(patient_id, group, assigned_group, gender, age, dropout, everything())
@@ -98,7 +98,7 @@ names(lipinf)
 head(lipinf)
 
 # Anthropometric data -----------------------------------------------------
-# n = 256
+# n = 356
 dim(body)
 n_distinct(body$patient_id)
 
@@ -195,6 +195,11 @@ pp_df %>%
   select(group, gender, age, BMI, TC_0:HDL_2, hsCRP_0:TNFa_2, energy_kcal:lignin_ea) %>% 
   summary()
 
+pp_df %>% 
+  filter(is.na(TC_0)) %>% 
+  select(TC_0:HDL_2, hsCRP_0:TNFa_2) %>% 
+  print(n = Inf)
+
 # Descriptive table at baseline -------------------------------------------
 
 table_vars <- c("gender", "age", "BMI", "TC_0", "HDL_0", "LDL_0", "Trig_0", "hsCRP_0", "IL1_0", "IL6_0", "TNFa_0")
@@ -242,5 +247,41 @@ pp_df %>%
 
 # Lipid/inflammation: Table by group & year -------------------------------
 
+lipid_vars <- c("TC_0", "TC_2", "LDL_0", "LDL_2", "HDL_0", "HDL_2", "Trig_0", "Trig_2")
+infl_vars  <- c("hsCRP_0", "hsCRP_2", "IL1_0", "IL1_2", "IL6_0", "IL6_2", "TNFa_0", "TNFa_2")
+vars       <- c("TC", "LDL", "HDL", "Trig", "hsCRP", "IL1", "IL6", "TNFa")
 
+# Complete cases only: n = 300
+pp_df_comp <- pp_df %>% 
+  select(patient_id, group, lipid_vars, infl_vars) %>% 
+  na.omit()
+
+table(pp_df_comp$group)
+
+# Transform to long format
+pp_df_long <- pp_df_comp %>% 
+  pivot_longer(c(lipid_vars, infl_vars), names_pattern = "(.*)_(.*)", names_to = c(".value", "year")) %>% 
+  mutate(year = as.numeric(year)) 
+
+# Check distribution
+pp_df_long %>% 
+  pivot_longer(vars, names_to = "variable", values_to = "value") %>% 
+  ggplot(aes(x = value)) +
+  geom_histogram(bins = 30) +
+  facet_wrap(~variable, scales = "free")
+
+# Descriptive table of lipids and inflammatory markers by year and group
+pp_df_long %>% 
+  CreateTableOne(vars, strata = c("year", "group"), data = ., test = FALSE)
+
+pp_df_comp %>% 
+  mutate(TC_change = TC_2 - TC_0,
+         LDL_change = LDL_2 - LDL_0,
+         HDL_change = HDL_2 - HDL_0,
+         Trig_change = Trig_2 - Trig_0,
+         hsCRP_change = hsCRP_2 - hsCRP_0,
+         IL1_change = IL1_2 - IL1_0,
+         IL6_change = IL6_2 - IL6_0,
+         TNFa_change = TNFa_2 - TNFa_0) %>% 
+  CreateTableOne(paste0(vars, "_change"), strata = "group", data =., test = FALSE)
 

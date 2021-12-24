@@ -31,3 +31,5 @@ message("Reading anthropometric data...")
 temp <- unzip(zipfile, body_file, exdir = tempdir())
 body <- read_excel(temp) %>% 
   clean_names()
+
+message("Done!")
