@@ -32,3 +32,14 @@ kcal_adjust <- function(var, kcal, log=TRUE){
   }
   return(df$ea_y)
 }
+
+# Scatter plot b/w change in lipid and dietary total polyphenols
+ggp_scatter <- function(data, yvar, label){
+  yvar <- enquo(yvar)
+  data %>% 
+    ggplot(aes(x = total_polyphenol_ea, y = (!!yvar), color = group)) +
+    geom_point() + 
+    scale_x_log10() +
+    labs(x = "Energy-adjusted total polyphenol intake (mg/day)", y = label, color = "") +
+    theme(legend.position = "bottom")
+}

@@ -252,9 +252,21 @@ infl_vars  <- c("hsCRP_0", "hsCRP_2", "IL1_0", "IL1_2", "IL6_0", "IL6_2", "TNFa_
 vars       <- c("TC", "LDL", "HDL", "Trig", "hsCRP", "IL1", "IL6", "TNFa")
 
 # Complete cases only: n = 300
-pp_df_comp <- pp_df %>% 
+pp_df_comp_id <- pp_df %>% 
   select(patient_id, group, lipid_vars, infl_vars) %>% 
-  na.omit()
+  na.omit() %>% 
+  select(patient_id)
+
+pp_df_comp <- pp_df %>% 
+  semi_join(pp_df_comp_id, by = "patient_id") %>% 
+  mutate(TC_change = TC_2 - TC_0,
+         LDL_change = LDL_2 - LDL_0,
+         HDL_change = HDL_2 - HDL_0,
+         Trig_change = Trig_2 - Trig_0,
+         hsCRP_change = hsCRP_2 - hsCRP_0,
+         IL1_change = IL1_2 - IL1_0,
+         IL6_change = IL6_2 - IL6_0,
+         TNFa_change = TNFa_2 - TNFa_0) 
 
 table(pp_df_comp$group)
 
@@ -275,13 +287,61 @@ pp_df_long %>%
   CreateTableOne(vars, strata = c("year", "group"), data = ., test = FALSE)
 
 pp_df_comp %>% 
-  mutate(TC_change = TC_2 - TC_0,
-         LDL_change = LDL_2 - LDL_0,
-         HDL_change = HDL_2 - HDL_0,
-         Trig_change = Trig_2 - Trig_0,
-         hsCRP_change = hsCRP_2 - hsCRP_0,
-         IL1_change = IL1_2 - IL1_0,
-         IL6_change = IL6_2 - IL6_0,
-         TNFa_change = TNFa_2 - TNFa_0) %>% 
   CreateTableOne(paste0(vars, "_change"), strata = "group", data =., test = FALSE)
 
+# Profile plots for lipid
+pp_df_long %>% 
+  pivot_longer(TC:Trig, names_to = "variable", values_to = "value") %>% 
+  ggplot(aes(x = year, y = value, color = group, group = patient_id)) +
+  geom_line() +
+  scale_x_continuous(breaks = c(0, 2)) +
+  labs(x = "Year", color = "") +
+  facet_wrap(~ variable, scales = "free", ncol = 4) +
+  theme(legend.position = "bottom")
+
+# Profile plots for inflammatory markers
+pp_df_long %>% 
+  pivot_longer(hsCRP:TNFa, names_to = "variable", values_to = "value") %>% 
+  ggplot(aes(x = year, y = value, color = group, group = patient_id)) +
+  geom_line() +
+  scale_x_continuous(breaks = c(0, 2)) +
+  labs(x = "Year", color = "") +
+  facet_wrap(~ variable, scales = "free", ncol = 4) +
+  theme(legend.position = "bottom")
+
+# ANCOVA models -----------------------------------------------------------
+
+# Specify covariates
+covar <- c("age", "gender", "BMI")
+
+pp_df_comp %>% 
+  select(all_of(covar)) %>% 
+  summary()
+
+# Function for ANCOVA model
+ancova_mod <- function(data, yvar, basevar){
+  covar <- paste(covar, collapse = " + ")
+  fm <- formula(paste0(yvar, "~ total_polyphenol_ea + ", basevar, " + ", covar))
+  print(fm)
+  mod <- data %>% lm(fm, data = .)
+  print(ggResidpanel::resid_panel(mod, plots = "all"))
+  return(summary(mod))
+}
+
+pp_df_comp %>% ggp_scatter(TC_change, "Changes in total cholesterol (Year 2 - Baseline, mg/dL")
+pp_df_comp %>% ancova_mod("TC_change", "TC_0")
+
+pp_df_comp %>% ggp_scatter(LDL_change, "Changes in LDL cholesterol (Year 2 - Baseline, mg/dL)")
+pp_df_comp %>% ancova_mod("LDL_change", "LDL_0")
+
+pp_df_comp %>% ggp_scatter(hsCRP_change, "Changes in hsCRP (Year 2 - Baseline, mg/dL)")
+pp_df_comp %>% ancova_mod("hsCRP_change", "hsCRP_0")
+
+pp_df_comp %>% ggp_scatter(IL1_change, "Changes in IL-1 (Year 2 - Baseline, pg/ml)")
+pp_df_comp %>% ancova_mod("IL1_change", "IL1_0")
+
+pp_df_comp %>% ggp_scatter(IL6_change, "Changes in IL-6 (Year 2 - Baseline, pg/ml)")
+pp_df_comp %>% ancova_mod("IL6_change", "IL6_0")
+
+pp_df_comp %>% ggp_scatter(TNFa_change, "Changes in TNFa (Year 2 - Baseline, pg/ml)")
+pp_df_comp %>% ancova_mod("TNFa_change", "TNFa_0")
