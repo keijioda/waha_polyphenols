@@ -31,7 +31,7 @@ n_distinct(lipid$patient_id)
 
 names(lipid)
 
-# Note that 13 subjects were not assined to any group
+# Note that 13 subjects were not assigned to any group
 table(lipid$assigned_group, useNA = "ifany")
 
 # Hemoglobin A1c values are all missing
@@ -82,7 +82,7 @@ inflm2 %>%
 inflm2 %>% 
   select(starts_with("hs"), starts_with("IL"), starts_with("TNF"))
 
-# Merge lipid and inflammation data, exlucing missing group
+# Merge lipid and inflammation data, exlucding missing group
 # n = 356
 lipinf <- lipid2 %>% 
   select(-assigned_group) %>% 
@@ -200,52 +200,7 @@ pp_df %>%
   select(TC_0:HDL_2, hsCRP_0:TNFa_2) %>% 
   print(n = Inf)
 
-# Descriptive table at baseline -------------------------------------------
-
-table_vars <- c("gender", "age", "BMI", "TC_0", "HDL_0", "LDL_0", "Trig_0", "hsCRP_0", "IL1_0", "IL6_0", "TNFa_0")
-
-pp_df %>% 
-  select(group, all_of(table_vars)) %>% 
-  summary()
-
-# Check distributions
-pp_df %>% 
-  select(all_of(table_vars), -gender, -age) %>% 
-  pivot_longer(BMI:TNFa_0, names_to = "variable", values_to = "value") %>% 
-  ggplot(aes(x = value)) +
-  geom_histogram(bins = 30) +
-  facet_wrap(~ variable, scales = "free")
-
-# Descriptive table at baseline
-pp_df %>% 
-  CreateTableOne(table_vars, strata = "group", data = .) %>% 
-  print(showAllLevels = TRUE, nonnormal = c("HDL_0", "Trig_0", "hsCRP_0", "IL1_0", "IL6_0", "TNFa_0"))
-
-# Descriptive table of energy-adjusted intakes ----------------------------
-
-# Check distributions
-pp_df %>% 
-  select(all_of(ea_pps)) %>% 
-  pivot_longer(1:5, names_to = "variable", values_to = "value") %>% 
-  ggplot(aes(x = value)) +
-  geom_histogram(bins = 30) +
-  facet_wrap(~ variable, scales = "free")
-
-# Intake comparison by group
-pp_df %>% 
-  CreateTableOne(ea_pps, strata = "group", data = .) %>% 
-  print(nonnormal = ea_pps)
-
-# Denstiy plot by group
-pp_df %>% 
-  select(all_of(ea_pps), group) %>% 
-  pivot_longer(1:5, names_to = "variable", values_to = "value") %>% 
-  ggplot(aes(x = value, fill = group)) +
-  geom_density(alpha = 0.5) +
-  facet_wrap(~ variable, scales = "free") +
-  scale_x_continuous(trans=scales::pseudo_log_trans(base = 10))
-
-# Lipid/inflammation: Table by group & year -------------------------------
+# Complete cases only -----------------------------------------------------
 
 lipid_vars <- c("TC_0", "TC_2", "LDL_0", "LDL_2", "HDL_0", "HDL_2", "Trig_0", "Trig_2")
 infl_vars  <- c("hsCRP_0", "hsCRP_2", "IL1_0", "IL1_2", "IL6_0", "IL6_2", "TNFa_0", "TNFa_2")
@@ -253,7 +208,7 @@ vars       <- c("TC", "LDL", "HDL", "Trig", "hsCRP", "IL1", "IL6", "TNFa")
 
 # Complete cases only: n = 300
 pp_df_comp_id <- pp_df %>% 
-  select(patient_id, group, lipid_vars, infl_vars) %>% 
+  select(patient_id, group, all_of(lipid_vars), all_of(infl_vars)) %>% 
   na.omit() %>% 
   select(patient_id)
 
@@ -268,11 +223,59 @@ pp_df_comp <- pp_df %>%
          IL6_change = IL6_2 - IL6_0,
          TNFa_change = TNFa_2 - TNFa_0) 
 
+dim(pp_df_comp)
+
+# Descriptive table at baseline -------------------------------------------
+
+table_vars <- c("gender", "age", "BMI", "TC_0", "HDL_0", "LDL_0", "Trig_0", "hsCRP_0", "IL1_0", "IL6_0", "TNFa_0")
+
+pp_df_comp %>% 
+  select(group, all_of(table_vars)) %>% 
+  summary()
+
+# Check distributions
+pp_df_comp %>% 
+  select(all_of(table_vars), -gender, -age) %>% 
+  pivot_longer(BMI:TNFa_0, names_to = "variable", values_to = "value") %>% 
+  ggplot(aes(x = value)) +
+  geom_histogram(bins = 30) +
+  facet_wrap(~ variable, scales = "free")
+
+# Descriptive table at baseline
+pp_df_comp %>% 
+  CreateTableOne(table_vars, strata = "group", data = .) %>% 
+  print(showAllLevels = TRUE, nonnormal = c("HDL_0", "Trig_0", "hsCRP_0", "IL1_0", "IL6_0", "TNFa_0"))
+
+# Descriptive table of energy-adjusted intakes ----------------------------
+
+# Check distributions
+pp_df_comp %>% 
+  select(all_of(ea_pps)) %>% 
+  pivot_longer(1:5, names_to = "variable", values_to = "value") %>% 
+  ggplot(aes(x = value)) +
+  geom_histogram(bins = 30) +
+  facet_wrap(~ variable, scales = "free", ncol = 5)
+
+# Intake comparison by group
+pp_df_comp %>% 
+  CreateTableOne(ea_pps, strata = "group", data = .) %>% 
+  print(nonnormal = ea_pps)
+
+# Denstiy plot by group
+pp_df_comp %>% 
+  select(all_of(ea_pps), group) %>% 
+  pivot_longer(1:5, names_to = "variable", values_to = "value") %>% 
+  ggplot(aes(x = value, fill = group)) +
+  geom_density(alpha = 0.5) +
+  facet_wrap(~ variable, scales = "free")
+
+# Lipid/inflammation: Table by group & year -------------------------------
+
 table(pp_df_comp$group)
 
 # Transform to long format
 pp_df_long <- pp_df_comp %>% 
-  pivot_longer(c(lipid_vars, infl_vars), names_pattern = "(.*)_(.*)", names_to = c(".value", "year")) %>% 
+  pivot_longer(c(all_of(lipid_vars), all_of(infl_vars)), names_pattern = "(.*)_(.*)", names_to = c(".value", "year")) %>% 
   mutate(year = as.numeric(year)) 
 
 # Check distribution

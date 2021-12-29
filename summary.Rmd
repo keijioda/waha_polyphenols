@@ -1,0 +1,251 @@
+---
+title: "WAHA Polyphenols Study"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Required packages
+pacs <- c("tidyverse", "haven", "janitor", "readxl", "tableone")
+sapply(pacs, require, character.only = TRUE)
+
+# Read functions
+source("functions.R")
+
+# Read data ---------------------------------------------------------------
+# Will be using only LLU data -- make sure to subset for id >= 5000
+
+zipfile <- "./data/Dietary Polyphenol Lipid and Inflammation files.zip"
+
+lipid_file <- "BDLab_BCNLLU1709lipids.sav"
+inflm_file <- "WAHA_ BD_Cytokines_BCN_LLU Inflammation.sav"
+diet_file  <- "waha-recalls-per-recalls-overlapping-foodgroups-with-pOH.csv"
+body_file  <- "Table1Data.xlsx"
+
+source("dataprep.R")
+
+# lipid data --------------------------------------------------------------
+# n = 369
+# Select variables and rename
+lipid2 <- lipid %>% 
+  select(-contains("hb"), -total_cholesterol1, -triglycerides1) %>%
+  rename(TC_0 = total_cholesterol,
+         TC_2 = total_cholesterol2,
+         Trig_0 = triglycerides,
+         Trig_2 = triglycerides2,
+         VLDL_0 = vldl_c_b,
+         VLDL_2 = vldl_c_f,
+         LDL_0 = ldl_c_b,
+         LDL_2 = ldl_c_f,
+         HDL_0 = hdl_c_b,
+         HDL_2 = hdl_c_f)
+
+# inflammatory marker data ------------------------------------------------
+# n = 371
+# Rename variables
+inflm2 <- inflm %>% 
+  rename(hsCRP_0 = high_sensitivity_crp,
+         hsCRP_2 = high_sensitivity_crp2,
+         IL1_0 = il_1ss_1,
+         IL1_2 = il_1ss_2,
+         IL6_0 = il_6_1,
+         IL6_2 = il_6_2,
+         TNFa_0 = tnf_a_1,
+         TNFa_2 = tnf_a_2) %>% 
+  select(-high_sensitivity_crp1)
+
+# Merge lipid and inflammation data, exlucding missing group
+# n = 356
+lipinf <- lipid2 %>% 
+  select(-assigned_group) %>% 
+  inner_join(inflm2, by = "patient_id") %>%
+  filter(!is.na(assigned_group)) %>% 
+  mutate(group = factor(assigned_group, labels = c("Walnut", "Control")),
+         group = relevel(group, ref = "Control"),
+         gender = factor(gender, labels = c("F", "M"))) %>% 
+  select(-center, -dropout_visit) %>% 
+  select(patient_id, group, assigned_group, gender, age, dropout, everything())
+
+# Anthropometric data -----------------------------------------------------
+# n = 356
+# Select variables
+# BMI needs to be re-calculated
+body2 <- body %>% 
+  mutate(educ = factor(education),
+         educ_yr = education_years,
+         race = factor(race),
+         BMI = weight_basal / (height_basal / 100) ^ 2) %>% 
+  select(patient_id, race, educ_yr, educ, race, BMI)
+
+# Merge to lipid/inflammation data
+lipinf2 <- lipinf %>% 
+  inner_join(body2, by = "patient_id")
+
+# Diet recall data --------------------------------------------------------
+# n.obs = 1246, n.subj = 334
+
+# There is one ID not found in lipid/inflammation merge file
+ids_no_lipid <- drec %>% 
+  distinct(patient_id) %>% 
+  anti_join(lipinf, by = "patient_id")
+
+# There are 23 IDs not found in dietary recalls
+ids_no_recall <- lipinf %>% 
+  anti_join(distinct(drec, patient_id), by = "patient_id") %>% 
+  select(patient_id)
+
+# Remove subjects with no lipid
+# Rename long names
+# n.obs = 1242, n.subj = 333
+drec2 <- drec %>% 
+  anti_join(ids_no_lipid, by = "patient_id") %>% 
+  rename(flavanols = flavanols_proanthocyanidins_np)
+
+# Energy-adjust each recall day and then take the average
+pps <- c("total_polyphenol", "total_flavonoids", "flavanols", "phenolic_acid", "lignin")
+ea_pps <- paste0(pps, "_ea")
+drec2[ea_pps] <- lapply(drec2[pps], kcal_adjust, kcal = drec2$energy_kcal)
+
+dintake <- drec2 %>% 
+  group_by(patient_id) %>% 
+  summarize_at(c("energy_kcal", ea_pps), mean, na.rm = TRUE)
+
+# Merge three files -------------------------------------------------------
+# n = 333 after merging
+pp_df <- lipinf2 %>% 
+  inner_join(dintake, by = "patient_id")
+
+```
+
+## Datasets
+
+* A zip file receved from RA: `Dietary Polyphenol Lipid and Inflammation files.zip`
+  * Contains:
+    * Lipid file in SPSS: `BDLab_BCNLLU1709lipids.sav`
+    * Inflammation markers file in SPSS: `WAHA_ BD_Cytokines_BCN_LLU Inflammation.sav`
+    * Anthropometrics in Excel: `Table1Data.xlsx`
+    * Recall files in CSV: `waha-recalls-per-recalls-overlapping-foodgroups-with-pOH.csv`
+
+### Lipid data
+
+* Includes *n* = `r nrow(lipid)` subjects.
+* Variables: total cholesterol, LDL, HDL, triglycerides (mg/dL) at baseline and year 2. HbA1c values are all missing. 
+
+### Inflammatory marker data
+
+* Includes *n* = `r nrow(inflm)` subjects.
+* Variables: hsCRP (mg/dL), IL-1 (pg/ml), IL-6 (pg/ml), TNF-a (pg/ml) at baseline and year 2.
+
+### Anthropometric data
+
+* Includes *n* = `r nrow(body)` subjects.
+* Variables: Group, age, gender, race, education, height, weight, BMI, etc.
+
+### Dietary recall data
+
+* Includes `r nrow(drec)` observations from *n* = `r n_distinct(drec$patient_id)` subjects. The number of recalls ranges from 1 to 6 recalls.
+  * There is 1 subject who was not found in lipid and inflammatory marker data. This subject was excluded, yielding `r nrow(drec2)` observations from *n* = `r n_distinct(drec2$patient_id)` subjects.
+  
+* Variables: Total energy (kcal/day), total polyphenols, total flavonoids, flavanols, phenolic acid, lignin, etc.
+* Dietary polyphenol variables were energy-adjusted each day using the residual method and then averaged for each subject.
+
+## Analytic dataset
+
+```{r include=FALSE}
+# Complete cases only -----------------------------------------------------
+
+lipid_vars <- c("TC_0", "TC_2", "LDL_0", "LDL_2", "HDL_0", "HDL_2", "Trig_0", "Trig_2")
+infl_vars  <- c("hsCRP_0", "hsCRP_2", "IL1_0", "IL1_2", "IL6_0", "IL6_2", "TNFa_0", "TNFa_2")
+vars       <- c("TC", "LDL", "HDL", "Trig", "hsCRP", "IL1", "IL6", "TNFa")
+
+# Complete cases only: n = 300
+pp_df_comp_id <- pp_df %>% 
+  select(patient_id, group, all_of(lipid_vars), all_of(infl_vars)) %>% 
+  na.omit() %>% 
+  select(patient_id)
+
+pp_df_comp <- pp_df %>% 
+  semi_join(pp_df_comp_id, by = "patient_id") %>% 
+  mutate(TC_change = TC_2 - TC_0,
+         LDL_change = LDL_2 - LDL_0,
+         HDL_change = HDL_2 - HDL_0,
+         Trig_change = Trig_2 - Trig_0,
+         hsCRP_change = hsCRP_2 - hsCRP_0,
+         IL1_change = IL1_2 - IL1_0,
+         IL6_change = IL6_2 - IL6_0,
+         TNFa_change = TNFa_2 - TNFa_0) 
+```
+
+* All data files were inner-joined, producing *n* = `r nrow(pp_df)` subjects.
+* For analysis, any subjects who has any missing on lipids and inflammatory markers were excluded. This resulted in *n* = `r nrow(pp_df_comp)` subjects.
+
+## Descriptive table at baseline by treatment
+
+* Medians (and IQR) were reported for HDL, triglycerides and all inflammatory marker variables, as their distributions were right-skewed. Mann-Whitney tests were used for these variables for comparisons between treatment (`test = nonnormal`)
+
+```{r echo = FALSE}
+
+# Descriptive table at baseline -------------------------------------------
+
+table_vars <- c("gender", "age", "BMI", "TC_0", "LDL_0", "HDL_0", "Trig_0", "hsCRP_0", "IL1_0", "IL6_0", "TNFa_0")
+
+pp_df_comp %>% 
+  CreateTableOne(table_vars, strata = "group", data = .) %>% 
+  print(showAllLevels = TRUE, nonnormal = c("HDL_0", "Trig_0", "hsCRP_0", "IL1_0", "IL6_0", "TNFa_0")) %>%  
+  kableone()
+```
+
+## Descriptive table of dietary intake of polyphenols by treatment
+
+* All polyphenol intake variables were energy-adjusted as mentioned above. All dietary polyphenol variabls were right-skewed.
+
+```{r echo = FALSE}
+
+pp_df_comp %>% 
+  CreateTableOne(ea_pps, strata = "group", data = .) %>% 
+  print(nonnormal = ea_pps) %>%
+  kableone()
+```
+
+* Density plots of dietary polyphenol intakes were shown below.
+
+```{r echo = FALSE, fig.width = 10, fig.height = 3}
+# Denstiy plot by group
+pp_df_comp %>% 
+  select(all_of(ea_pps), group) %>% 
+  pivot_longer(1:5, names_to = "variable", values_to = "value") %>% 
+  mutate(variable = factor(variable, levels = ea_pps)) %>% 
+  ggplot(aes(x = value, fill = group)) +
+  geom_density(alpha = 0.5) +
+  facet_wrap(~ variable, scales = "free", ncol = 5) +
+  theme(legend.position = "bottom")
+
+```
+
+## Descriptive table of lipid/inflammatory markers by group and year
+
+* Mean lipid and inflammator marker variables by group and year (baseline and year 2):
+
+```{r echo = FALSE}
+
+# Transform to long format
+pp_df_long <- pp_df_comp %>% 
+  pivot_longer(c(all_of(lipid_vars), all_of(infl_vars)), names_pattern = "(.*)_(.*)", names_to = c(".value", "year")) %>% 
+  mutate(year = as.numeric(year)) 
+
+# Descriptive table of lipids and inflammatory markers by year and group
+pp_df_long %>% 
+  CreateTableOne(vars, strata = c("year", "group"), data = ., test = FALSE) %>% 
+  kableone()
+```
+
+* Changes from baseline were calculated for each subject and then average changes were calculated. The walnut group tended to show more declines in IL-1, IL-6 and TNF-a.
+
+```{r echo = FALSE}
+
+pp_df_comp %>% 
+  CreateTableOne(paste0(vars, "_change"), strata = "group", data =., test = FALSE) %>% 
+  kableone()
+```
+
