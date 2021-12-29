@@ -73,6 +73,11 @@ WAHA Polyphenols Study
 | IL6_0 (median \[IQR\])   |       | 2.17 \[1.23, 3.41\]     | 2.13 \[1.30, 3.35\]     | 0.944 | nonnorm |
 | TNFa_0 (median \[IQR\])  |       | 5.36 \[3.91, 6.68\]     | 5.88 \[4.41, 7.01\]     | 0.086 | nonnorm |
 
+-   Inflammatory variables appear to have very large outliers. Check
+    with RA.
+
+![](summary_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+
 ## Descriptive table of dietary intake of polyphenols by treatment
 
 -   All polyphenol intake variables were energy-adjusted as mentioned
@@ -89,7 +94,7 @@ WAHA Polyphenols Study
 
 -   Density plots of dietary polyphenol intakes were shown below.
 
-![](summary_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 ## Descriptive table of lipid/inflammatory markers by group and year
 

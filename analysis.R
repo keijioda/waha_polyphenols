@@ -63,6 +63,13 @@ n_distinct(inflm$patient_id)
 names(inflm)
 table(inflm$assigned_group, useNA = "ifany")
 
+inflm %>% 
+  select(patient_id, lipid_lowering:ezetimibe)
+
+inflm %>% 
+  select(patient_id, lipid_lowering:ezetimibe) %>% 
+  filter(lipid_lowering != statin)
+
 # Rename variables
 inflm2 <- inflm %>% 
   rename(hsCRP_0 = high_sensitivity_crp,
@@ -224,6 +231,7 @@ pp_df_comp <- pp_df %>%
          TNFa_change = TNFa_2 - TNFa_0) 
 
 dim(pp_df_comp)
+names(pp_df_comp)
 
 # Descriptive table at baseline -------------------------------------------
 
@@ -241,7 +249,19 @@ pp_df_comp %>%
   geom_histogram(bins = 30) +
   facet_wrap(~ variable, scales = "free")
 
+# Note outliers on inflammatory markers
+pp_df_comp %>% 
+  select(hsCRP_0, IL1_0, IL6_0, TNFa_0) %>% 
+  pivot_longer(hsCRP_0:TNFa_0, names_to = "variable", values_to = "value") %>% 
+  ggplot(aes(x = value)) +
+  geom_histogram(bins = 30) +
+  facet_wrap(~ variable, scales = "free", ncol = 4)
+
 # Descriptive table at baseline
+pp_df_comp %>% 
+  CreateTableOne(table_vars, strata = "group", data = .) %>% 
+  print(showAllLevels = TRUE)
+
 pp_df_comp %>% 
   CreateTableOne(table_vars, strata = "group", data = .) %>% 
   print(showAllLevels = TRUE, nonnormal = c("HDL_0", "Trig_0", "hsCRP_0", "IL1_0", "IL6_0", "TNFa_0"))
@@ -315,7 +335,7 @@ pp_df_long %>%
 # ANCOVA models -----------------------------------------------------------
 
 # Specify covariates
-covar <- c("age", "gender", "BMI")
+covar <- c("age", "gender", "BMI", "lipid_lowering")
 
 pp_df_comp %>% 
   select(all_of(covar)) %>% 

@@ -196,6 +196,19 @@ pp_df_comp %>%
   kableone()
 ```
 
+* Inflammatory variables appear to have very large outliers. Check with RA.
+
+```{r echo = FALSE, fig.width = 10, fig.height = 3}
+# Note outliers on inflammatory markers
+pp_df_comp %>% 
+  select(hsCRP_0, IL1_0, IL6_0, TNFa_0) %>% 
+  pivot_longer(hsCRP_0:TNFa_0, names_to = "variable", values_to = "value") %>% 
+  ggplot(aes(x = value)) +
+  geom_histogram(bins = 30) +
+  facet_wrap(~ variable, scales = "free", ncol = 4)
+
+```
+
 ## Descriptive table of dietary intake of polyphenols by treatment
 
 * All polyphenol intake variables were energy-adjusted as mentioned above. All dietary polyphenol variabls were right-skewed.
@@ -225,7 +238,8 @@ pp_df_comp %>%
 
 ## Descriptive table of lipid/inflammatory markers by group and year
 
-* Mean lipid and inflammator marker variables by group and year (baseline and year 2):
+* Mean lipid and inflammator marker variables by group and year (baseline and year 2). 
+  * Note that mean baseline values were higher in IL-1 and IL-6 for the walnut group, but their medians were actually lower (see the descriptive table at baseline above). 
 
 ```{r echo = FALSE}
 
