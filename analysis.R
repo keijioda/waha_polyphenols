@@ -219,6 +219,7 @@ pp_df_comp_id <- pp_df %>%
   na.omit() %>% 
   select(patient_id)
 
+white_levels <- c(rep("Non-White", 4), "White")
 pp_df_comp <- pp_df %>% 
   semi_join(pp_df_comp_id, by = "patient_id") %>% 
   mutate(TC_change = TC_2 - TC_0,
@@ -228,14 +229,16 @@ pp_df_comp <- pp_df %>%
          hsCRP_change = hsCRP_2 - hsCRP_0,
          IL1_change = IL1_2 - IL1_0,
          IL6_change = IL6_2 - IL6_0,
-         TNFa_change = TNFa_2 - TNFa_0) 
+         TNFa_change = TNFa_2 - TNFa_0,
+         Race2 = factor(white_levels[race]),
+         Race2 = relevel(Race2, "White")) 
 
 dim(pp_df_comp)
 names(pp_df_comp)
 
 # Descriptive table at baseline -------------------------------------------
 
-table_vars <- c("gender", "age", "BMI", "TC_0", "HDL_0", "LDL_0", "Trig_0", "hsCRP_0", "IL1_0", "IL6_0", "TNFa_0")
+table_vars <- c("gender", "age", "Race2", "BMI", "TC_0", "HDL_0", "LDL_0", "Trig_0", "hsCRP_0", "IL1_0", "IL6_0", "TNFa_0")
 
 pp_df_comp %>% 
   select(group, all_of(table_vars)) %>% 
@@ -345,7 +348,7 @@ pp_df_comp %>%
 ancova_mod <- function(data, yvar, basevar){
   covar <- paste(covar, collapse = " + ")
   fm <- formula(paste0(yvar, "~ total_polyphenol_ea + ", basevar, " + ", covar))
-  print(fm)
+  cat(paste("Model: ", deparse1(fm)))
   mod <- data %>% lm(fm, data = .)
   print(ggResidpanel::resid_panel(mod, plots = "all"))
   return(summary(mod))
