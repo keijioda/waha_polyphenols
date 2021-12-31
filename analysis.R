@@ -182,9 +182,21 @@ drec2 %>%
 ea_pps <- paste0(pps, "_ea")
 drec2[ea_pps] <- lapply(drec2[pps], kcal_adjust, kcal = drec2$energy_kcal)
 
+fg <- drec2 %>% 
+  select(contains("_total_polyphenol"), 
+         contains("_total_flavonoid"),
+         contains("_flavanol"),
+         contains("_phenolic_acid"),
+         contains("_lignan")) %>% 
+  names()
+
 dintake <- drec2 %>% 
   group_by(patient_id) %>% 
-  summarize_at(c("energy_kcal", ea_pps), mean, na.rm = TRUE)
+  summarize_at(c("energy_kcal", ea_pps, fg), mean, na.rm = TRUE)
+
+dintake %>% 
+  ggplot(aes(x = animal_protein_total_polyphenol)) + 
+  geom_histogram()
 
 # Merge three files -------------------------------------------------------
 # n = 333 after merging
@@ -231,7 +243,8 @@ pp_df_comp <- pp_df %>%
          IL6_change = IL6_2 - IL6_0,
          TNFa_change = TNFa_2 - TNFa_0,
          Race2 = factor(white_levels[race]),
-         Race2 = relevel(Race2, "White")) 
+         Race2 = relevel(Race2, "White"),
+         total_polyphenol_ea_100 = total_flavonoids_ea / 100) 
 
 dim(pp_df_comp)
 names(pp_df_comp)
@@ -292,6 +305,39 @@ pp_df_comp %>%
   geom_density(alpha = 0.5) +
   facet_wrap(~ variable, scales = "free")
 
+# Polyphenol intake by food group -----------------------------------------
+
+Mean <- function(x) mean(x, na.rm = TRUE)
+SD <- function(x) sd(x, na.rm = TRUE)
+
+options(scipen = 999)
+pp_df_comp %>% 
+  select(all_of(fg)) %>% 
+  pivot_longer(1:55, names_to = "variable", values_to = "value") %>% 
+  mutate(
+    pp = case_when(
+      grepl("_total_polyphenol", variable) == TRUE ~ "Total_polyphenol",
+      grepl("_total_flavonoid",  variable) == TRUE ~ "Total_flavonoids",
+      grepl("_flavanol", variable) == TRUE ~ "Flavanol",
+      grepl("_phenolic_acid", variable) == TRUE ~ "Phenolic_acid",
+      grepl("_lignan", variable) == TRUE ~ "Lignan"),
+    pp = factor(pp, levels = c("Total_polyphenol", "Total_flavonoids", "Flavanol", "Phenolic_acid", "Lignan")),
+    fg = case_when(
+      grepl("animal", variable) == TRUE ~ "Animal protein",
+      grepl("beverage", variable) == TRUE ~ "Beverage",
+      grepl("chocolate", variable) == TRUE ~ "Chocolates",
+      grepl("fats_and_oil", variable) == TRUE ~ "Fat/oil",
+      grepl("fruit", variable) == TRUE ~ "Fruits",
+      grepl("grains", variable) == TRUE ~ "Grains",
+      grepl("legume", variable) == TRUE ~ "Legumes",
+      grepl("misc", variable) == TRUE ~ "Misc",
+      grepl("nuts", variable) == TRUE ~ "Nuts/seeds",
+      grepl("spices", variable) == TRUE ~ "Spices",
+      grepl("vegetable", variable) == TRUE ~ "Vegetables"),
+    fg = factor(fg))  %>% 
+  tabular(Heading("Food group") * fg ~ Heading() * value * Heading() * pp * Format(digits = 1) * (Mean + SD), data = .)
+options(scipen = 0)
+
 # Lipid/inflammation: Table by group & year -------------------------------
 
 table(pp_df_comp$group)
@@ -347,7 +393,7 @@ pp_df_comp %>%
 # Function for ANCOVA model
 ancova_mod <- function(data, yvar, basevar){
   covar <- paste(covar, collapse = " + ")
-  fm <- formula(paste0(yvar, "~ total_polyphenol_ea + ", basevar, " + ", covar))
+  fm <- formula(paste0(yvar, "~ total_polyphenol_ea_100 + ", basevar, " + ", covar))
   cat(paste("Model: ", deparse1(fm)))
   mod <- data %>% lm(fm, data = .)
   print(ggResidpanel::resid_panel(mod, plots = "all"))

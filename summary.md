@@ -134,63 +134,102 @@ WAHA Polyphenols Study
 | IL6_change (mean (SD))   | 0.00 (2.24)   | -0.13 (2.67)  |
 | TNFa_change (mean (SD))  | 0.04 (1.62)   | -0.24 (1.67)  |
 
+## Polyphenol intake by food group
+
+-   Means and SDs of polyphenol intake by food group.
+    -   Note that “Misc” group have all zero.
+
+<!-- -->
+
+    ##                                                                             
+    ##                 Total_polyphenol          Total_flavonoids          Flavanol
+    ##  Food group     Mean             SD       Mean             SD       Mean    
+    ##  Animal protein  55.6834          93.7400   0.5713           1.3473  27.8446
+    ##  Beverage       845.7642         729.0294  28.8974          76.1575   6.4958
+    ##  Chocolates     100.3500         233.2257   0.0000           0.0000  50.9791
+    ##  Fat/oil          6.6832           6.0914   0.1916           0.3816   0.0089
+    ##  Fruits         396.6888         334.0450  15.2011          22.3603  92.2259
+    ##  Grains         126.8576         139.4146   0.7261           5.3708  17.4703
+    ##  Legumes        281.3996         619.3581   1.3550           4.0025   6.3917
+    ##  Misc             0.0000           0.0000   0.0000           0.0000   0.0000
+    ##  Nuts/seeds     343.8405         328.5734  13.2835          13.7084  17.7919
+    ##  Spices          26.2777          76.9312   0.0470           0.4948   0.0000
+    ##  Vegetables     247.9784         257.5422   8.8869           7.7332   0.1424
+    ##                                                   
+    ##           Phenolic_acid          Lignan           
+    ##  SD       Mean          SD       Mean     SD      
+    ##   53.2452   0.2359        1.0787   0.0002   0.0012
+    ##   15.7095 227.1104      270.1807   0.6786   2.0181
+    ##  121.7216   0.8035        1.9404   0.0197   0.2738
+    ##    0.0888   0.0416        0.1863   0.1908   0.3108
+    ##  120.5846  18.5902       25.2161   7.6635  11.1338
+    ##   60.7345  30.0682       24.8018   1.2692   2.7573
+    ##   48.2881   4.8506        9.1244   1.8098   4.1718
+    ##    0.0000   0.0000        0.0000   0.0000   0.0000
+    ##   19.2961  93.6667       94.8263   1.6922   5.5951
+    ##    0.0000   0.0094        0.0287   0.0417   0.1297
+    ##    1.2006   4.8368        4.8684  24.3426  38.8629
+
 ## Association b/w dietary polyphenol and the change in lipids
 
 -   For each of lipids (total cholesterol and LDL), a linear models were
     fitted using the change (year 2 - baseline) as the dependent
     variable and the dietary total polyphenols (energy-adjusted) as the
-    main independent variable of interest. The model adjusted for the
-    baseline value of the lipid being modeled, as well as: gender
-    (female as reference), age, BMI and the use of lipid lowering
-    medications (yes/no, no as reference) at the baseline.
+    main independent variable of interest.
+    -   The unit of dietary total polyphenols was changed to 100 mg/day,
+        due to small beta estimates.
+    -   The model adjusted for the baseline value of the lipid being
+        modeled, as well as: gender (female as reference), age, BMI and
+        the use of lipid lowering medications (yes/no, no as reference)
+        at the baseline.
 
 ### Change in TC vs total polyphenol
 
 -   A scatterplot indicated that there is no association between the
     change in TC and dietary polyphenols.
 
-![](summary_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 -   There was no significant association between the change in TC and
     dietary polyphenol intake:
 
 <!-- -->
 
-    ## Model:  TC_change ~ total_polyphenol_ea + TC_0 + age + gender + BMI + lipid_lowering
+    ## Model:  TC_change ~ total_polyphenol_ea_100 + TC_0 + age + gender + BMI + lipid_lowering
 
-| Predictor           |    Beta |     SE |     t | p-value |
-|:--------------------|--------:|-------:|------:|:--------|
-| (Intercept)         |  71.837 | 39.078 |  1.84 | 0.067   |
-| total_polyphenol_ea |  -0.002 |  0.002 | -1.34 | 0.181   |
-| TC_0                |  -0.447 |  0.053 | -8.44 | \<0.001 |
-| age                 |   0.305 |  0.484 |  0.63 | 0.528   |
-| genderM             | -11.987 |  4.080 | -2.94 | 0.004   |
-| BMI                 |  -0.120 |  0.380 | -0.32 | 0.752   |
-| lipid_lowering      |  -4.063 |  4.262 | -0.95 | 0.341   |
+| Predictor               |    Beta |     SE |     t | p-value |
+|:------------------------|--------:|-------:|------:|:--------|
+| (Intercept)             |  65.114 | 38.944 |  1.67 | 0.096   |
+| total_polyphenol_ea_100 |  -0.483 |  2.064 | -0.23 | 0.815   |
+| TC_0                    |  -0.447 |  0.053 | -8.40 | \<0.001 |
+| age                     |   0.329 |  0.487 |  0.68 | 0.500   |
+| genderM                 | -12.401 |  4.080 | -3.04 | 0.003   |
+| BMI                     |  -0.113 |  0.382 | -0.30 | 0.767   |
+| lipid_lowering          |  -3.907 |  4.274 | -0.91 | 0.361   |
 
 ### Change in LDL vs total polyphenol
 
 -   A scatterplot indicated that there is no association between the
     change in TC and dietary polyphenols.
 
-![](summary_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 -   There was no significant association between the change in LDL and
     dietary polyphenol intake:
 
 <!-- -->
 
-    ## Model:  LDL_change ~ total_polyphenol_ea + LDL_0 + age + gender + BMI + lipid_lowering
+    ## Model:  LDL_change ~ total_polyphenol_ea_100 + LDL_0 + age + gender + BMI + lipid_lowering
 
-| Predictor           |   Beta |     SE |     t | p-value |
-|:--------------------|-------:|-------:|------:|:--------|
-| (Intercept)         | 44.146 | 19.257 |  2.29 | 0.023   |
-| total_polyphenol_ea |  0.000 |  0.001 | -0.13 | 0.893   |
-| LDL_0               | -0.437 |  0.049 | -8.98 | \<0.001 |
-| age                 |  0.033 |  0.240 |  0.14 | 0.891   |
-| genderM             | -4.923 |  1.990 | -2.47 | 0.014   |
-| BMI                 |  0.060 |  0.189 |  0.32 | 0.753   |
-| lipid_lowering      | -0.207 |  2.149 | -0.10 | 0.923   |
+| Predictor               |   Beta |     SE |     t | p-value |
+|:------------------------|-------:|-------:|------:|:--------|
+| (Intercept)             | 43.699 | 19.068 |  2.29 | 0.023   |
+| total_polyphenol_ea_100 | -0.160 |  1.024 | -0.16 | 0.876   |
+| LDL_0                   | -0.437 |  0.049 | -8.96 | \<0.001 |
+| age                     |  0.037 |  0.241 |  0.15 | 0.879   |
+| genderM                 | -4.944 |  1.986 | -2.49 | 0.013   |
+| BMI                     |  0.058 |  0.190 |  0.31 | 0.760   |
+| lipid_lowering          | -0.191 |  2.148 | -0.09 | 0.929   |
 
 ## Association b/w dietary polyphenol and the change in inflammatory markers
 
@@ -208,93 +247,93 @@ WAHA Polyphenols Study
 -   A scatterplot showed there are several outliers in change in hsCRP.
     Check with RA.
 
-![](summary_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 
 -   There was no significant association between the change in LDL and
     dietary polyphenol intake:
 
 <!-- -->
 
-    ## Model:  hsCRP_change ~ total_polyphenol_ea + hsCRP_0 + age + gender + BMI + lipid_lowering
+    ## Model:  hsCRP_change ~ total_polyphenol_ea_100 + hsCRP_0 + age + gender + BMI + lipid_lowering
 
-| Predictor           |   Beta |    SE |      t | p-value |
-|:--------------------|-------:|------:|-------:|:--------|
-| (Intercept)         | -0.694 | 0.408 |  -1.70 | 0.090   |
-| total_polyphenol_ea |  0.000 | 0.000 |   0.29 | 0.775   |
-| hsCRP_0             | -0.768 | 0.045 | -17.17 | \<0.001 |
-| age                 |  0.004 | 0.005 |   0.79 | 0.433   |
-| genderM             | -0.053 | 0.045 |  -1.17 | 0.245   |
-| BMI                 |  0.023 | 0.004 |   5.21 | \<0.001 |
-| lipid_lowering      | -0.039 | 0.046 |  -0.85 | 0.395   |
+| Predictor               |   Beta |    SE |      t | p-value |
+|:------------------------|-------:|------:|-------:|:--------|
+| (Intercept)             | -0.677 | 0.404 |  -1.67 | 0.095   |
+| total_polyphenol_ea_100 |  0.003 | 0.023 |   0.12 | 0.902   |
+| hsCRP_0                 | -0.769 | 0.045 | -17.25 | \<0.001 |
+| age                     |  0.004 | 0.005 |   0.77 | 0.444   |
+| genderM                 | -0.052 | 0.045 |  -1.15 | 0.252   |
+| BMI                     |  0.023 | 0.004 |   5.21 | \<0.001 |
+| lipid_lowering          | -0.040 | 0.046 |  -0.86 | 0.390   |
 
 ### Change in IL-1 vs total polyphenol
 
 -   A scatterplot showed there are several outliers in change in IL-1.
     Check with RA.
 
-![](summary_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
 
 -   There was no significant association between the change in IL-1 and
     dietary polyphenol intake:
 
 <!-- -->
 
-    ## Model:  IL1_change ~ total_polyphenol_ea + IL1_0 + age + gender + BMI + lipid_lowering
+    ## Model:  IL1_change ~ total_polyphenol_ea_100 + IL1_0 + age + gender + BMI + lipid_lowering
 
-| Predictor           |   Beta |    SE |      t | p-value |
-|:--------------------|-------:|------:|-------:|:--------|
-| (Intercept)         |  0.829 | 0.497 |   1.67 | 0.097   |
-| total_polyphenol_ea |  0.000 | 0.000 |   0.06 | 0.955   |
-| IL1_0               | -0.414 | 0.021 | -19.98 | \<0.001 |
-| age                 | -0.007 | 0.007 |  -1.03 | 0.305   |
-| genderM             | -0.041 | 0.054 |  -0.76 | 0.447   |
-| BMI                 |  0.002 | 0.005 |   0.33 | 0.741   |
-| lipid_lowering      | -0.008 | 0.056 |  -0.15 | 0.882   |
+| Predictor               |   Beta |    SE |      t | p-value |
+|:------------------------|-------:|------:|-------:|:--------|
+| (Intercept)             |  0.832 | 0.492 |   1.69 | 0.092   |
+| total_polyphenol_ea_100 | -0.006 | 0.028 |  -0.20 | 0.840   |
+| IL1_0                   | -0.414 | 0.021 | -19.95 | \<0.001 |
+| age                     | -0.007 | 0.007 |  -1.01 | 0.313   |
+| genderM                 | -0.041 | 0.054 |  -0.76 | 0.447   |
+| BMI                     |  0.002 | 0.005 |   0.31 | 0.756   |
+| lipid_lowering          | -0.008 | 0.056 |  -0.15 | 0.880   |
 
 ### Change in IL-6 vs total polyphenol
 
 -   A scatterplot showed there are several outliers in change in IL-6.
     Check with RA.
 
-![](summary_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 
 -   There was no significant association between the change in IL-6 and
     dietary polyphenol intake:
 
 <!-- -->
 
-    ## Model:  IL6_change ~ total_polyphenol_ea + IL6_0 + age + gender + BMI + lipid_lowering
+    ## Model:  IL6_change ~ total_polyphenol_ea_100 + IL6_0 + age + gender + BMI + lipid_lowering
 
-| Predictor           |   Beta |    SE |     t | p-value |
-|:--------------------|-------:|------:|------:|:--------|
-| (Intercept)         |  1.539 | 2.669 |  0.58 | 0.565   |
-| total_polyphenol_ea |  0.000 | 0.000 |  0.76 | 0.445   |
-| IL6_0               |  0.229 | 0.043 |  5.36 | \<0.001 |
-| age                 | -0.018 | 0.036 | -0.49 | 0.623   |
-| genderM             |  0.255 | 0.293 |  0.87 | 0.385   |
-| BMI                 | -0.050 | 0.028 | -1.79 | 0.075   |
-| lipid_lowering      |  0.153 | 0.305 |  0.50 | 0.616   |
+| Predictor               |   Beta |    SE |     t | p-value |
+|:------------------------|-------:|------:|------:|:--------|
+| (Intercept)             |  1.848 | 2.642 |  0.70 | 0.485   |
+| total_polyphenol_ea_100 |  0.110 | 0.152 |  0.72 | 0.469   |
+| IL6_0                   |  0.229 | 0.043 |  5.36 | \<0.001 |
+| age                     | -0.020 | 0.036 | -0.57 | 0.572   |
+| genderM                 |  0.275 | 0.293 |  0.94 | 0.348   |
+| BMI                     | -0.049 | 0.028 | -1.75 | 0.082   |
+| lipid_lowering          |  0.147 | 0.305 |  0.48 | 0.631   |
 
 ### Change in TNF-a vs total polyphenol
 
 -   A scatterplot indicated that there is no association between the
     change in TNF-a and dietary polyphenols.
 
-![](summary_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 
 -   There was no significant association between the change in TNF-a and
     dietary polyphenol intake:
 
 <!-- -->
 
-    ## Model:  TNFa_change ~ total_polyphenol_ea + TNFa_0 + age + gender + BMI + lipid_lowering
+    ## Model:  TNFa_change ~ total_polyphenol_ea_100 + TNFa_0 + age + gender + BMI + lipid_lowering
 
-| Predictor           |   Beta |    SE |     t | p-value |
-|:--------------------|-------:|------:|------:|:--------|
-| (Intercept)         | -0.091 | 1.730 | -0.05 | 0.958   |
-| total_polyphenol_ea |  0.000 | 0.000 |  0.19 | 0.851   |
-| TNFa_0              | -0.274 | 0.038 | -7.20 | \<0.001 |
-| age                 |  0.027 | 0.023 |  1.16 | 0.248   |
-| genderM             | -0.123 | 0.189 | -0.65 | 0.515   |
-| BMI                 | -0.016 | 0.018 | -0.90 | 0.368   |
-| lipid_lowering      |  0.375 | 0.195 |  1.92 | 0.056   |
+| Predictor               |   Beta |    SE |     t | p-value |
+|:------------------------|-------:|------:|------:|:--------|
+| (Intercept)             | -0.065 | 1.708 | -0.04 | 0.969   |
+| total_polyphenol_ea_100 | -0.144 | 0.098 | -1.47 | 0.142   |
+| TNFa_0                  | -0.274 | 0.038 | -7.26 | \<0.001 |
+| age                     |  0.029 | 0.023 |  1.27 | 0.205   |
+| genderM                 | -0.125 | 0.188 | -0.67 | 0.506   |
+| BMI                     | -0.019 | 0.018 | -1.03 | 0.304   |
+| lipid_lowering          |  0.373 | 0.194 |  1.92 | 0.056   |
