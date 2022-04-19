@@ -5,7 +5,7 @@
 browseURL("https://github.com/keijioda/waha_polyphenols")
 
 # Required packages
-pacs <- c("tidyverse", "haven", "janitor", "readxl", "tableone")
+pacs <- c("tidyverse", "haven", "janitor", "readxl", "tableone", "tables")
 sapply(pacs, require, character.only = TRUE)
 
 # Read functions
@@ -21,6 +21,7 @@ inflm_file <- "WAHA_ BD_Cytokines_BCN_LLU Inflammation.sav"
 diet_file  <- "waha-recalls-per-recalls-overlapping-foodgroups-with-pOH.csv"
 # diet_file  <- "waha-recalls-per-subject-overlapping-foodgroups-with-pOH.csv"
 body_file  <- "Table1Data.xlsx"
+urine_file <- "./data/Master Polyphenol Database with Creatinine Final 04112022.xlsx"
 
 source("dataprep.R")
 

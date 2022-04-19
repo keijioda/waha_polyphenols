@@ -32,4 +32,11 @@ temp <- unzip(zipfile, body_file, exdir = tempdir())
 body <- read_excel(temp) %>% 
   clean_names()
 
+# Urine data: n = 307
+message("Reading urine data...")
+urine <- read_excel(urine_file) %>% 
+  clean_names() %>% 
+  mutate(patient_id = id) %>% 
+  select(patient_id, final_polyphenol_yield_mg_g_creatinine)
+
 message("Done!")
