@@ -497,34 +497,6 @@ ggp_df %>%
   facet_grid(~ variable, scales = "free_x") +
   labs(y = "Urinary total polyphenol / creatinine")
 
-# Pearson correlation b/w urine & dietary polyphenols
-# Dietary variables log-transformed
-urine_comp_y2 %>% 
-  select(starts_with("ur_"), ends_with("_ea")) %>% 
-  mutate(across(ends_with("_ea"), function(x) log(x + 1))) %>% 
-  cor(use = "pairwise.complete.obs") %>% 
-  data.frame() %>% 
-  select(1:2) %>% 
-  slice(-(1:2)) %>% 
-  round(3)
-
-# Spearman correlation with raw dietary variables
-urine_comp_y2 %>% 
-  select(starts_with("ur_"), ends_with("_ea")) %>% 
-  cor(method = "spearman", use = "pairwise.complete.obs") %>% 
-  data.frame() %>% 
-  select(1:2) %>% 
-  slice(-(1:2)) %>% 
-  round(3)
-
-# P-values based on Spearman corr
-urine_comp_y2 %>% 
-  select(starts_with("ur_"), ends_with("_ea")) %>% 
-  rstatix::cor_pmat(method = "spearman") %>% 
-  data.frame() %>% 
-  select(1:3) %>% 
-  slice(-(1:2))
-
 # Model
 mod1a <- lm(ur_tot_pp ~ log(total_polyphenol_ea) + age + gender + BMI, data = urine_comp_y2)
 mod1b <- lm(ur_tot_pp ~ log(total_flavonoids_ea) + age + gender + BMI, data = urine_comp_y2)
@@ -543,3 +515,59 @@ mod2d <- lm(ur_tot_pp_cr ~ log(phenolic_acid_ea) + age + gender + BMI, data = ur
 mod2 <- list(mod2a, mod2b, mod2c, mod2d)
 names(mod2) <- paste0("log_", pp_names)
 mod2 %>% map(function(x) summary(x)$coef) %>% map(round, 4)
+
+# Urine polyphenol and blood lipids (TC, LDL)
+urine_comp_long <- urine %>% 
+  rename(ur_tot_pp = polyphenol_yield_correction_factor_2,
+         ur_tot_pp_cr = final_polyphenol_yield_mg_g_creatinine) %>%
+  mutate(year = as.numeric(time) - 1) %>% 
+  inner_join(pp_df_long, by = c("patient_id", "year")) %>%
+  mutate(year = factor(year)) %>% 
+  arrange(patient_id, year)
+
+# Check data
+urine_comp_long %>% 
+  select(patient_id, year, TC, LDL, starts_with("ur_"))
+
+urine_comp_long %>% 
+  pivot_longer(TC:LDL, names_to = "variable", values_to = "value") %>% 
+  mutate(variable = factor(variable, levels = c("TC", "LDL"))) %>% 
+  ggplot(aes(y = ur_tot_pp, x = value, color = year)) +
+  geom_point() +
+  geom_smooth(span = 1) +
+  scale_x_log10() +
+  facet_grid(~ variable, scale = "free_x")
+
+urine_comp_long %>% 
+  pivot_longer(TC:LDL, names_to = "variable", values_to = "value") %>% 
+  mutate(variable = factor(variable, levels = c("TC", "LDL"))) %>% 
+  ggplot(aes(y = ur_tot_pp_cr, x = value, color = year)) +
+  geom_point() +
+  geom_smooth(span = 1) +
+  scale_x_log10() +
+  facet_grid(~ variable, scale = "free_x")
+
+# Urine polyphenol and inflamamtory markers
+urine_comp_long %>% 
+  select(patient_id, year, hsCRP, IL1, IL6, TNFa, starts_with("ur_"))
+
+urine_comp_long %>% 
+  select(patient_id, year, hsCRP, IL1, IL6, TNFa, starts_with("ur_")) %>% 
+  pivot_longer(hsCRP:TNFa, names_to = "variable", values_to = "value") %>% 
+  mutate(variable = factor(variable, levels = c("hsCRP", "IL1", "IL6", "TNFa"))) %>% 
+  ggplot(aes(y = ur_tot_pp, x = value, color = year)) +
+  geom_point() +
+  geom_smooth(span = 1) +
+  scale_x_log10() +
+  facet_grid(~ variable, scale = "free_x")
+
+urine_comp_long %>% 
+  select(patient_id, year, hsCRP, IL1, IL6, TNFa, starts_with("ur_")) %>% 
+  pivot_longer(hsCRP:TNFa, names_to = "variable", values_to = "value") %>% 
+  mutate(variable = factor(variable, levels = c("hsCRP", "IL1", "IL6", "TNFa"))) %>% 
+  ggplot(aes(y = ur_tot_pp_cr, x = value, color = year)) +
+  geom_point() +
+  geom_smooth(span = 1) +
+  scale_x_log10() +
+  facet_grid(~ variable, scale = "free_x")
+
