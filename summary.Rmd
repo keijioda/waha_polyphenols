@@ -551,7 +551,7 @@ ggp_df %>%
 * A linear model was fitted for each combination of urine polyphenol (as a dependent variable) and log dietary polyphenol (an independent variable), while adjusting for age, gender and BMI.
 
 * Linear models for **urine total polyphenol**:
-  * There was a significantly **negative** association between urine total polyphenol and the log of dietary total flaonoids (p = 0.0208). There were no significant associations with other dietary polyphenols.
+  * There was a significantly **negative** association between urine total polyphenol and the log of dietary total flaonoids (p = 0.0208). There were no significant associations with any other dietary polyphenols.
 
 ``` {r echo = FALSE}
 # Model
@@ -567,7 +567,7 @@ mod1 %>% map(function(x) summary(x)$coef) %>% map(round, 4)
 ```
 
 * Linear models for **urine total polyphenol / creatinine**:
-  * There was a significantly **negative** association between urine total polyphenol/creatinine and the log of dietary total flaonoids (p = 0.0456). There were no significant associations with other dietary polyphenols.
+  * There was a significantly **negative** association between urine total polyphenol/creatinine and the log of dietary total flaonoids (p = 0.0456). There were no significant associations with any other dietary polyphenols.
 
 ``` {r echo = FALSE}
 mod2a <- lm(ur_tot_pp_cr ~ log(total_polyphenol_ea) + age + gender + BMI, data = urine_comp_y2)
