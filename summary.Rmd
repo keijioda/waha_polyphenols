@@ -22,6 +22,7 @@ lipid_file <- "BDLab_BCNLLU1709lipids.sav"
 inflm_file <- "WAHA_ BD_Cytokines_BCN_LLU Inflammation.sav"
 diet_file  <- "waha-recalls-per-recalls-overlapping-foodgroups-with-pOH.csv"
 body_file  <- "Table1Data.xlsx"
+urine_file <- "./data/Master Polyphenol Database with Creatinine Final 04112022.xlsx"
 
 source("dataprep.R")
 
@@ -450,3 +451,131 @@ pp_df_comp %>% ancova_mod("TNFa_change", "TNFa_0")
 
 ```
 
+## Analysis on urinary polyphenol
+
+### Descriptive analysis by treatment and time
+
+* Means (SD) by treatment and time are shown below for urine polyphenol (`ur_tot_pp`) and urine polyphenol / creatinine (`ur_tot_pp_cr`):
+
+```{r echo = FALSE}
+# When merged with lipid/diet wide format data, 295 unique subjects
+urine_comp <- urine %>% 
+  rename(ur_tot_pp = polyphenol_yield_correction_factor_2,
+         ur_tot_pp_cr = final_polyphenol_yield_mg_g_creatinine) %>% 
+  inner_join(pp_df_comp, by = "patient_id")
+
+# Descriptive stats by diet and time
+urine_comp %>% 
+  tabular(Heading("Year") * time ~ Heading("") * group * (ur_tot_pp + ur_tot_pp_cr) * (Mean + SD), data = .)
+```
+
+### Comparisons of urine polyphenol between treatment groups over time
+
+* To compare urine polyphenol between two treatment groups over time, mixed models were fitted for both variables (`ur_tot_pp` and `ur_tot_pp_cr`). The mixed model included treatment, time and treatment x time interaction as fixed-effects terms and subjects as a random-effects term.
+
+  * From the mixed model, marginal means were estimated for the two treatment groups at each time point and then compared, by testing for the simple effects of treatment at each time point.
+
+```{r include = FALSE}
+# Mixed models
+library(lme4); library(emmeans)
+```
+
+* **Urine total polyphenol**: Estimated marginal means by treatment group at each time point
+
+``` {r echo = FALSE}
+# No creatinine adjustment
+mod1 <- lmer(ur_tot_pp ~ group * time + (1|patient_id), data = urine_comp)
+mod1_emm <- emmeans(mod1, ~ group| time)
+mod1_emm %>% knitr::kable() 
+```
+
+* Comparisons between treatments by time:
+  * There were no significant differences at any time point:
+
+``` {r echo = FALSE}
+pairs(mod1_emm, reverse = TRUE) %>% knitr::kable()
+```
+
+* **Urine total polyphenol adjusted for creatinine**: Estimated marginal means by treatment group at each time point
+
+``` {r echo = FALSE}
+# With creatinine adjustment
+mod2 <- lmer(ur_tot_pp_cr ~ group * time + (1|patient_id), data = urine_comp)
+mod2_emm <- emmeans(mod2, ~ group| time)
+mod2_emm %>% knitr::kable()
+```
+
+* Comparisons between treatments by time:
+  * There were no significant differences at any time point:
+
+``` {r echo = FALSE}
+pairs(mod2_emm, reverse = TRUE) %>% knitr::kable()
+```
+
+### Association between dietary polyphenol intake and urine polyphenol excretion
+
+* To examine if there are any associations between dietary polyphenol intake and urine polyphenol at Year 2, scatterplots were produced. Dietary intakes (total, flavonoids, flavanols, phenonic acids) were energy-adjusted as described above. Note that in the scatterplots below the x-axis is on the log-scale. A lowess smoothed curve was fitted for each plot.
+
+* Scatterplots against **urine total polyphenol**:
+
+``` {r echo = FALSE, warning = FALSE, message = FALSE, fig.width = 10, fig.height = 3}
+# Scatterplots
+pp_names <- urine_comp %>% select(ends_with("_ea")) %>% select(-lignin_ea) %>% names()
+
+urine_comp_y2 <- urine_comp %>% filter(time == 2) %>% select(-lignin_ea)
+ggp_df <- urine_comp_y2 %>% 
+  pivot_longer(ends_with("_ea"), names_to = "variable", values_to = "value") %>% 
+  mutate(variable = factor(variable, labels = pp_names))
+
+ggp_df %>% 
+  ggplot(aes(x = value, y = ur_tot_pp)) +
+  geom_point() +
+  geom_smooth(method = "loess", span = 1) + 
+  scale_x_log10() +
+  facet_grid(~ variable, scales = "free_x") +
+  labs(y = "Urinary total polyphenol")
+```
+
+* Scatterplots against **urine total polyphenol adjusted for creatinine**:
+
+``` {r echo = FALSE, warning = FALSE, message = FALSE, fig.width = 10, fig.height = 3}
+ggp_df %>% 
+  ggplot(aes(x = value, y = ur_tot_pp_cr)) +
+  geom_point() +
+  geom_smooth(method = "loess", span = 1) + 
+  scale_x_log10() +
+  facet_grid(~ variable, scales = "free_x") +
+  labs(y = "Urinary total polyphenol / creatinine")
+```
+
+* A linear model was fitted for each combination of urine polyphenol (as a dependent variable) and log dietary polyphenol (an independent variable), while adjusting for age, gender and BMI.
+
+* Linear models for **urine total polyphenol**:
+  * There was a significantly **negative** association between urine total polyphenol and the log of dietary total flaonoids (p = 0.0208). There were no significant associations with other dietary polyphenols.
+
+``` {r echo = FALSE}
+# Model
+mod1a <- lm(ur_tot_pp ~ log(total_polyphenol_ea) + age + gender + BMI, data = urine_comp_y2)
+mod1b <- lm(ur_tot_pp ~ log(total_flavonoids_ea) + age + gender + BMI, data = urine_comp_y2)
+mod1c <- lm(ur_tot_pp ~ log(flavanols_ea + 1) + age + gender + BMI, data = urine_comp_y2)
+mod1d <- lm(ur_tot_pp ~ log(phenolic_acid_ea) + age + gender + BMI, data = urine_comp_y2)
+
+mod1 <- list(mod1a, mod1b, mod1c, mod1d)
+names(mod1) <- paste0("log_", pp_names)
+mod1 %>% map(function(x) summary(x)$coef) %>% map(round, 4)
+
+```
+
+* Linear models for **urine total polyphenol / creatinine**:
+  * There was a significantly **negative** association between urine total polyphenol/creatinine and the log of dietary total flaonoids (p = 0.0456). There were no significant associations with other dietary polyphenols.
+
+``` {r echo = FALSE}
+mod2a <- lm(ur_tot_pp_cr ~ log(total_polyphenol_ea) + age + gender + BMI, data = urine_comp_y2)
+mod2b <- lm(ur_tot_pp_cr ~ log(total_flavonoids_ea) + age + gender + BMI, data = urine_comp_y2)
+mod2c <- lm(ur_tot_pp_cr ~ log(flavanols_ea + 1) + age + gender + BMI, data = urine_comp_y2)
+mod2d <- lm(ur_tot_pp_cr ~ log(phenolic_acid_ea) + age + gender + BMI, data = urine_comp_y2)
+
+mod2 <- list(mod2a, mod2b, mod2c, mod2d)
+names(mod2) <- paste0("log_", pp_names)
+mod2 %>% map(function(x) summary(x)$coef) %>% map(round, 4)
+```

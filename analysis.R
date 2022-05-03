@@ -474,9 +474,9 @@ pairs(mod2b_emm, reverse = TRUE)
 # Dietary polyphenols and urine polyphenol
 
 # Scatterplots
-pp_names <- urine_comp %>% select(ends_with("_ea")) %>% names()
+pp_names <- urine_comp %>% select(ends_with("_ea")) %>% select(-lignin_ea) %>% names()
 
-urine_comp_y2 <- urine_comp %>% filter(time == 2)
+urine_comp_y2 <- urine_comp %>% filter(time == 2) %>% select(-lignin_ea)
 ggp_df <- urine_comp_y2 %>% 
   pivot_longer(ends_with("_ea"), names_to = "variable", values_to = "value") %>% 
   mutate(variable = factor(variable, labels = pp_names))
@@ -525,3 +525,21 @@ urine_comp_y2 %>%
   select(1:3) %>% 
   slice(-(1:2))
 
+# Model
+mod1a <- lm(ur_tot_pp ~ log(total_polyphenol_ea) + age + gender + BMI, data = urine_comp_y2)
+mod1b <- lm(ur_tot_pp ~ log(total_flavonoids_ea) + age + gender + BMI, data = urine_comp_y2)
+mod1c <- lm(ur_tot_pp ~ log(flavanols_ea + 1) + age + gender + BMI, data = urine_comp_y2)
+mod1d <- lm(ur_tot_pp ~ log(phenolic_acid_ea) + age + gender + BMI, data = urine_comp_y2)
+
+mod1 <- list(mod1a, mod1b, mod1c, mod1d)
+names(mod1) <- paste0("log_", pp_names)
+mod1 %>% map(function(x) summary(x)$coef) %>% map(round, 4)
+
+mod2a <- lm(ur_tot_pp_cr ~ log(total_polyphenol_ea) + age + gender + BMI, data = urine_comp_y2)
+mod2b <- lm(ur_tot_pp_cr ~ log(total_flavonoids_ea) + age + gender + BMI, data = urine_comp_y2)
+mod2c <- lm(ur_tot_pp_cr ~ log(flavanols_ea + 1) + age + gender + BMI, data = urine_comp_y2)
+mod2d <- lm(ur_tot_pp_cr ~ log(phenolic_acid_ea) + age + gender + BMI, data = urine_comp_y2)
+
+mod2 <- list(mod2a, mod2b, mod2c, mod2d)
+names(mod2) <- paste0("log_", pp_names)
+mod2 %>% map(function(x) summary(x)$coef) %>% map(round, 4)

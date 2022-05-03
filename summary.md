@@ -337,3 +337,179 @@ WAHA Polyphenols Study
 | genderM                 | -0.125 | 0.188 | -0.67 | 0.506   |
 | BMI                     | -0.019 | 0.018 | -1.03 | 0.304   |
 | lipid_lowering          |  0.373 | 0.194 |  1.92 | 0.056   |
+
+## Analysis on urinary polyphenol
+
+### Descriptive analysis by treatment and time
+
+-   Means (SD) by treatment and time are shown below for urine
+    polyphenol (`ur_tot_pp`) and urine polyphenol / creatinine
+    (`ur_tot_pp_cr`):
+
+<!-- -->
+
+    ##                                                                             
+    ##                                                                             
+    ##       Control                             Walnut                            
+    ##       ur_tot_pp        ur_tot_pp_cr       ur_tot_pp       ur_tot_pp_cr      
+    ##  Year Mean      SD     Mean         SD    Mean      SD    Mean         SD   
+    ##  0    285.1     119.68 313.9        138.8 283.9     100.7 315.4        132.6
+    ##  1    278.2      98.97 320.2        122.4 301.7     104.8 344.0        131.9
+    ##  2    282.3     109.17 348.6        152.8 292.9     102.9 363.9        163.7
+
+### Comparisons of urine polyphenol between treatment groups over time
+
+-   To compare urine polyphenol between two treatment groups over time,
+    mixed models were fitted for both variables (`ur_tot_pp` and
+    `ur_tot_pp_cr`). The mixed model included treatment, time and
+    treatment x time interaction as fixed-effects terms and subjects as
+    a random-effects term.
+
+    -   From the mixed model, marginal means were estimated for the two
+        treatment groups at each time point and then compared, by
+        testing for the simple effects of treatment at each time point.
+
+-   **Urine total polyphenol**: Estimated marginal means by treatment
+    group at each time point
+
+| group   | time |   emmean |       SE |       df | lower.CL | upper.CL |
+|:--------|:-----|---------:|---------:|---------:|---------:|---------:|
+| Control | 0    | 285.1411 | 8.921118 | 415.6284 | 267.6050 | 302.6772 |
+| Walnut  | 0    | 283.8844 | 8.594443 | 415.6284 | 266.9904 | 300.7784 |
+| Control | 1    | 278.6424 | 8.944255 | 419.1957 | 261.0612 | 296.2236 |
+| Walnut  | 1    | 301.4796 | 8.604715 | 417.2719 | 284.5656 | 318.3935 |
+| Control | 2    | 282.3023 | 8.921118 | 415.6284 | 264.7662 | 299.8384 |
+| Walnut  | 2    | 294.7487 | 8.615111 | 418.9360 | 277.8144 | 311.6829 |
+
+-   Comparisons between treatments by time:
+    -   There were no significant differences at any time point:
+
+| contrast         | time |  estimate |       SE |       df |    t.ratio |   p.value |
+|:-----------------|:-----|----------:|---------:|---------:|-----------:|----------:|
+| Walnut - Control | 0    | -1.256721 | 12.38753 | 415.6284 | -0.1014506 | 0.9192417 |
+| Walnut - Control | 1    | 22.837142 | 12.41132 | 418.2699 |  1.8400255 | 0.0664729 |
+| Walnut - Control | 2    | 12.446374 | 12.40187 | 417.2211 |  1.0035881 | 0.3161589 |
+
+-   **Urine total polyphenol adjusted for creatinine**: Estimated
+    marginal means by treatment group at each time point
+
+| group   | time |   emmean |       SE |       df | lower.CL | upper.CL |
+|:--------|:-----|---------:|---------:|---------:|---------:|---------:|
+| Control | 0    | 315.3950 | 12.09690 | 405.9568 | 291.6146 | 339.1754 |
+| Walnut  | 0    | 315.1817 | 11.62167 | 404.0103 | 292.3352 | 338.0282 |
+| Control | 1    | 320.0088 | 12.09690 | 405.9568 | 296.2284 | 343.7892 |
+| Walnut  | 1    | 343.2666 | 11.62167 | 404.0103 | 320.4202 | 366.1131 |
+| Control | 2    | 348.6468 | 12.06420 | 402.3564 | 324.9301 | 372.3635 |
+| Walnut  | 2    | 365.3572 | 11.62167 | 404.0103 | 342.5107 | 388.2037 |
+
+-   Comparisons between treatments by time:
+    -   There were no significant differences at any time point:
+
+| contrast         | time |   estimate |       SE |       df |    t.ratio |   p.value |
+|:-----------------|:-----|-----------:|---------:|---------:|-----------:|----------:|
+| Walnut - Control | 0    | -0.2132768 | 16.77493 | 405.0214 | -0.0127140 | 0.9898622 |
+| Walnut - Control | 1    | 23.2578433 | 16.77493 | 405.0214 |  1.3864646 | 0.1663678 |
+| Walnut - Control | 2    | 16.7104502 | 16.75136 | 403.1516 |  0.9975579 | 0.3190921 |
+
+### Association between dietary polyphenol intake and urine polyphenol excretion
+
+-   To examine if there are any associations between dietary polyphenol
+    intake and urine polyphenol at Year 2, scatterplots were produced.
+    Dietary intakes (total, flavonoids, flavanols, phenonic acids) were
+    energy-adjusted as described above. Note that in the scatterplots
+    below the x-axis is on the log-scale. A lowess smoothed curve was
+    fitted for each plot.
+
+-   Scatterplots against **urine total polyphenol**:
+
+![](summary_files/figure-gfm/unnamed-chunk-28-1.png)<!-- -->
+
+-   Scatterplots against **urine total polyphenol adjusted for
+    creatinine**:
+
+![](summary_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->
+
+-   A linear model was fitted for each combination of urine polyphenol
+    (as a dependent variable) and log dietary polyphenol (an independent
+    variable), while adjusting for age, gender and BMI.
+
+-   Linear models for **urine total polyphenol**:
+
+    -   There was a significantly **negative** association between urine
+        total polyphenol and the log of dietary total flaonoids (p =
+        0.0208). There were no significant associations with other
+        dietary polyphenols.
+
+<!-- -->
+
+    ## $log_total_polyphenol_ea
+    ##                          Estimate Std. Error t value Pr(>|t|)
+    ## (Intercept)              255.2155   160.6739  1.5884   0.1133
+    ## log(total_polyphenol_ea)   3.0823    14.0336  0.2196   0.8263
+    ## age                       -0.0758     1.6228 -0.0467   0.9628
+    ## genderM                    9.6491    13.1845  0.7319   0.4649
+    ## BMI                        0.3930     1.2814  0.3067   0.7593
+    ## 
+    ## $log_total_flavonoids_ea
+    ##                          Estimate Std. Error t value Pr(>|t|)
+    ## (Intercept)              341.8514   122.2395  2.7966   0.0055
+    ## log(total_flavonoids_ea) -15.6156     6.7156 -2.3253   0.0208
+    ## age                        0.0131     1.6082  0.0081   0.9935
+    ## genderM                    8.6870    13.0649  0.6649   0.5066
+    ## BMI                        0.0454     1.2777  0.0355   0.9717
+    ## 
+    ## $log_flavanols_ea
+    ##                       Estimate Std. Error t value Pr(>|t|)
+    ## (Intercept)           259.8229   122.9543  2.1132   0.0354
+    ## log(flavanols_ea + 1)   3.9042     5.3959  0.7236   0.4699
+    ## age                    -0.0946     1.6217 -0.0583   0.9535
+    ## genderM                 9.4863    13.1718  0.7202   0.4720
+    ## BMI                     0.4378     1.2820  0.3415   0.7330
+    ## 
+    ## $log_phenolic_acid_ea
+    ##                       Estimate Std. Error t value Pr(>|t|)
+    ## (Intercept)           301.8429   124.9188  2.4163   0.0163
+    ## log(phenolic_acid_ea)  -4.9813     7.2990 -0.6825   0.4955
+    ## age                    -0.0110     1.6238 -0.0068   0.9946
+    ## genderM                 9.4368    13.1759  0.7162   0.4744
+    ## BMI                     0.4108     1.2806  0.3208   0.7486
+
+-   Linear models for **urine total polyphenol / creatinine**:
+    -   There was a significantly **negative** association between urine
+        total polyphenol/creatinine and the log of dietary total
+        flaonoids (p = 0.0456). There were no significant associations
+        with other dietary polyphenols.
+
+<!-- -->
+
+    ## $log_total_polyphenol_ea
+    ##                          Estimate Std. Error t value Pr(>|t|)
+    ## (Intercept)              433.5288   236.2797  1.8348   0.0676
+    ## log(total_polyphenol_ea)   5.9389    20.5443  0.2891   0.7727
+    ## age                       -1.2607     2.3971 -0.5259   0.5994
+    ## genderM                  -77.5863    19.4457 -3.9899   0.0001
+    ## BMI                       -0.2628     1.8957 -0.1386   0.8898
+    ## 
+    ## $log_total_flavonoids_ea
+    ##                          Estimate Std. Error t value Pr(>|t|)
+    ## (Intercept)              557.3405   180.2409  3.0922   0.0022
+    ## log(total_flavonoids_ea) -19.9167     9.9181 -2.0081   0.0456
+    ## age                       -1.1209     2.3810 -0.4708   0.6382
+    ## genderM                  -78.8516    19.3166 -4.0821   0.0001
+    ## BMI                       -0.6928     1.8932 -0.3659   0.7147
+    ## 
+    ## $log_flavanols_ea
+    ##                       Estimate Std. Error t value Pr(>|t|)
+    ## (Intercept)           486.9216   181.2452  2.6865   0.0077
+    ## log(flavanols_ea + 1)  -1.7562     8.1623 -0.2152   0.8298
+    ## age                    -1.2374     2.3979 -0.5160   0.6062
+    ## genderM               -77.3802    19.4443 -3.9796   0.0001
+    ## BMI                    -0.2970     1.8976 -0.1565   0.8758
+    ## 
+    ## $log_phenolic_acid_ea
+    ##                       Estimate Std. Error t value Pr(>|t|)
+    ## (Intercept)           489.9372   184.4582  2.6561   0.0084
+    ## log(phenolic_acid_ea)  -2.3505    10.7419 -0.2188   0.8270
+    ## age                    -1.2259     2.3998 -0.5108   0.6099
+    ## genderM               -77.6193    19.4564 -3.9894   0.0001
+    ## BMI                    -0.2679     1.8956 -0.1413   0.8877
