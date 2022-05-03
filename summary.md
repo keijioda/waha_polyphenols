@@ -437,7 +437,7 @@ WAHA Polyphenols Study
 
     -   There was a significantly **negative** association between urine
         total polyphenol and the log of dietary total flaonoids (p =
-        0.0208). There were no significant associations with other
+        0.0208). There were no significant associations with any other
         dietary polyphenols.
 
 <!-- -->
@@ -478,7 +478,7 @@ WAHA Polyphenols Study
     -   There was a significantly **negative** association between urine
         total polyphenol/creatinine and the log of dietary total
         flaonoids (p = 0.0456). There were no significant associations
-        with other dietary polyphenols.
+        with any other dietary polyphenols.
 
 <!-- -->
 
