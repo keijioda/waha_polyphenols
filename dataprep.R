@@ -36,7 +36,8 @@ body <- read_excel(temp) %>%
 message("Reading urine data...")
 urine <- read_excel(urine_file) %>% 
   clean_names() %>% 
-  mutate(patient_id = id) %>% 
-  select(patient_id, final_polyphenol_yield_mg_g_creatinine)
+  mutate(patient_id = id,
+         time = factor(collection_time, labels = c(0, 1, 2))) %>% 
+  select(patient_id, time, polyphenol_yield_correction_factor_2, final_polyphenol_yield_mg_g_creatinine)
 
 message("Done!")

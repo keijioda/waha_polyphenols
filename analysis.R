@@ -418,3 +418,110 @@ pp_df_comp %>% ancova_mod("IL6_change", "IL6_0")
 
 pp_df_comp %>% ggp_scatter(TNFa_change, "Changes in TNFa (Year 2 - Baseline, pg/ml)")
 pp_df_comp %>% ancova_mod("TNFa_change", "TNFa_0")
+
+# Urine data -- 911 obs from 307 unique subjects
+urine
+dim(urine)
+n_distinct(urine$patient_id)
+
+# When merged with lipid/diet wide format data, 295 unique subjects
+urine_comp <- urine %>% 
+  rename(ur_tot_pp = polyphenol_yield_correction_factor_2,
+         ur_tot_pp_cr = final_polyphenol_yield_mg_g_creatinine) %>% 
+  inner_join(pp_df_comp, by = "patient_id")
+
+dim(urine_comp)
+n_distinct(urine_comp$patient_id)
+
+# Distribution of urine polyphenols
+urine_comp %>% 
+  pivot_longer(starts_with("ur_"), names_to = "variable", values_to = "value") %>% 
+  filter(!is.na(value)) %>% 
+  ggplot(aes(x = value, group = variable)) + 
+  geom_histogram(bins = 30) +
+  facet_grid(~variable)
+
+# Descriptive stats by diet and time
+urine_comp %>% 
+  tabular(Heading("Year") * time ~ Heading("") * group * (ur_tot_pp + ur_tot_pp_cr) * (Mean + SD), data = .)
+
+# Mixed models
+library(lme4); library(emmeans)
+
+# No creatinine adjustment
+mod1 <- lmer(ur_tot_pp ~ group * time + (1|patient_id), data = urine_comp)
+mod1_emm <- emmeans(mod1, ~ group| time)
+mod1_emm
+pairs(mod1_emm, reverse = TRUE)
+
+mod1b <- lmer(ur_tot_pp ~ group * time + age + gender + BMI + (1|patient_id), data = urine_comp)
+summary(mod1b)
+mod1b_emm <- emmeans(mod1, ~ group| time)
+mod1b_emm
+pairs(mod1b_emm, reverse = TRUE)
+
+# With creatinine adjustment
+mod2 <- lmer(ur_tot_pp_cr ~ group * time + (1|patient_id), data = urine_comp)
+mod2_emm <- emmeans(mod2, ~ group| time)
+mod2_emm
+pairs(mod2_emm, reverse = TRUE)
+
+mod2b <- lmer(ur_tot_pp_cr ~ group * time + age + gender + BMI + (1|patient_id), data = urine_comp)
+mod2b_emm <- emmeans(mod2, ~ group| time)
+mod2b_emm
+pairs(mod2b_emm, reverse = TRUE)
+
+# Dietary polyphenols and urine polyphenol
+
+# Scatterplots
+pp_names <- urine_comp %>% select(ends_with("_ea")) %>% names()
+
+urine_comp_y2 <- urine_comp %>% filter(time == 2)
+ggp_df <- urine_comp_y2 %>% 
+  pivot_longer(ends_with("_ea"), names_to = "variable", values_to = "value") %>% 
+  mutate(variable = factor(variable, labels = pp_names))
+
+ggp_df %>% 
+  ggplot(aes(x = value, y = ur_tot_pp)) +
+  geom_point() +
+  geom_smooth(method = "loess", span = 1) + 
+  scale_x_log10() +
+  facet_grid(~ variable, scales = "free_x") +
+  labs(y = "Urinary total polyphenol")
+
+ggp_df %>% 
+  ggplot(aes(x = value, y = ur_tot_pp_cr)) +
+  geom_point() +
+  geom_smooth(method = "loess", span = 1) + 
+  scale_x_log10() +
+  facet_grid(~ variable, scales = "free_x") +
+  labs(y = "Urinary total polyphenol / creatinine")
+
+# Pearson correlation b/w urine & dietary polyphenols
+# Dietary variables log-transformed
+urine_comp_y2 %>% 
+  select(starts_with("ur_"), ends_with("_ea")) %>% 
+  mutate(across(ends_with("_ea"), function(x) log(x + 1))) %>% 
+  cor(use = "pairwise.complete.obs") %>% 
+  data.frame() %>% 
+  select(1:2) %>% 
+  slice(-(1:2)) %>% 
+  round(3)
+
+# Spearman correlation with raw dietary variables
+urine_comp_y2 %>% 
+  select(starts_with("ur_"), ends_with("_ea")) %>% 
+  cor(method = "spearman", use = "pairwise.complete.obs") %>% 
+  data.frame() %>% 
+  select(1:2) %>% 
+  slice(-(1:2)) %>% 
+  round(3)
+
+# P-values based on Spearman corr
+urine_comp_y2 %>% 
+  select(starts_with("ur_"), ends_with("_ea")) %>% 
+  rstatix::cor_pmat(method = "spearman") %>% 
+  data.frame() %>% 
+  select(1:3) %>% 
+  slice(-(1:2))
+
