@@ -513,3 +513,181 @@ WAHA Polyphenols Study
     ## age                    -1.2259     2.3998 -0.5108   0.6099
     ## genderM               -77.6193    19.4564 -3.9894   0.0001
     ## BMI                    -0.2679     1.8956 -0.1413   0.8877
+
+### Association between urine polyphenol and blood lipids
+
+-   To examine if there are any associations between urine polyphenol
+    and blood lipids (total cholesterol and LDL), scatterplots were
+    produced. lowess smoothed curves was fitted for for both years of
+    measurements (Year 0 and Year 2).
+
+-   Scatterplots of TC and LDL (y-axis) against **urine total
+    polyphenol** (x-axis):
+
+![](summary_files/figure-gfm/unnamed-chunk-32-1.png)<!-- -->
+
+-   Scatterplots of TC and LDL (y-axis) against **urine total polyphenol
+    / creatinine** (x-axis):
+
+![](summary_files/figure-gfm/unnamed-chunk-33-1.png)<!-- -->
+
+-   To see if the association between urine polyphenol and lipids is
+    significant or not, mixed models were fitted using lipids (TC or
+    LDL) as the dependent variable and urine polyphenol (with or without
+    creatinine adjustment) as the main independent variable. The models
+    included: year (0 or 2), its interaction with urine polyphenol, age,
+    gender and BMI as fixed-effects terms and subjects as a
+    random-effects term.
+    -   From the mixed model, an estimated slope associated with urine
+        polyphenol (divided by 100) was calculated for each year.
+-   Estimated slope for **urine total polyphenol** on TC (1st table
+    below) and LDL (2nd table) by year:
+    -   There was a significant negative association with TC at Year 2
+        (p = 0.048).
+    -   No significant association was found with LDL.
+
+<!-- -->
+
+    ## $TC
+    ##  year I(ur_tot_pp)/100.trend   SE  df t.ratio p.value
+    ##  0                     -1.15 1.79 576  -0.645  0.5193
+    ##  2                     -3.69 1.86 575  -1.985  0.0476
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $LDL
+    ##  year I(ur_tot_pp)/100.trend    SE  df t.ratio p.value
+    ##  0                    -0.930 0.929 572  -1.000  0.3175
+    ##  2                    -0.694 0.966 571  -0.719  0.4727
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger
+
+-   Estimated slope for **urine total polyphenol / creatinine** on TC
+    (1st table below) and LDL (2nd table) by year:
+    -   There was a significant negative association with TC at both
+        Year 0 (p = 0.024) and Year 2 (p = 0.0028).
+    -   No significant association was found with LDL.
+
+<!-- -->
+
+    ## $TC
+    ##  year I(ur_tot_pp_cr)/100.trend   SE  df t.ratio p.value
+    ##  0                        -3.42 1.51 557  -2.261  0.0242
+    ##  2                        -3.86 1.29 557  -3.000  0.0028
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $LDL
+    ##  year I(ur_tot_pp_cr)/100.trend    SE  df t.ratio p.value
+    ##  0                        -1.28 0.796 555  -1.612  0.1076
+    ##  2                        -0.28 0.677 555  -0.413  0.6795
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger
+
+### Association between urine polyphenol and inflammatory markers
+
+-   To examine if there are any associations between urine polyphenol
+    and inflammatory markers (CRP, IL-1, IL-6, TNF-a), scatterplots were
+    produced. lowess smoothed curves was fitted for for both years of
+    measurements (Year 0 and Year 2).
+
+-   Scatterplots of inflammatory markers (y-axis) against **urine total
+    polyphenol** (x-axis):
+
+![](summary_files/figure-gfm/unnamed-chunk-37-1.png)<!-- -->
+
+-   Scatterplots of inflammatory markers (y-axis) against **urine total
+    polyphenol / creatinine** (x-axis):
+
+![](summary_files/figure-gfm/unnamed-chunk-38-1.png)<!-- -->
+
+-   To see if the association between urine polyphenol and inflammatory
+    marker is significant or not, mixed models were fitted using each
+    inflammatory marker as the dependent variable and urine polyphenol
+    (with or without creatinine adjustment) as the main independent
+    variable. The models included: year (0 or 2), its interaction with
+    urine polyphenol, age, gender and BMI as fixed-effects terms and
+    subjects as a random-effects term.
+    -   From the mixed model, an estimated slope associated with urine
+        polyphenol (divided by 100) was calculated for each year.
+-   Estimated slope for **urine total polyphenol** on inflammatory
+    markers by year:
+    -   There were no significant association with any of inflmmatory
+        markers.
+
+<!-- -->
+
+    ## $log_hsCRP
+    ##  year I(ur_tot_pp)/100.trend     SE  df t.ratio p.value
+    ##  0                 -7.62e-05 0.0502 578  -0.002  0.9988
+    ##  2                  4.14e-02 0.0522 577   0.793  0.4279
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $log_IL1
+    ##  year I(ur_tot_pp)/100.trend     SE  df t.ratio p.value
+    ##  0                  -0.00629 0.0228 538  -0.276  0.7830
+    ##  2                  -0.02916 0.0237 536  -1.230  0.2193
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $log_IL6
+    ##  year I(ur_tot_pp)/100.trend     SE  df t.ratio p.value
+    ##  0                   -0.0118 0.0386 562  -0.305  0.7601
+    ##  2                   -0.0124 0.0401 560  -0.309  0.7578
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $log_TNFa
+    ##  year I(ur_tot_pp)/100.trend     SE  df t.ratio p.value
+    ##  0                   -0.0154 0.0222 566  -0.694  0.4878
+    ##  2                   -0.0143 0.0231 564  -0.621  0.5349
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger
+
+-   Estimated slope for **urine total polyphenol / creatinine** on
+    inflammatory markers by year:
+    -   There were no significant association with any of inflmmatory
+        markers.
+
+<!-- -->
+
+    ## $log_hsCRP
+    ##  year I(ur_tot_pp_cr)/100.trend     SE  df t.ratio p.value
+    ##  0                      -0.0335 0.0429 558  -0.781  0.4350
+    ##  2                      -0.0035 0.0364 558  -0.096  0.9236
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $log_IL1
+    ##  year I(ur_tot_pp_cr)/100.trend     SE  df t.ratio p.value
+    ##  0                      0.00143 0.0192 521   0.075  0.9405
+    ##  2                     -0.02577 0.0163 521  -1.582  0.1143
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $log_IL6
+    ##  year I(ur_tot_pp_cr)/100.trend     SE  df t.ratio p.value
+    ##  0                      0.00359 0.0329 545   0.109  0.9132
+    ##  2                     -0.02339 0.0280 545  -0.835  0.4040
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $log_TNFa
+    ##  year I(ur_tot_pp_cr)/100.trend     SE  df t.ratio p.value
+    ##  0                     -0.00479 0.0191 548  -0.251  0.8020
+    ##  2                     -0.01466 0.0162 548  -0.904  0.3665
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger

@@ -579,3 +579,145 @@ mod2 <- list(mod2a, mod2b, mod2c, mod2d)
 names(mod2) <- paste0("log_", pp_names)
 mod2 %>% map(function(x) summary(x)$coef) %>% map(round, 4)
 ```
+
+### Association between urine polyphenol and blood lipids
+
+* To examine if there are any associations between urine polyphenol and blood lipids (total cholesterol and LDL), scatterplots were produced. lowess smoothed curves was fitted for for both years of measurements (Year 0 and Year 2).
+
+* Scatterplots of TC and LDL (y-axis) against **urine total polyphenol** (x-axis):
+
+``` {r echo = FALSE, warning = FALSE, message = FALSE, fig.width = 10}
+# Urine polyphenol and blood lipids (TC, LDL)
+urine_comp_long <- urine %>% 
+  rename(ur_tot_pp = polyphenol_yield_correction_factor_2,
+         ur_tot_pp_cr = final_polyphenol_yield_mg_g_creatinine) %>%
+  mutate(year = as.numeric(time) - 1) %>% 
+  inner_join(pp_df_long, by = c("patient_id", "year")) %>%
+  mutate(year = factor(year)) %>% 
+  arrange(patient_id, year)
+
+# Scatterplots
+urine_comp_long %>% 
+  pivot_longer(TC:LDL, names_to = "variable", values_to = "value") %>% 
+  mutate(variable = factor(variable, levels = c("TC", "LDL"))) %>% 
+  ggplot(aes(x = ur_tot_pp, y = value, color = year)) +
+  geom_point() +
+  geom_smooth(span = 1) +
+  facet_grid(~ variable, scales = "free")
+```
+
+* Scatterplots of TC and LDL (y-axis) against **urine total polyphenol / creatinine** (x-axis):
+
+``` {r echo = FALSE, warning = FALSE, message = FALSE, fig.width = 10}
+urine_comp_long %>% 
+  pivot_longer(TC:LDL, names_to = "variable", values_to = "value") %>% 
+  mutate(variable = factor(variable, levels = c("TC", "LDL"))) %>% 
+  ggplot(aes(x = ur_tot_pp_cr, y = value, color = year)) +
+  geom_point() +
+  geom_smooth(span = 1) +
+  facet_grid(~ variable, scales = "free")
+```
+
+* To see if the association between urine polyphenol and lipids is significant or not, mixed models were fitted using lipids (TC or LDL) as the dependent variable and urine polyphenol (with or without creatinine adjustment) as the main independent variable. The models included: year (0 or 2), its interaction with urine polyphenol, age, gender and BMI as fixed-effects terms and subjects as a random-effects term.
+  * From the mixed model, an estimated slope associated with urine polyphenol (divided by 100) was calculated for each year.  
+
+* Estimated slope for **urine total polyphenol** on TC (1st table below) and LDL (2nd table) by year:
+  * There was a significant negative association with TC at Year 2 (p = 0.048).
+  * No significant association was found with LDL.
+  
+``` {r include = FALSE}
+# Mixed model analysis
+library(lme4); library(emmeans); library(lmerTest)
+```
+
+``` {r echo = FALSE}
+# No creatinine adjustment
+mod1a <- lmer(TC ~ I(ur_tot_pp/100) * year + age + gender + BMI + (1|patient_id), data = urine_comp_long)
+mod1b <- update(mod1a, LDL ~ .)
+
+mod1 <- list(mod1a, mod1b) 
+names(mod1) <- c("TC", "LDL")
+mod1 %>% map(function(x) test(emtrends(x, "year", var = "I(ur_tot_pp)/100")))
+```
+
+* Estimated slope for **urine total polyphenol / creatinine** on TC (1st table below) and LDL (2nd table) by year:
+  * There was a significant negative association with TC at both Year 0 (p = 0.024) and Year 2 (p = 0.0028).
+  * No significant association was found with LDL.
+  
+``` {r echo = FALSE}
+# With creatinine adjustment
+mod2a <- lmer(TC ~ I(ur_tot_pp_cr/100) * year + age + gender + BMI + (1|patient_id), data = urine_comp_long)
+mod2b <- update(mod2a, LDL ~ .)
+
+mod2 <- list(mod2a, mod2b)
+names(mod2) <- c("TC", "LDL")
+mod2 %>% map(function(x) test(emtrends(x, "year", var = "I(ur_tot_pp_cr)/100")))
+```
+
+### Association between urine polyphenol and inflammatory markers
+
+* To examine if there are any associations between urine polyphenol and inflammatory markers (CRP, IL-1, IL-6, TNF-a), scatterplots were produced. lowess smoothed curves was fitted for for both years of measurements (Year 0 and Year 2).
+
+* Scatterplots of inflammatory markers (y-axis) against **urine total polyphenol** (x-axis):
+
+``` {r echo = FALSE, warning = FALSE, message = FALSE, fig.width = 10, fig.height = 3}
+# Scatterplots
+urine_comp_long %>% 
+  select(patient_id, year, hsCRP, IL1, IL6, TNFa, starts_with("ur_")) %>% 
+  pivot_longer(hsCRP:TNFa, names_to = "variable", values_to = "value") %>% 
+  mutate(variable = factor(variable, levels = c("hsCRP", "IL1", "IL6", "TNFa"))) %>% 
+  ggplot(aes(x = ur_tot_pp, y = value, color = year)) +
+  geom_point() +
+  geom_smooth(span = 1) +
+  scale_y_log10() +
+  facet_grid(~ variable, scales = "free")
+```
+
+* Scatterplots of inflammatory markers (y-axis) against **urine total polyphenol / creatinine** (x-axis):
+
+``` {r echo = FALSE, warning = FALSE, message = FALSE, fig.width = 10, fig.height = 3}
+urine_comp_long %>% 
+  select(patient_id, year, hsCRP, IL1, IL6, TNFa, starts_with("ur_")) %>% 
+  pivot_longer(hsCRP:TNFa, names_to = "variable", values_to = "value") %>% 
+  mutate(variable = factor(variable, levels = c("hsCRP", "IL1", "IL6", "TNFa"))) %>% 
+  ggplot(aes(x = ur_tot_pp_cr, y = value, color = year)) +
+  geom_point() +
+  geom_smooth(span = 1) +
+  scale_y_log10() +
+  facet_grid(~ variable, scale = "free")
+```
+
+* To see if the association between urine polyphenol and inflammatory marker is significant or not, mixed models were fitted using each inflammatory marker as the dependent variable and urine polyphenol (with or without creatinine adjustment) as the main independent variable. The models included: year (0 or 2), its interaction with urine polyphenol, age, gender and BMI as fixed-effects terms and subjects as a random-effects term.
+  * From the mixed model, an estimated slope associated with urine polyphenol (divided by 100) was calculated for each year.  
+
+* Estimated slope for **urine total polyphenol** on inflammatory markers by year:
+  * There were no significant association with any of inflmmatory markers.
+
+``` {r echo = FALSE}
+# No creatinine adjustment
+mod1a <- lmer(log(hsCRP) ~ I(ur_tot_pp/100) * year + age + gender + BMI + (1|patient_id), data = urine_comp_long)
+mod1b <- update(mod1a, log(IL1) ~ .)
+mod1c <- update(mod1a, log(IL6) ~ .)
+mod1d <- update(mod1a, log(TNFa) ~ .)
+
+mod1 <- list(mod1a, mod1b, mod1c, mod1d)
+names(mod1) <- c("log_hsCRP", "log_IL1", "log_IL6", "log_TNFa")
+mod1 %>% map(function(x) test(emtrends(x, "year", var = "I(ur_tot_pp)/100")))
+
+```  
+
+* Estimated slope for **urine total polyphenol / creatinine** on inflammatory markers by year:
+  * There were no significant association with any of inflmmatory markers.
+
+``` {r echo = FALSE}
+
+# With creatinine adjustment
+mod2a <- lmer(log(hsCRP) ~ I(ur_tot_pp_cr/100) * year + age + gender + BMI + (1|patient_id), data = urine_comp_long)
+mod2b <- update(mod2a, log(IL1) ~ .)
+mod2c <- update(mod2a, log(IL6) ~ .)
+mod2d <- update(mod2a, log(TNFa) ~ .)
+
+mod2 <- list(mod2a, mod2b, mod2c, mod2d)
+names(mod2) <- c("log_hsCRP", "log_IL1", "log_IL6", "log_TNFa")
+mod2 %>% map(function(x) test(emtrends(x, "year", var = "I(ur_tot_pp_cr)/100")))
+```  

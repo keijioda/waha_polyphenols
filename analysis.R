@@ -529,45 +529,91 @@ urine_comp_long <- urine %>%
 urine_comp_long %>% 
   select(patient_id, year, TC, LDL, starts_with("ur_"))
 
+# Scatterplots
 urine_comp_long %>% 
   pivot_longer(TC:LDL, names_to = "variable", values_to = "value") %>% 
   mutate(variable = factor(variable, levels = c("TC", "LDL"))) %>% 
-  ggplot(aes(y = ur_tot_pp, x = value, color = year)) +
+  ggplot(aes(x = ur_tot_pp, y = value, color = year)) +
   geom_point() +
   geom_smooth(span = 1) +
-  scale_x_log10() +
-  facet_grid(~ variable, scale = "free_x")
+  facet_grid(~ variable, scales = "free")
 
 urine_comp_long %>% 
   pivot_longer(TC:LDL, names_to = "variable", values_to = "value") %>% 
   mutate(variable = factor(variable, levels = c("TC", "LDL"))) %>% 
-  ggplot(aes(y = ur_tot_pp_cr, x = value, color = year)) +
+  ggplot(aes(x = ur_tot_pp_cr, y = value, color = year)) +
   geom_point() +
   geom_smooth(span = 1) +
-  scale_x_log10() +
-  facet_grid(~ variable, scale = "free_x")
+  facet_grid(~ variable, scales = "free")
+
+# Mixed model analysis
+library(lme4); library(emmeans); library(lmerTest)
+
+# No creatinine adjustment
+mod1a <- lmer(TC ~ I(ur_tot_pp/100) * year + age + gender + BMI + (1|patient_id), data = urine_comp_long)
+mod1b <- update(mod1a, LDL ~ .)
+
+mod1 <- list(mod1a, mod1b) 
+names(mod1) <- c("TC", "LDL")
+mod1 %>% map(summary)
+mod1 %>% map(function(x) test(emtrends(x, "year", var = "I(ur_tot_pp)/100")))
+
+# With creatinine adjustment
+mod2a <- lmer(TC ~ I(ur_tot_pp_cr/100) * year + age + gender + BMI + (1|patient_id), data = urine_comp_long)
+mod2b <- update(mod2a, LDL ~ .)
+
+mod2 <- list(mod2a, mod2b)
+names(mod2) <- c("TC", "LDL")
+mod2 %>% map(summary)
+mod2 %>% map(function(x) test(emtrends(x, "year", var = "I(ur_tot_pp_cr)/100")))
 
 # Urine polyphenol and inflamamtory markers
+# Check data
 urine_comp_long %>% 
   select(patient_id, year, hsCRP, IL1, IL6, TNFa, starts_with("ur_"))
 
+# Scatterplots
 urine_comp_long %>% 
   select(patient_id, year, hsCRP, IL1, IL6, TNFa, starts_with("ur_")) %>% 
   pivot_longer(hsCRP:TNFa, names_to = "variable", values_to = "value") %>% 
   mutate(variable = factor(variable, levels = c("hsCRP", "IL1", "IL6", "TNFa"))) %>% 
-  ggplot(aes(y = ur_tot_pp, x = value, color = year)) +
+  ggplot(aes(x = ur_tot_pp, y = value, color = year)) +
   geom_point() +
   geom_smooth(span = 1) +
-  scale_x_log10() +
-  facet_grid(~ variable, scale = "free_x")
+  scale_y_log10() +
+  facet_grid(~ variable, scales = "free")
 
 urine_comp_long %>% 
   select(patient_id, year, hsCRP, IL1, IL6, TNFa, starts_with("ur_")) %>% 
   pivot_longer(hsCRP:TNFa, names_to = "variable", values_to = "value") %>% 
   mutate(variable = factor(variable, levels = c("hsCRP", "IL1", "IL6", "TNFa"))) %>% 
-  ggplot(aes(y = ur_tot_pp_cr, x = value, color = year)) +
+  ggplot(aes(x = ur_tot_pp_cr, y = value, color = year)) +
   geom_point() +
   geom_smooth(span = 1) +
-  scale_x_log10() +
-  facet_grid(~ variable, scale = "free_x")
+  scale_y_log10() +
+  facet_grid(~ variable, scale = "free")
 
+# Mixed model analysis
+library(lme4); library(emmeans); library(lmerTest)
+
+# No creatinine adjustment
+mod1a <- lmer(log(hsCRP) ~ I(ur_tot_pp/100) * year + age + gender + BMI + (1|patient_id), data = urine_comp_long)
+mod1b <- update(mod1a, log(IL1) ~ .)
+mod1c <- update(mod1a, log(IL6) ~ .)
+mod1d <- update(mod1a, log(TNFa) ~ .)
+
+mod1 <- list(mod1a, mod1b, mod1c, mod1d)
+names(mod1) <- c("log_hsCRP", "log_IL1", "log_IL6", "log_TNFa")
+mod1 %>% map(summary)
+mod1 %>% map(function(x) test(emtrends(x, "year", var = "I(ur_tot_pp)/100")))
+
+# With creatinine adjustment
+mod2a <- lmer(log(hsCRP) ~ I(ur_tot_pp_cr/100) * year + age + gender + BMI + (1|patient_id), data = urine_comp_long)
+mod2b <- update(mod2a, log(IL1) ~ .)
+mod2c <- update(mod2a, log(IL6) ~ .)
+mod2d <- update(mod2a, log(TNFa) ~ .)
+
+mod2 <- list(mod2a, mod2b, mod2c, mod2d)
+names(mod2) <- c("log_hsCRP", "log_IL1", "log_IL6", "log_TNFa")
+mod2 %>% map(summary)
+mod2 %>% map(function(x) test(emtrends(x, "year", var = "I(ur_tot_pp_cr)/100")))
