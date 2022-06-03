@@ -231,6 +231,52 @@ WAHA Polyphenols Study
 | BMI                     |  0.058 |  0.190 |  0.31 | 0.760   |
 | lipid_lowering          | -0.191 |  2.148 | -0.09 | 0.929   |
 
+## Association b/w dietary polyphenol and lipids using mixed models
+
+-   To examine if there are any associations between dietary total
+    polyphenols (energy-adjusted) and blood lipids (total cholesterol
+    and LDL), scatterplots were produced. Lowess smoothed curves were
+    fitted for for both years of measurements (Year 0 and Year 2).
+
+-   Scatterplots of TC and LDL (y-axis) against dietary total
+    polyphenols (x-axis):
+
+    -   Note that the x-axis is on the log scale
+
+![](summary_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+
+-   To see if the association between dietary total polyphenols and
+    lipids is significant or not, mixed models were fitted using lipids
+    (TC or LDL) as the dependent variable and log of energy-adjusted
+    dietary total polyphenols as the main independent variable. The
+    models included: year (0 or 2), its interaction with dietary
+    polyphenol, age, gender and BMI as fixed-effects terms and subjects
+    as a random-effects term.
+    -   From the mixed model, an estimated slope associated with log
+        dietary polyphenol was calculated for each year.
+-   Estimated slope for dietary total polyphenol on TC (1st table below)
+    and LDL (2nd table) by year:
+    -   There was no significant association with TC or LDL at baseline
+        or Year 2
+
+<!-- -->
+
+    ## $TC
+    ##  year log(total_polyphenol_ea).trend   SE  df t.ratio p.value
+    ##     0                           2.03 4.88 454   0.417  0.6771
+    ##     2                          -2.53 4.88 454  -0.519  0.6043
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $LDL
+    ##  year log(total_polyphenol_ea).trend   SE  df t.ratio p.value
+    ##     0                         -0.955 2.58 440  -0.370  0.7119
+    ##     2                         -1.093 2.58 440  -0.423  0.6726
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger
+
 ## Association b/w dietary polyphenol and the change in inflammatory markers
 
 -   For each of inflammatory markers (hsCRP, IL-1, IL-6, TNF-a), a
@@ -247,7 +293,7 @@ WAHA Polyphenols Study
 -   A scatterplot showed there are several outliers in change in hsCRP.
     Check with RA.
 
-![](summary_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
 
 -   There was no significant association between the change in LDL and
     dietary polyphenol intake:
@@ -271,7 +317,7 @@ WAHA Polyphenols Study
 -   A scatterplot showed there are several outliers in change in IL-1.
     Check with RA.
 
-![](summary_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
 -   There was no significant association between the change in IL-1 and
     dietary polyphenol intake:
@@ -295,7 +341,7 @@ WAHA Polyphenols Study
 -   A scatterplot showed there are several outliers in change in IL-6.
     Check with RA.
 
-![](summary_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
 
 -   There was no significant association between the change in IL-6 and
     dietary polyphenol intake:
@@ -319,7 +365,7 @@ WAHA Polyphenols Study
 -   A scatterplot indicated that there is no association between the
     change in TNF-a and dietary polyphenols.
 
-![](summary_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
 
 -   There was no significant association between the change in TNF-a and
     dietary polyphenol intake:
@@ -337,6 +383,67 @@ WAHA Polyphenols Study
 | genderM                 | -0.125 | 0.188 | -0.67 | 0.506   |
 | BMI                     | -0.019 | 0.018 | -1.03 | 0.304   |
 | lipid_lowering          |  0.373 | 0.194 |  1.92 | 0.056   |
+
+## Association b/w dietary polyphenol and inflammatory markers using mixed models
+
+-   To examine if there are any associations between dietary total
+    polyphenols (energy-adjusted) and inflammatory markers (hsCRP, IL-1,
+    IL-6, TNFa), scatterplots were produced. Lowess smoothed curves were
+    fitted for for both years of measurements (Year 0 and Year 2).
+
+-   Scatterplots against dietary total polyphenols (x-axis):
+
+    -   Note that the both x- and y-axis are on the log scale
+
+![](summary_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
+
+-   To see if the association between dietary total polyphenols and
+    inflammatory markers is significant or not, mixed models were fitted
+    using inflammatory markers as the dependent variable and log of
+    energy-adjusted dietary total polyphenols as the main independent
+    variable. The models included: year (0 or 2), its interaction with
+    dietary polyphenol, age, gender and BMI as fixed-effects terms and
+    subjects as a random-effects term.
+    -   From the mixed model, an estimated slope associated with log
+        dietary polyphenol was calculated for each year.
+-   Estimated slope for dietary total polyphenol on each inflammatory
+    marker by year:
+    -   There was no significant association with any of inflammatory
+        markers at baseline or Year 2
+
+<!-- -->
+
+    ## $`log(hsCRP)`
+    ##  year log(total_polyphenol_ea).trend    SE  df t.ratio p.value
+    ##     0                         -0.128 0.133 465  -0.962  0.3364
+    ##     2                          0.105 0.133 465   0.786  0.4323
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $`log(IL1)`
+    ##  year log(total_polyphenol_ea).trend     SE  df t.ratio p.value
+    ##     0                        0.00591 0.0713 381   0.083  0.9340
+    ##     2                       -0.03695 0.0713 381  -0.518  0.6045
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $`log(IL6)`
+    ##  year log(total_polyphenol_ea).trend    SE  df t.ratio p.value
+    ##     0                         -0.139 0.113 412  -1.240  0.2158
+    ##     2                          0.069 0.113 412   0.613  0.5401
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $`log(TNFa)`
+    ##  year log(total_polyphenol_ea).trend     SE  df t.ratio p.value
+    ##     0                        0.00406 0.0637 421   0.064  0.9492
+    ##     2                       -0.00780 0.0637 421  -0.122  0.9026
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger
 
 ## Analysis on urinary polyphenol
 
@@ -422,12 +529,12 @@ WAHA Polyphenols Study
 
 -   Scatterplots against **urine total polyphenol**:
 
-![](summary_files/figure-gfm/unnamed-chunk-28-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-32-1.png)<!-- -->
 
 -   Scatterplots against **urine total polyphenol adjusted for
     creatinine**:
 
-![](summary_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-33-1.png)<!-- -->
 
 -   A linear model was fitted for each combination of urine polyphenol
     (as a dependent variable) and log dietary polyphenol (an independent
@@ -518,18 +625,18 @@ WAHA Polyphenols Study
 
 -   To examine if there are any associations between urine polyphenol
     and blood lipids (total cholesterol and LDL), scatterplots were
-    produced. lowess smoothed curves was fitted for for both years of
+    produced. Lowess smoothed curves were fitted for for both years of
     measurements (Year 0 and Year 2).
 
 -   Scatterplots of TC and LDL (y-axis) against **urine total
     polyphenol** (x-axis):
 
-![](summary_files/figure-gfm/unnamed-chunk-32-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-36-1.png)<!-- -->
 
 -   Scatterplots of TC and LDL (y-axis) against **urine total polyphenol
     / creatinine** (x-axis):
 
-![](summary_files/figure-gfm/unnamed-chunk-33-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-37-1.png)<!-- -->
 
 -   To see if the association between urine polyphenol and lipids is
     significant or not, mixed models were fitted using lipids (TC or
@@ -598,12 +705,12 @@ WAHA Polyphenols Study
 -   Scatterplots of inflammatory markers (y-axis) against **urine total
     polyphenol** (x-axis):
 
-![](summary_files/figure-gfm/unnamed-chunk-37-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-41-1.png)<!-- -->
 
 -   Scatterplots of inflammatory markers (y-axis) against **urine total
     polyphenol / creatinine** (x-axis):
 
-![](summary_files/figure-gfm/unnamed-chunk-38-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-42-1.png)<!-- -->
 
 -   To see if the association between urine polyphenol and inflammatory
     marker is significant or not, mixed models were fitted using each

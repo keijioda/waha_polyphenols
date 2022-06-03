@@ -419,6 +419,67 @@ pp_df_comp %>% ancova_mod("IL6_change", "IL6_0")
 pp_df_comp %>% ggp_scatter(TNFa_change, "Changes in TNFa (Year 2 - Baseline, pg/ml)")
 pp_df_comp %>% ancova_mod("TNFa_change", "TNFa_0")
 
+# Association b/w dietary total polyphenols and lipid/inflammatory markers
+vars <- c("total_polyphenol_ea", "TC", "LDL", "hsCRP", "IL1", "IL6", "TNFa")
+
+pp_df_long %>% 
+  select(all_of(vars)) %>% 
+  pivot_longer(total_polyphenol_ea:TNFa, names_to = "var", values_to = "value") %>%
+  mutate(var = factor(var, levels = vars)) %>% 
+  ggplot(aes(x = value)) +
+  geom_histogram(bins = 30) +
+  facet_wrap(~ var, scales = "free", ncol = 4)
+
+# Scatterplots for TC and LDL
+pp_df_long %>% 
+  select(all_of(vars[1:3]), year) %>% 
+  pivot_longer(TC:LDL, names_to = "variable", values_to = "value") %>% 
+  mutate(variable = factor(variable, levels = vars[-1]),
+         year = factor(year)) %>% 
+  ggplot(aes(x = total_polyphenol_ea, y = value, color = year)) +
+  geom_point() +
+  geom_smooth(span = 1) +
+  scale_x_log10() +
+  labs(x = "Energy-adjusted total polyphenols intake") +
+  facet_wrap(~ variable, scales = "free")
+
+# Scatterplots for inflammatory markers
+pp_df_long %>% 
+  select(all_of(vars[c(1, 4:7)]), year) %>% 
+  pivot_longer(hsCRP:TNFa, names_to = "variable", values_to = "value") %>% 
+  mutate(variable = factor(variable, levels = vars[4:7]),
+         year = factor(year)) %>% 
+  ggplot(aes(x = total_polyphenol_ea, y = value, color = year)) +
+  geom_point() +
+  geom_smooth(span = 1) +
+  scale_x_log10() +
+  scale_y_log10() +
+  labs(x = "Energy-adjusted total polyphenols intake") +
+  facet_wrap(~ variable, scales = "free", ncol = 4)
+
+# Mixed model analysis
+library(lme4); library(emmeans); library(lmerTest)
+
+# Mixed models for TC and LDL
+mod1a <- lmer(TC ~ log(total_polyphenol_ea) * year + age + gender + BMI + (1|patient_id), data = pp_df_long)
+mod1b <- update(mod1a, LDL ~ .)
+
+mod1 <- list(mod1a, mod1b) 
+names(mod1) <- c("TC", "LDL")
+mod1 %>% map(summary)
+mod1 %>% map(function(x) test(emtrends(x, "year", var = "log(total_polyphenol_ea)")))
+
+# Mixed models for inflammatory markers
+mod2a <- lmer(log(hsCRP) ~ log(total_polyphenol_ea) * year + age + gender + BMI + (1|patient_id), data = pp_df_long)
+mod2b <- update(mod2a, log(IL1) ~.)
+mod2c <- update(mod2a, log(IL6) ~.)
+mod2d <- update(mod2a, log(TNFa) ~.)
+
+mod2 <- list(mod2a, mod2b, mod2c, mod2d) 
+names(mod2) <- c("log(hsCRP)", "log(IL1)", "log(IL6)", "log(TNFa)")
+mod2 %>% map(summary)
+mod2 %>% map(function(x) test(emtrends(x, "year", var = "log(total_polyphenol_ea)")))
+
 # Urine data -- 911 obs from 307 unique subjects
 urine
 dim(urine)
