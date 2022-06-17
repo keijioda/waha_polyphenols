@@ -471,7 +471,7 @@ urine_comp %>%
 
 ### Comparisons of urine polyphenol between treatment groups over time
 
-* To compare urine polyphenol between two treatment groups over time, mixed models were fitted for both variables (`ur_tot_pp` and `ur_tot_pp_cr`). The mixed model included treatment, time and treatment x time interaction as fixed-effects terms and subjects as a random-effects term.
+* To compare urine polyphenol between two treatment groups over time, mixed models were fitted for both variables (`ur_tot_pp` and `ur_tot_pp_cr`). The mixed model included treatment, time, treatment x time interaction, age, gender, and BMI as fixed-effects terms and subjects as a random-effects term.
 
   * From the mixed model, marginal means were estimated for the two treatment groups at each time point and then compared, by testing for the simple effects of treatment at each time point.
 
@@ -484,32 +484,32 @@ library(lme4); library(emmeans)
 
 ``` {r echo = FALSE}
 # No creatinine adjustment
-mod1 <- lmer(ur_tot_pp ~ group * time + (1|patient_id), data = urine_comp)
-mod1_emm <- emmeans(mod1, ~ group| time)
-mod1_emm %>% knitr::kable() 
+mod1b <- lmer(ur_tot_pp ~ group * time + age + gender + BMI + (1|patient_id), data = urine_comp)
+mod1b_emm <- emmeans(mod1b, ~ group| time)
+mod1b_emm %>% knitr::kable() 
 ```
 
 * Comparisons between treatments by time:
   * There were no significant differences at any time point:
 
 ``` {r echo = FALSE}
-pairs(mod1_emm, reverse = TRUE) %>% knitr::kable()
+pairs(mod1b_emm, reverse = TRUE) %>% knitr::kable()
 ```
 
 * **Urine total polyphenol adjusted for creatinine**: Estimated marginal means by treatment group at each time point
 
 ``` {r echo = FALSE}
 # With creatinine adjustment
-mod2 <- lmer(ur_tot_pp_cr ~ group * time + (1|patient_id), data = urine_comp)
-mod2_emm <- emmeans(mod2, ~ group| time)
-mod2_emm %>% knitr::kable()
+mod2b <- lmer(ur_tot_pp_cr ~ group * time + age + gender + BMI + (1|patient_id), data = urine_comp)
+mod2b_emm <- emmeans(mod2b, ~ group| time)
+mod2b_emm %>% knitr::kable()
 ```
 
 * Comparisons between treatments by time:
   * There were no significant differences at any time point:
 
 ``` {r echo = FALSE}
-pairs(mod2_emm, reverse = TRUE) %>% knitr::kable()
+pairs(mod2b_emm, reverse = TRUE) %>% knitr::kable()
 ```
 
 ### Association between dietary polyphenol intake and urine polyphenol excretion

@@ -361,9 +361,9 @@ WAHA Polyphenols Study
 
 -   To compare urine polyphenol between two treatment groups over time,
     mixed models were fitted for both variables (`ur_tot_pp` and
-    `ur_tot_pp_cr`). The mixed model included treatment, time and
-    treatment x time interaction as fixed-effects terms and subjects as
-    a random-effects term.
+    `ur_tot_pp_cr`). The mixed model included treatment, time, treatment
+    x time interaction, age, gender, and BMI as fixed-effects terms and
+    subjects as a random-effects term.
 
     -   From the mixed model, marginal means were estimated for the two
         treatment groups at each time point and then compared, by
@@ -374,42 +374,42 @@ WAHA Polyphenols Study
 
 | group   | time |   emmean |       SE |       df | lower.CL | upper.CL |
 |:--------|:-----|---------:|---------:|---------:|---------:|---------:|
-| Control | 0    | 285.1411 | 8.921118 | 415.6284 | 267.6050 | 302.6772 |
-| Walnut  | 0    | 283.8844 | 8.594443 | 415.6284 | 266.9904 | 300.7784 |
-| Control | 1    | 278.6424 | 8.944255 | 419.1957 | 261.0612 | 296.2236 |
-| Walnut  | 1    | 301.4796 | 8.604715 | 417.2719 | 284.5656 | 318.3935 |
-| Control | 2    | 282.3023 | 8.921118 | 415.6284 | 264.7662 | 299.8384 |
-| Walnut  | 2    | 294.7487 | 8.615111 | 418.9360 | 277.8144 | 311.6829 |
+| Control | 0    | 285.6736 | 9.180779 | 403.3223 | 267.6254 | 303.7217 |
+| Walnut  | 0    | 284.5856 | 8.789272 | 405.0605 | 267.3074 | 301.8639 |
+| Control | 1    | 279.1703 | 9.202002 | 406.4504 | 261.0808 | 297.2598 |
+| Walnut  | 1    | 302.1807 | 8.800672 | 406.8175 | 284.8803 | 319.4812 |
+| Control | 2    | 282.8348 | 9.180779 | 403.3223 | 264.7866 | 300.8829 |
+| Walnut  | 2    | 295.4536 | 8.807782 | 407.9137 | 278.1393 | 312.7679 |
 
 -   Comparisons between treatments by time:
     -   There were no significant differences at any time point:
 
-| contrast         | time |  estimate |       SE |       df |    t.ratio |   p.value |
-|:-----------------|:-----|----------:|---------:|---------:|-----------:|----------:|
-| Walnut - Control | 0    | -1.256721 | 12.38753 | 415.6284 | -0.1014506 | 0.9192417 |
-| Walnut - Control | 1    | 22.837142 | 12.41132 | 418.2699 |  1.8400255 | 0.0664729 |
-| Walnut - Control | 2    | 12.446374 | 12.40187 | 417.2211 |  1.0035881 | 0.3161589 |
+| contrast         | time |  estimate |       SE |       df |   t.ratio |   p.value |
+|:-----------------|:-----|----------:|---------:|---------:|----------:|----------:|
+| Walnut - Control | 0    | -1.087947 | 12.46745 | 409.5818 | -0.087263 | 0.9305051 |
+| Walnut - Control | 1    | 23.010434 | 12.49182 | 412.2459 |  1.842040 | 0.0661874 |
+| Walnut - Control | 2    | 12.618831 | 12.48198 | 411.1682 |  1.010964 | 0.3126282 |
 
 -   **Urine total polyphenol adjusted for creatinine**: Estimated
     marginal means by treatment group at each time point
 
 | group   | time |   emmean |       SE |       df | lower.CL | upper.CL |
 |:--------|:-----|---------:|---------:|---------:|---------:|---------:|
-| Control | 0    | 315.3950 | 12.09690 | 405.9568 | 291.6146 | 339.1754 |
-| Walnut  | 0    | 315.1817 | 11.62167 | 404.0103 | 292.3352 | 338.0282 |
-| Control | 1    | 320.0088 | 12.09690 | 405.9568 | 296.2284 | 343.7892 |
-| Walnut  | 1    | 343.2666 | 11.62167 | 404.0103 | 320.4202 | 366.1131 |
-| Control | 2    | 348.6468 | 12.06420 | 402.3564 | 324.9301 | 372.3635 |
-| Walnut  | 2    | 365.3572 | 11.62167 | 404.0103 | 342.5107 | 388.2037 |
+| Control | 0    | 303.4217 | 12.02285 | 403.6797 | 279.7865 | 327.0569 |
+| Walnut  | 0    | 305.0495 | 11.53047 | 402.0494 | 282.3820 | 327.7171 |
+| Control | 1    | 308.1292 | 12.02015 | 403.3862 | 284.4993 | 331.7592 |
+| Walnut  | 1    | 333.0611 | 11.53310 | 402.3488 | 310.3885 | 355.7338 |
+| Control | 2    | 336.7158 | 11.98908 | 399.9791 | 313.1463 | 360.2853 |
+| Walnut  | 2    | 355.2142 | 11.52944 | 401.9323 | 332.5486 | 377.8797 |
 
 -   Comparisons between treatments by time:
     -   There were no significant differences at any time point:
 
-| contrast         | time |   estimate |       SE |       df |    t.ratio |   p.value |
-|:-----------------|:-----|-----------:|---------:|---------:|-----------:|----------:|
-| Walnut - Control | 0    | -0.2132768 | 16.77493 | 405.0214 | -0.0127140 | 0.9898622 |
-| Walnut - Control | 1    | 23.2578433 | 16.77493 | 405.0214 |  1.3864646 | 0.1663678 |
-| Walnut - Control | 2    | 16.7104502 | 16.75136 | 403.1516 |  0.9975579 | 0.3190921 |
+| contrast         | time |  estimate |       SE |       df |   t.ratio |   p.value |
+|:-----------------|:-----|----------:|---------:|---------:|----------:|----------:|
+| Walnut - Control | 0    |  1.627856 | 16.35125 | 408.5749 | 0.0995554 | 0.9207461 |
+| Walnut - Control | 1    | 24.931924 | 16.35270 | 408.6957 | 1.5246364 | 0.1281232 |
+| Walnut - Control | 2    | 18.498379 | 16.32739 | 406.6432 | 1.1329661 | 0.2578961 |
 
 ### Association between dietary polyphenol intake and urine polyphenol excretion
 

@@ -456,7 +456,7 @@ pairs(mod1_emm, reverse = TRUE)
 
 mod1b <- lmer(ur_tot_pp ~ group * time + age + gender + BMI + (1|patient_id), data = urine_comp)
 summary(mod1b)
-mod1b_emm <- emmeans(mod1, ~ group| time)
+mod1b_emm <- emmeans(mod1b, ~ group| time)
 mod1b_emm
 pairs(mod1b_emm, reverse = TRUE)
 
@@ -467,7 +467,7 @@ mod2_emm
 pairs(mod2_emm, reverse = TRUE)
 
 mod2b <- lmer(ur_tot_pp_cr ~ group * time + age + gender + BMI + (1|patient_id), data = urine_comp)
-mod2b_emm <- emmeans(mod2, ~ group| time)
+mod2b_emm <- emmeans(mod2b, ~ group| time)
 mod2b_emm
 pairs(mod2b_emm, reverse = TRUE)
 
