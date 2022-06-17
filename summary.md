@@ -522,10 +522,10 @@ WAHA Polyphenols Study
 
 -   To examine if there are any associations between dietary polyphenol
     intake and urine polyphenol at Year 2, scatterplots were produced.
-    Dietary intakes (total, flavonoids, flavanols, phenonic acids) were
-    energy-adjusted as described above. Note that in the scatterplots
-    below the x-axis is on the log-scale. A lowess smoothed curve was
-    fitted for each plot.
+    ~~Dietary intakes (total, flavonoids, flavanols, phenonic acids)
+    were energy-adjusted as described above.~~ Note that in the
+    scatterplots below the x-axis is on the log-scale. A lowess smoothed
+    curve was fitted for each plot.
 
 -   Scatterplots against **urine total polyphenol**:
 
@@ -543,83 +543,81 @@ WAHA Polyphenols Study
 -   Linear models for **urine total polyphenol**:
 
     -   There was a significantly **negative** association between urine
-        total polyphenol and the log of dietary total flaonoids (p =
-        0.0208). There were no significant associations with any other
+        total polyphenol and the log of dietary total flavonoids (p =
+        0.0316). There were no significant associations with any other
         dietary polyphenols.
 
 <!-- -->
 
-    ## $log_total_polyphenol_ea
-    ##                          Estimate Std. Error t value Pr(>|t|)
-    ## (Intercept)              255.2155   160.6739  1.5884   0.1133
-    ## log(total_polyphenol_ea)   3.0823    14.0336  0.2196   0.8263
-    ## age                       -0.0758     1.6228 -0.0467   0.9628
-    ## genderM                    9.6491    13.1845  0.7319   0.4649
-    ## BMI                        0.3930     1.2814  0.3067   0.7593
-    ## 
-    ## $log_total_flavonoids_ea
-    ##                          Estimate Std. Error t value Pr(>|t|)
-    ## (Intercept)              341.8514   122.2395  2.7966   0.0055
-    ## log(total_flavonoids_ea) -15.6156     6.7156 -2.3253   0.0208
-    ## age                        0.0131     1.6082  0.0081   0.9935
-    ## genderM                    8.6870    13.0649  0.6649   0.5066
-    ## BMI                        0.0454     1.2777  0.0355   0.9717
-    ## 
-    ## $log_flavanols_ea
+    ## $log_total_polyphenol
     ##                       Estimate Std. Error t value Pr(>|t|)
-    ## (Intercept)           259.8229   122.9543  2.1132   0.0354
-    ## log(flavanols_ea + 1)   3.9042     5.3959  0.7236   0.4699
-    ## age                    -0.0946     1.6217 -0.0583   0.9535
-    ## genderM                 9.4863    13.1718  0.7202   0.4720
-    ## BMI                     0.4378     1.2820  0.3415   0.7330
+    ## (Intercept)           216.3967   154.0658  1.4046   0.1612
+    ## log(total_polyphenol)   8.3303    12.9033  0.6456   0.5191
+    ## age                    -0.0933     1.6220 -0.0575   0.9542
+    ## genderM                 7.9148    13.4697  0.5876   0.5573
+    ## BMI                     0.4048     1.2806  0.3161   0.7522
     ## 
-    ## $log_phenolic_acid_ea
+    ## $log_total_flavonoids
     ##                       Estimate Std. Error t value Pr(>|t|)
-    ## (Intercept)           301.8429   124.9188  2.4163   0.0163
-    ## log(phenolic_acid_ea)  -4.9813     7.2990 -0.6825   0.4955
-    ## age                    -0.0110     1.6238 -0.0068   0.9946
-    ## genderM                 9.4368    13.1759  0.7162   0.4744
-    ## BMI                     0.4108     1.2806  0.3208   0.7486
+    ## (Intercept)           337.0380   122.3551  2.7546   0.0063
+    ## log(total_flavonoids) -14.2729     6.6088 -2.1597   0.0316
+    ## age                    -0.0111     1.6100 -0.0069   0.9945
+    ## genderM                11.0788    13.0883  0.8465   0.3980
+    ## BMI                     0.0686     1.2794  0.0536   0.9573
+    ## 
+    ## $log_flavanols
+    ##                    Estimate Std. Error t value Pr(>|t|)
+    ## (Intercept)        257.1619   122.5824  2.0979   0.0368
+    ## log(flavanols + 1)   4.7004     5.3475  0.8790   0.3801
+    ## age                 -0.1104     1.6212 -0.0681   0.9457
+    ## genderM              8.4723    13.2403  0.6399   0.5228
+    ## BMI                  0.4438     1.2811  0.3464   0.7293
+    ## 
+    ## $log_phenolic_acid
+    ##                    Estimate Std. Error t value Pr(>|t|)
+    ## (Intercept)        293.0093   124.2080  2.3590   0.0190
+    ## log(phenolic_acid)  -3.2375     7.0001 -0.4625   0.6441
+    ## age                 -0.0246     1.6252 -0.0151   0.9879
+    ## genderM             10.2964    13.2290  0.7783   0.4370
+    ## BMI                  0.4005     1.2811  0.3126   0.7548
 
 -   Linear models for **urine total polyphenol / creatinine**:
-    -   There was a significantly **negative** association between urine
-        total polyphenol/creatinine and the log of dietary total
-        flaonoids (p = 0.0456). There were no significant associations
-        with any other dietary polyphenols.
+    -   There were no significant associations with any of dietary
+        polyphenols.
 
 <!-- -->
 
-    ## $log_total_polyphenol_ea
-    ##                          Estimate Std. Error t value Pr(>|t|)
-    ## (Intercept)              433.5288   236.2797  1.8348   0.0676
-    ## log(total_polyphenol_ea)   5.9389    20.5443  0.2891   0.7727
-    ## age                       -1.2607     2.3971 -0.5259   0.5994
-    ## genderM                  -77.5863    19.4457 -3.9899   0.0001
-    ## BMI                       -0.2628     1.8957 -0.1386   0.8898
-    ## 
-    ## $log_total_flavonoids_ea
-    ##                          Estimate Std. Error t value Pr(>|t|)
-    ## (Intercept)              557.3405   180.2409  3.0922   0.0022
-    ## log(total_flavonoids_ea) -19.9167     9.9181 -2.0081   0.0456
-    ## age                       -1.1209     2.3810 -0.4708   0.6382
-    ## genderM                  -78.8516    19.3166 -4.0821   0.0001
-    ## BMI                       -0.6928     1.8932 -0.3659   0.7147
-    ## 
-    ## $log_flavanols_ea
+    ## $log_total_polyphenol
     ##                       Estimate Std. Error t value Pr(>|t|)
-    ## (Intercept)           486.9216   181.2452  2.6865   0.0077
-    ## log(flavanols_ea + 1)  -1.7562     8.1623 -0.2152   0.8298
-    ## age                    -1.2374     2.3979 -0.5160   0.6062
-    ## genderM               -77.3802    19.4443 -3.9796   0.0001
-    ## BMI                    -0.2970     1.8976 -0.1565   0.8758
+    ## (Intercept)           382.6991   227.1156  1.6850   0.0931
+    ## log(total_polyphenol)  12.7925    18.9501  0.6751   0.5002
+    ## age                    -1.2801     2.3956 -0.5343   0.5935
+    ## genderM               -80.1358    19.8299 -4.0412   0.0001
+    ## BMI                    -0.2467     1.8943 -0.1302   0.8965
     ## 
-    ## $log_phenolic_acid_ea
+    ## $log_total_flavonoids
     ##                       Estimate Std. Error t value Pr(>|t|)
-    ## (Intercept)           489.9372   184.4582  2.6561   0.0084
-    ## log(phenolic_acid_ea)  -2.3505    10.7419 -0.2188   0.8270
-    ## age                    -1.2259     2.3998 -0.5108   0.6099
-    ## genderM               -77.6193    19.4564 -3.9894   0.0001
-    ## BMI                    -0.2679     1.8956 -0.1413   0.8877
+    ## (Intercept)           548.0577   180.5432  3.0356   0.0026
+    ## log(total_flavonoids) -17.2347     9.7593 -1.7660   0.0785
+    ## age                    -1.1666     2.3844 -0.4893   0.6250
+    ## genderM               -75.9182    19.3548 -3.9225   0.0001
+    ## BMI                    -0.6461     1.8965 -0.3407   0.7336
+    ## 
+    ## $log_flavanols
+    ##                    Estimate Std. Error t value Pr(>|t|)
+    ## (Intercept)        479.9995   180.8112  2.6547   0.0084
+    ## log(flavanols + 1)  -0.2885     8.0885 -0.0357   0.9716
+    ## age                 -1.2485     2.3986 -0.5205   0.6031
+    ## genderM            -77.3819    19.5416 -3.9599   0.0001
+    ## BMI                 -0.2796     1.8973 -0.1474   0.8830
+    ## 
+    ## $log_phenolic_acid
+    ##                    Estimate Std. Error t value Pr(>|t|)
+    ## (Intercept)        479.4623   183.3299  2.6153   0.0094
+    ## log(phenolic_acid)  -0.1633    10.3095 -0.0158   0.9874
+    ## age                 -1.2493     2.4009 -0.5203   0.6033
+    ## genderM            -77.4259    19.5113 -3.9683   0.0001
+    ## BMI                 -0.2760     1.8957 -0.1456   0.8843
 
 ### Association between urine polyphenol and blood lipids
 

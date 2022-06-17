@@ -193,7 +193,7 @@ fg <- drec2 %>%
 
 dintake <- drec2 %>% 
   group_by(patient_id) %>% 
-  summarize_at(c("energy_kcal", ea_pps, fg), mean, na.rm = TRUE)
+  summarize_at(c("energy_kcal", ea_pps, pps, fg), mean, na.rm = TRUE)
 
 dintake %>% 
   ggplot(aes(x = animal_protein_total_polyphenol)) + 
@@ -535,11 +535,11 @@ pairs(mod2b_emm, reverse = TRUE)
 # Dietary polyphenols and urine polyphenol
 
 # Scatterplots
-pp_names <- urine_comp %>% select(ends_with("_ea")) %>% select(-lignin_ea) %>% names()
+pp_names <- urine_comp %>% select(all_of(pps)) %>% select(-lignin) %>% names()
 
-urine_comp_y2 <- urine_comp %>% filter(time == 2) %>% select(-lignin_ea)
+urine_comp_y2 <- urine_comp %>% filter(time == 2)
 ggp_df <- urine_comp_y2 %>% 
-  pivot_longer(ends_with("_ea"), names_to = "variable", values_to = "value") %>% 
+  pivot_longer(all_of(pp_names), names_to = "variable", values_to = "value") %>% 
   mutate(variable = factor(variable, labels = pp_names))
 
 ggp_df %>% 
@@ -559,19 +559,19 @@ ggp_df %>%
   labs(y = "Urinary total polyphenol / creatinine")
 
 # Model
-mod1a <- lm(ur_tot_pp ~ log(total_polyphenol_ea) + age + gender + BMI, data = urine_comp_y2)
-mod1b <- lm(ur_tot_pp ~ log(total_flavonoids_ea) + age + gender + BMI, data = urine_comp_y2)
-mod1c <- lm(ur_tot_pp ~ log(flavanols_ea + 1) + age + gender + BMI, data = urine_comp_y2)
-mod1d <- lm(ur_tot_pp ~ log(phenolic_acid_ea) + age + gender + BMI, data = urine_comp_y2)
+mod1a <- lm(ur_tot_pp ~ log(total_polyphenol) + age + gender + BMI, data = urine_comp_y2)
+mod1b <- lm(ur_tot_pp ~ log(total_flavonoids) + age + gender + BMI, data = urine_comp_y2)
+mod1c <- lm(ur_tot_pp ~ log(flavanols + 1) + age + gender + BMI, data = urine_comp_y2)
+mod1d <- lm(ur_tot_pp ~ log(phenolic_acid) + age + gender + BMI, data = urine_comp_y2)
 
 mod1 <- list(mod1a, mod1b, mod1c, mod1d)
 names(mod1) <- paste0("log_", pp_names)
 mod1 %>% map(function(x) summary(x)$coef) %>% map(round, 4)
 
-mod2a <- lm(ur_tot_pp_cr ~ log(total_polyphenol_ea) + age + gender + BMI, data = urine_comp_y2)
-mod2b <- lm(ur_tot_pp_cr ~ log(total_flavonoids_ea) + age + gender + BMI, data = urine_comp_y2)
-mod2c <- lm(ur_tot_pp_cr ~ log(flavanols_ea + 1) + age + gender + BMI, data = urine_comp_y2)
-mod2d <- lm(ur_tot_pp_cr ~ log(phenolic_acid_ea) + age + gender + BMI, data = urine_comp_y2)
+mod2a <- lm(ur_tot_pp_cr ~ log(total_polyphenol) + age + gender + BMI, data = urine_comp_y2)
+mod2b <- lm(ur_tot_pp_cr ~ log(total_flavonoids) + age + gender + BMI, data = urine_comp_y2)
+mod2c <- lm(ur_tot_pp_cr ~ log(flavanols + 1) + age + gender + BMI, data = urine_comp_y2)
+mod2d <- lm(ur_tot_pp_cr ~ log(phenolic_acid) + age + gender + BMI, data = urine_comp_y2)
 
 mod2 <- list(mod2a, mod2b, mod2c, mod2d)
 names(mod2) <- paste0("log_", pp_names)
