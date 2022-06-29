@@ -417,16 +417,31 @@ pp_df_long %>%
 ``` {r include = FALSE}
 # Mixed model analysis
 library(lme4); library(emmeans); library(lmerTest)
+
+fit_lmer <- function(y, x) {
+  fm <- paste(y, "~", x, "* year + age + gender + BMI + (1|patient_id)")
+  lmer(fm, data = pp_df_long)
+}
+
+sum_lmer <- function(xvar){
+  out <- lapply(dv, fit_lmer, x = xvar)
+  names(out) <- dv
+  return(lapply(out, function(x) test(emtrends(x, "year", var = xvar))))
+}
 ```
 
 ``` {r echo = FALSE}
 # Mixed models for TC and LDL
-mod1a <- lmer(TC ~ log(total_polyphenol_ea) * year + age + gender + BMI + (1|patient_id), data = pp_df_long)
-mod1b <- update(mod1a, LDL ~ .)
+dv <- c("TC", "LDL")
+sum_lmer(x = "log(total_polyphenol_ea)")
+```
 
-mod1 <- list(mod1a, mod1b) 
-names(mod1) <- c("TC", "LDL")
-mod1 %>% map(function(x) test(emtrends(x, "year", var = "log(total_polyphenol_ea)")))
+* Similarly, a mixed model was fitted using log dietary total flavonoids, flavanols, and phenolic acid (all energy-adjusted) on TC and LDL.
+
+``` {r echo = FALSE}
+sum_lmer(x = "log(total_flavonoids_ea)")
+sum_lmer(x = "log(flavanols_ea + 1)")
+sum_lmer(x = "log(phenolic_acid_ea)")
 ```
 
 ## Association b/w dietary polyphenol and the change in inflammatory markers
@@ -528,14 +543,15 @@ pp_df_long %>%
 
 ``` {r echo = FALSE}
 # Mixed models for inflammatory markers
-mod2a <- lmer(log(hsCRP) ~ log(total_polyphenol_ea) * year + age + gender + BMI + (1|patient_id), data = pp_df_long)
-mod2b <- update(mod2a, log(IL1) ~.)
-mod2c <- update(mod2a, log(IL6) ~.)
-mod2d <- update(mod2a, log(TNFa) ~.)
+dv <- c("log(hsCRP)", "log(IL1)", "log(IL6)", "log(TNFa)")
+sum_lmer(x = "log(total_polyphenol_ea)")
+```
+* Similarly, a mixed model was fitted using log dietary total flavonoids, flavanols, and phenolic acid (all energy-adjusted) on the inflammatory markers.
 
-mod2 <- list(mod2a, mod2b, mod2c, mod2d) 
-names(mod2) <- c("log(hsCRP)", "log(IL1)", "log(IL6)", "log(TNFa)")
-mod2 %>% map(function(x) test(emtrends(x, "year", var = "log(total_polyphenol_ea)")))
+``` {r echo = FALSE}
+sum_lmer(x = "log(total_flavonoids_ea)")
+sum_lmer(x = "log(flavanols_ea + 1)")
+sum_lmer(x = "log(phenolic_acid_ea)")
 ```
 
 ## Analysis on urinary polyphenol

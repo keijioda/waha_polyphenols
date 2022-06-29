@@ -460,25 +460,30 @@ pp_df_long %>%
 # Mixed model analysis
 library(lme4); library(emmeans); library(lmerTest)
 
-# Mixed models for TC and LDL
-mod1a <- lmer(TC ~ log(total_polyphenol_ea) * year + age + gender + BMI + (1|patient_id), data = pp_df_long)
-mod1b <- update(mod1a, LDL ~ .)
+fit_lmer <- function(y, x) {
+  fm <- paste(y, "~", x, "* year + age + gender + BMI + (1|patient_id)")
+  lmer(fm, data = pp_df_long)
+}
 
-mod1 <- list(mod1a, mod1b) 
-names(mod1) <- c("TC", "LDL")
-mod1 %>% map(summary)
-mod1 %>% map(function(x) test(emtrends(x, "year", var = "log(total_polyphenol_ea)")))
+sum_lmer <- function(xvar){
+  out <- lapply(dv, fit_lmer, x = xvar)
+  names(out) <- dv
+  return(lapply(out, function(x) test(emtrends(x, "year", var = xvar))))
+}
+
+# Mixed models for TC and LDL
+dv <- c("TC", "LDL")
+sum_lmer(x = "log(total_polyphenol_ea)")
+sum_lmer(x = "log(total_flavonoids_ea)")
+sum_lmer(x = "log(flavanols_ea + 1)")
+sum_lmer(x = "log(phenolic_acid_ea)")
 
 # Mixed models for inflammatory markers
-mod2a <- lmer(log(hsCRP) ~ log(total_polyphenol_ea) * year + age + gender + BMI + (1|patient_id), data = pp_df_long)
-mod2b <- update(mod2a, log(IL1) ~.)
-mod2c <- update(mod2a, log(IL6) ~.)
-mod2d <- update(mod2a, log(TNFa) ~.)
-
-mod2 <- list(mod2a, mod2b, mod2c, mod2d) 
-names(mod2) <- c("log(hsCRP)", "log(IL1)", "log(IL6)", "log(TNFa)")
-mod2 %>% map(summary)
-mod2 %>% map(function(x) test(emtrends(x, "year", var = "log(total_polyphenol_ea)")))
+dv <- c("log(hsCRP)", "log(IL1)", "log(IL6)", "log(TNFa)")
+sum_lmer(x = "log(total_polyphenol_ea)")
+sum_lmer(x = "log(total_flavonoids_ea)")
+sum_lmer(x = "log(flavanols_ea + 1)")
+sum_lmer(x = "log(phenolic_acid_ea)")
 
 # Urine data -- 911 obs from 307 unique subjects
 urine

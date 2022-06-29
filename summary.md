@@ -277,6 +277,60 @@ WAHA Polyphenols Study
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger
 
+-   Similarly, a mixed model was fitted using log dietary total
+    flavonoids, flavanols, and phenolic acid (all energy-adjusted) on TC
+    and LDL.
+
+<!-- -->
+
+    ## $TC
+    ##  year log(total_flavonoids_ea).trend   SE  df t.ratio p.value
+    ##     0                           2.36 2.34 453   1.010  0.3130
+    ##     2                           0.93 2.34 453   0.398  0.6910
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $LDL
+    ##  year log(total_flavonoids_ea).trend   SE  df t.ratio p.value
+    ##     0                          0.217 1.24 439   0.175  0.8610
+    ##     2                         -0.403 1.24 439  -0.325  0.7452
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger
+
+    ## $TC
+    ##  year log(flavanols_ea + 1).trend   SE  df t.ratio p.value
+    ##     0                       -2.83 1.87 455  -1.510  0.1317
+    ##     2                       -1.21 1.87 455  -0.644  0.5199
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $LDL
+    ##  year log(flavanols_ea + 1).trend    SE  df t.ratio p.value
+    ##     0                      -1.446 0.992 441  -1.458  0.1455
+    ##     2                      -0.952 0.992 441  -0.960  0.3375
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger
+
+    ## $TC
+    ##  year log(phenolic_acid_ea).trend   SE  df t.ratio p.value
+    ##     0                       1.175 2.54 455   0.463  0.6436
+    ##     2                       0.979 2.54 455   0.386  0.7000
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $LDL
+    ##  year log(phenolic_acid_ea).trend   SE  df t.ratio p.value
+    ##     0                       0.116 1.34 440   0.086  0.9311
+    ##     2                      -0.268 1.34 440  -0.199  0.8422
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger
+
 ## Association b/w dietary polyphenol and the change in inflammatory markers
 
 -   For each of inflammatory markers (hsCRP, IL-1, IL-6, TNF-a), a
@@ -293,7 +347,7 @@ WAHA Polyphenols Study
 -   A scatterplot showed there are several outliers in change in hsCRP.
     Check with RA.
 
-![](summary_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 
 -   There was no significant association between the change in LDL and
     dietary polyphenol intake:
@@ -317,7 +371,7 @@ WAHA Polyphenols Study
 -   A scatterplot showed there are several outliers in change in IL-1.
     Check with RA.
 
-![](summary_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 
 -   There was no significant association between the change in IL-1 and
     dietary polyphenol intake:
@@ -341,7 +395,7 @@ WAHA Polyphenols Study
 -   A scatterplot showed there are several outliers in change in IL-6.
     Check with RA.
 
-![](summary_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
 
 -   There was no significant association between the change in IL-6 and
     dietary polyphenol intake:
@@ -365,7 +419,7 @@ WAHA Polyphenols Study
 -   A scatterplot indicated that there is no association between the
     change in TNF-a and dietary polyphenols.
 
-![](summary_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
 
 -   There was no significant association between the change in TNF-a and
     dietary polyphenol intake:
@@ -395,7 +449,7 @@ WAHA Polyphenols Study
 
     -   Note that the both x- and y-axis are on the log scale
 
-![](summary_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-26-1.png)<!-- -->
 
 -   To see if the association between dietary total polyphenols and
     inflammatory markers is significant or not, mixed models were fitted
@@ -441,6 +495,108 @@ WAHA Polyphenols Study
     ##  year log(total_polyphenol_ea).trend     SE  df t.ratio p.value
     ##     0                        0.00406 0.0637 421   0.064  0.9492
     ##     2                       -0.00780 0.0637 421  -0.122  0.9026
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger
+
+-   Similarly, a mixed model was fitted using log dietary total
+    flavonoids, flavanols, and phenolic acid (all energy-adjusted) on
+    the inflammatory markers.
+
+<!-- -->
+
+    ## $`log(hsCRP)`
+    ##  year log(total_flavonoids_ea).trend     SE  df t.ratio p.value
+    ##     0                        -0.0120 0.0638 465  -0.188  0.8513
+    ##     2                         0.0354 0.0638 465   0.554  0.5796
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $`log(IL1)`
+    ##  year log(total_flavonoids_ea).trend     SE  df t.ratio p.value
+    ##     0                       -0.00290 0.0342 381  -0.085  0.9325
+    ##     2                       -0.00503 0.0342 381  -0.147  0.8830
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $`log(IL6)`
+    ##  year log(total_flavonoids_ea).trend     SE  df t.ratio p.value
+    ##     0                        -0.0778 0.0539 413  -1.444  0.1494
+    ##     2                        -0.0652 0.0539 413  -1.211  0.2266
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $`log(TNFa)`
+    ##  year log(total_flavonoids_ea).trend     SE  df t.ratio p.value
+    ##     0                       -0.00287 0.0305 419  -0.094  0.9251
+    ##     2                       -0.04658 0.0305 419  -1.528  0.1273
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger
+
+    ## $`log(hsCRP)`
+    ##  year log(flavanols_ea + 1).trend     SE  df t.ratio p.value
+    ##     0                     -0.0323 0.0512 466  -0.630  0.5289
+    ##     2                      0.0450 0.0512 466   0.878  0.3804
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $`log(IL1)`
+    ##  year log(flavanols_ea + 1).trend     SE  df t.ratio p.value
+    ##     0                     0.02870 0.0274 381   1.047  0.2957
+    ##     2                     0.00874 0.0274 381   0.319  0.7500
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $`log(IL6)`
+    ##  year log(flavanols_ea + 1).trend     SE  df t.ratio p.value
+    ##     0                     -0.0163 0.0433 412  -0.376  0.7075
+    ##     2                      0.0524 0.0433 412   1.210  0.2271
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $`log(TNFa)`
+    ##  year log(flavanols_ea + 1).trend     SE  df t.ratio p.value
+    ##     0                    -0.00758 0.0245 420  -0.310  0.7569
+    ##     2                    -0.02880 0.0245 420  -1.177  0.2399
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger
+
+    ## $`log(hsCRP)`
+    ##  year log(phenolic_acid_ea).trend     SE  df t.ratio p.value
+    ##     0                     -0.0650 0.0692 466  -0.939  0.3484
+    ##     2                      0.0326 0.0692 466   0.471  0.6377
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $`log(IL1)`
+    ##  year log(phenolic_acid_ea).trend     SE  df t.ratio p.value
+    ##     0                      0.0063 0.0371 381   0.170  0.8652
+    ##     2                     -0.0133 0.0371 381  -0.358  0.7204
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $`log(IL6)`
+    ##  year log(phenolic_acid_ea).trend     SE  df t.ratio p.value
+    ##     0                     -0.0574 0.0585 412  -0.980  0.3277
+    ##     2                      0.0490 0.0585 412   0.837  0.4032
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $`log(TNFa)`
+    ##  year log(phenolic_acid_ea).trend     SE  df t.ratio p.value
+    ##     0                      0.0139 0.0331 421   0.418  0.6761
+    ##     2                      0.0108 0.0331 421   0.325  0.7453
     ## 
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger
@@ -529,12 +685,12 @@ WAHA Polyphenols Study
 
 -   Scatterplots against **urine total polyphenol**:
 
-![](summary_files/figure-gfm/unnamed-chunk-32-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-34-1.png)<!-- -->
 
 -   Scatterplots against **urine total polyphenol adjusted for
     creatinine**:
 
-![](summary_files/figure-gfm/unnamed-chunk-33-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-35-1.png)<!-- -->
 
 -   A linear model was fitted for each combination of urine polyphenol
     (as a dependent variable) and log dietary polyphenol (an independent
@@ -629,12 +785,12 @@ WAHA Polyphenols Study
 -   Scatterplots of TC and LDL (y-axis) against **urine total
     polyphenol** (x-axis):
 
-![](summary_files/figure-gfm/unnamed-chunk-36-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-38-1.png)<!-- -->
 
 -   Scatterplots of TC and LDL (y-axis) against **urine total polyphenol
     / creatinine** (x-axis):
 
-![](summary_files/figure-gfm/unnamed-chunk-37-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-39-1.png)<!-- -->
 
 -   To see if the association between urine polyphenol and lipids is
     significant or not, mixed models were fitted using lipids (TC or
@@ -703,12 +859,12 @@ WAHA Polyphenols Study
 -   Scatterplots of inflammatory markers (y-axis) against **urine total
     polyphenol** (x-axis):
 
-![](summary_files/figure-gfm/unnamed-chunk-41-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-43-1.png)<!-- -->
 
 -   Scatterplots of inflammatory markers (y-axis) against **urine total
     polyphenol / creatinine** (x-axis):
 
-![](summary_files/figure-gfm/unnamed-chunk-42-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-44-1.png)<!-- -->
 
 -   To see if the association between urine polyphenol and inflammatory
     marker is significant or not, mixed models were fitted using each
