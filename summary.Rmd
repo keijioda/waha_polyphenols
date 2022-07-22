@@ -219,17 +219,6 @@ pp_df_comp %>%
   kableone()
 ```
 
-## Descriptive table of dietary intake by treatment
-
-```{r echo = FALSE}
-
-# Descriptive table for dietary intake
-pp_df_comp %>% 
-  CreateTableOne(vars = c("energy_kcal", oth_intk), strata = "group", data = .) %>% 
-  print(showAllLevels = TRUE) %>% 
-  kableone()
-```
-
 * Inflammatory variables appear to have very large outliers. Check with RA.
 
 ```{r echo = FALSE, fig.width = 10, fig.height = 3}
@@ -241,6 +230,17 @@ pp_df_comp %>%
   geom_histogram(bins = 30) +
   facet_wrap(~ variable, scales = "free", ncol = 4)
 
+```
+
+## Descriptive table of dietary intake by treatment
+
+```{r echo = FALSE}
+
+# Descriptive table for dietary intake
+pp_df_comp %>% 
+  CreateTableOne(vars = c("energy_kcal", oth_intk), strata = "group", data = .) %>% 
+  print(showAllLevels = TRUE) %>% 
+  kableone()
 ```
 
 ## Descriptive table of dietary intake of polyphenols by treatment
