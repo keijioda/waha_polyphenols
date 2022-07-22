@@ -57,28 +57,52 @@ WAHA Polyphenols Study
     right-skewed. Mann-Whitney tests were used for these variables for
     comparisons between treatment (`test = nonnormal`)
 
-|                          | level     | Control                 | Walnut                  | p     | test    |
-|:-------------------------|:----------|:------------------------|:------------------------|:------|:--------|
-| n                        |           | 146                     | 154                     |       |         |
-| gender (%)               | F         | 99 (67.8)               | 97 (63.0)               | 0.450 |         |
-|                          | M         | 47 (32.2)               | 57 (37.0)               |       |         |
-| Race2 (%)                | White     | 111 (76.0)              | 121 (78.6)              | 0.698 |         |
-|                          | Non-White | 35 (24.0)               | 33 (21.4)               |       |         |
-| age (mean (SD))          |           | 69.42 (3.64)            | 70.08 (4.04)            | 0.141 |         |
-| BMI (mean (SD))          |           | 27.65 (4.92)            | 27.47 (5.02)            | 0.744 |         |
-| TC_0 (mean (SD))         |           | 190.42 (39.09)          | 182.64 (38.25)          | 0.082 |         |
-| LDL_0 (mean (SD))        |           | 116.15 (21.34)          | 113.42 (19.69)          | 0.249 |         |
-| HDL_0 (median \[IQR\])   |           | 61.75 \[55.37, 70.18\]  | 58.69 \[52.63, 67.07\]  | 0.027 | nonnorm |
-| Trig_0 (median \[IQR\])  |           | 93.50 \[68.00, 124.00\] | 95.00 \[72.50, 130.00\] | 0.519 | nonnorm |
-| hsCRP_0 (median \[IQR\]) |           | 0.13 \[0.06, 0.32\]     | 0.16 \[0.07, 0.30\]     | 0.380 | nonnorm |
-| IL1_0 (median \[IQR\])   |           | 1.11 \[0.71, 1.47\]     | 1.02 \[0.75, 1.42\]     | 0.695 | nonnorm |
-| IL6_0 (median \[IQR\])   |           | 2.17 \[1.23, 3.41\]     | 2.13 \[1.30, 3.35\]     | 0.944 | nonnorm |
-| TNFa_0 (median \[IQR\])  |           | 5.36 \[3.91, 6.68\]     | 5.88 \[4.41, 7.01\]     | 0.086 | nonnorm |
+|                               | level     | Control                 | Walnut                  | p     | test    |
+|:------------------------------|:----------|:------------------------|:------------------------|:------|:--------|
+| n                             |           | 146                     | 154                     |       |         |
+| gender (%)                    | F         | 99 (67.8)               | 97 (63.0)               | 0.450 |         |
+|                               | M         | 47 (32.2)               | 57 (37.0)               |       |         |
+| age (mean (SD))               |           | 69.42 (3.64)            | 70.08 (4.04)            | 0.141 |         |
+| Race2 (%)                     | White     | 111 (76.0)              | 121 (78.6)              | 0.698 |         |
+|                               | Non-White | 35 (24.0)               | 33 (21.4)               |       |         |
+| educ (%)                      | \<=12 yrs | 19 (13.0)               | 14 ( 9.1)               | 0.368 |         |
+|                               | \>12 yrs  | 127 (87.0)              | 140 (90.9)              |       |         |
+| ever_smoked (%)               | Never     | 143 (97.9)              | 147 (95.5)              | 0.379 |         |
+|                               | Ever      | 3 ( 2.1)                | 7 ( 4.5)                |       |         |
+| BMI (mean (SD))               |           | 27.65 (4.92)            | 27.47 (5.02)            | 0.744 |         |
+| waist_perimeter (mean (SD))   |           | 98.08 (13.45)           | 98.86 (14.50)           | 0.676 |         |
+| hip_circumference (mean (SD)) |           | 106.81 (11.02)          | 105.63 (10.87)          | 0.356 |         |
+| TC_0 (mean (SD))              |           | 190.42 (39.09)          | 182.64 (38.25)          | 0.082 |         |
+| HDL_0 (median \[IQR\])        |           | 61.75 \[55.37, 70.18\]  | 58.69 \[52.63, 67.07\]  | 0.027 | nonnorm |
+| LDL_0 (mean (SD))             |           | 116.15 (21.34)          | 113.42 (19.69)          | 0.249 |         |
+| Trig_0 (median \[IQR\])       |           | 93.50 \[68.00, 124.00\] | 95.00 \[72.50, 130.00\] | 0.519 | nonnorm |
+| hsCRP_0 (median \[IQR\])      |           | 0.13 \[0.06, 0.32\]     | 0.16 \[0.07, 0.30\]     | 0.380 | nonnorm |
+| IL1_0 (median \[IQR\])        |           | 1.11 \[0.71, 1.47\]     | 1.02 \[0.75, 1.42\]     | 0.695 | nonnorm |
+| IL6_0 (median \[IQR\])        |           | 2.17 \[1.23, 3.41\]     | 2.13 \[1.30, 3.35\]     | 0.944 | nonnorm |
+| TNFa_0 (median \[IQR\])       |           | 5.36 \[3.91, 6.68\]     | 5.88 \[4.41, 7.01\]     | 0.086 | nonnorm |
+
+## Descriptive table of dietary intake by treatment
+
+|                                                      | level | Control          | Walnut           | p       | test |
+|:-----------------------------------------------------|:------|:-----------------|:-----------------|:--------|:-----|
+| n                                                    |       | 146              | 154              |         |      |
+| energy_kcal (mean (SD))                              |       | 1607.71 (452.50) | 1835.90 (535.99) | \<0.001 |      |
+| total_carbohydrate_g (mean (SD))                     |       | 194.42 (65.47)   | 206.88 (80.31)   | 0.143   |      |
+| percent_calories_from_carbohydrate (mean (SD))       |       | 1604.69 (540.50) | 1674.18 (519.58) | 0.257   |      |
+| total_dietary_fiber_g (mean (SD))                    |       | 20.52 (8.47)     | 24.78 (10.79)    | \<0.001 |      |
+| total_fat_g (mean (SD))                              |       | 63.01 (22.08)    | 84.49 (26.23)    | \<0.001 |      |
+| percent_calories_from_fat (mean (SD))                |       | 807.02 (268.28)  | 868.96 (272.89)  | 0.048   |      |
+| total_saturated_fatty_acids_sfa_g (mean (SD))        |       | 20.62 (9.51)     | 21.67 (9.71)     | 0.347   |      |
+| percent_calories_from_sfa (mean (SD))                |       | 248.69 (95.59)   | 246.26 (93.86)   | 0.824   |      |
+| total_monounsaturated_fatty_acids_mufa_g (mean (SD)) |       | 22.42 (8.58)     | 24.97 (8.81)     | 0.012   |      |
+| percent_calories_from_mufa (mean (SD))               |       | 285.70 (99.26)   | 290.64 (104.77)  | 0.676   |      |
+| total_polyunsaturated_fatty_acids_pufa_g (mean (SD)) |       | 14.66 (5.51)     | 31.67 (8.37)     | \<0.001 |      |
+| percent_calories_from_pufa (mean (SD))               |       | 196.68 (73.88)   | 254.10 (76.42)   | \<0.001 |      |
 
 -   Inflammatory variables appear to have very large outliers. Check
     with RA.
 
-![](summary_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 ## Descriptive table of dietary intake of polyphenols by treatment
 
@@ -96,7 +120,7 @@ WAHA Polyphenols Study
 
 -   Density plots of dietary polyphenol intakes were shown below.
 
-![](summary_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ## Descriptive table of lipid/inflammatory markers by group and year
 
@@ -188,7 +212,7 @@ WAHA Polyphenols Study
 -   A scatterplot indicated that there is no association between the
     change in TC and dietary polyphenols.
 
-![](summary_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 -   There was no significant association between the change in TC and
     dietary polyphenol intake:
@@ -212,7 +236,7 @@ WAHA Polyphenols Study
 -   A scatterplot indicated that there is no association between the
     change in TC and dietary polyphenols.
 
-![](summary_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
 -   There was no significant association between the change in LDL and
     dietary polyphenol intake:
@@ -243,7 +267,7 @@ WAHA Polyphenols Study
 
     -   Note that the x-axis is on the log scale
 
-![](summary_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
 -   To see if the association between dietary total polyphenols and
     lipids is significant or not, mixed models were fitted using lipids
@@ -347,7 +371,7 @@ WAHA Polyphenols Study
 -   A scatterplot showed there are several outliers in change in hsCRP.
     Check with RA.
 
-![](summary_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
 -   There was no significant association between the change in LDL and
     dietary polyphenol intake:
@@ -371,7 +395,7 @@ WAHA Polyphenols Study
 -   A scatterplot showed there are several outliers in change in IL-1.
     Check with RA.
 
-![](summary_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
 
 -   There was no significant association between the change in IL-1 and
     dietary polyphenol intake:
@@ -395,7 +419,7 @@ WAHA Polyphenols Study
 -   A scatterplot showed there are several outliers in change in IL-6.
     Check with RA.
 
-![](summary_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
 
 -   There was no significant association between the change in IL-6 and
     dietary polyphenol intake:
@@ -419,7 +443,7 @@ WAHA Polyphenols Study
 -   A scatterplot indicated that there is no association between the
     change in TNF-a and dietary polyphenols.
 
-![](summary_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
 
 -   There was no significant association between the change in TNF-a and
     dietary polyphenol intake:
@@ -449,7 +473,7 @@ WAHA Polyphenols Study
 
     -   Note that the both x- and y-axis are on the log scale
 
-![](summary_files/figure-gfm/unnamed-chunk-26-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
 
 -   To see if the association between dietary total polyphenols and
     inflammatory markers is significant or not, mixed models were fitted
@@ -685,12 +709,12 @@ WAHA Polyphenols Study
 
 -   Scatterplots against **urine total polyphenol**:
 
-![](summary_files/figure-gfm/unnamed-chunk-34-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-35-1.png)<!-- -->
 
 -   Scatterplots against **urine total polyphenol adjusted for
     creatinine**:
 
-![](summary_files/figure-gfm/unnamed-chunk-35-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-36-1.png)<!-- -->
 
 -   A linear model was fitted for each combination of urine polyphenol
     (as a dependent variable) and log dietary polyphenol (an independent
@@ -785,12 +809,12 @@ WAHA Polyphenols Study
 -   Scatterplots of TC and LDL (y-axis) against **urine total
     polyphenol** (x-axis):
 
-![](summary_files/figure-gfm/unnamed-chunk-38-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-39-1.png)<!-- -->
 
 -   Scatterplots of TC and LDL (y-axis) against **urine total polyphenol
     / creatinine** (x-axis):
 
-![](summary_files/figure-gfm/unnamed-chunk-39-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-40-1.png)<!-- -->
 
 -   To see if the association between urine polyphenol and lipids is
     significant or not, mixed models were fitted using lipids (TC or
@@ -859,12 +883,12 @@ WAHA Polyphenols Study
 -   Scatterplots of inflammatory markers (y-axis) against **urine total
     polyphenol** (x-axis):
 
-![](summary_files/figure-gfm/unnamed-chunk-43-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-44-1.png)<!-- -->
 
 -   Scatterplots of inflammatory markers (y-axis) against **urine total
     polyphenol / creatinine** (x-axis):
 
-![](summary_files/figure-gfm/unnamed-chunk-44-1.png)<!-- -->
+![](summary_files/figure-gfm/unnamed-chunk-45-1.png)<!-- -->
 
 -   To see if the association between urine polyphenol and inflammatory
     marker is significant or not, mixed models were fitted using each

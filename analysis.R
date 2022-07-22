@@ -119,7 +119,7 @@ body2 <- body %>%
          educ_yr = education_years,
          race = factor(race),
          BMI = weight_basal / (height_basal / 100) ^ 2) %>% 
-  select(patient_id, race, educ_yr, educ, race, BMI)
+  select(patient_id, race, educ_yr, educ, race, BMI, waist_perimeter, hip_circumference)
 
 # Merge to lipid/inflammation data
 lipinf2 <- lipinf %>% 
@@ -169,7 +169,13 @@ n_distinct(drec2$patient_id)
 
 # Check total kcal and total phenols
 pps <- c("total_polyphenol", "total_flavonoids", "flavanols", "phenolic_acid", "lignin")
-drec2 %>% select(patient_id, recall_day, all_of(pps))
+oth_intk <- c("total_carbohydrate_g", "percent_calories_from_carbohydrate", 
+              "total_dietary_fiber_g", "total_fat_g", "percent_calories_from_fat", 
+              "total_saturated_fatty_acids_sfa_g", "percent_calories_from_sfa",
+              "total_monounsaturated_fatty_acids_mufa_g", "percent_calories_from_mufa",
+              "total_polyunsaturated_fatty_acids_pufa_g", "percent_calories_from_pufa")
+
+drec2 %>% select(patient_id, recall_day, all_of(pps), all_of(oth_intk))
 
 drec2 %>% 
   select(energy_kcal, all_of(pps)) %>% 
@@ -193,7 +199,7 @@ fg <- drec2 %>%
 
 dintake <- drec2 %>% 
   group_by(patient_id) %>% 
-  summarize_at(c("energy_kcal", ea_pps, pps, fg), mean, na.rm = TRUE)
+  summarize_at(c("energy_kcal", ea_pps, pps, fg, oth_intk), mean, na.rm = TRUE)
 
 dintake %>% 
   ggplot(aes(x = animal_protein_total_polyphenol)) + 
@@ -252,7 +258,8 @@ names(pp_df_comp)
 
 # Descriptive table at baseline -------------------------------------------
 
-table_vars <- c("gender", "age", "Race2", "BMI", "TC_0", "HDL_0", "LDL_0", "Trig_0", "hsCRP_0", "IL1_0", "IL6_0", "TNFa_0")
+table_vars <- c("gender", "age", "Race2", "educ", "ever_smoked", "BMI", "waist_perimeter", "hip_circumference",
+                "TC_0", "HDL_0", "LDL_0", "Trig_0", "hsCRP_0", "IL1_0", "IL6_0", "TNFa_0")
 
 pp_df_comp %>% 
   select(group, all_of(table_vars)) %>% 
@@ -276,12 +283,22 @@ pp_df_comp %>%
 
 # Descriptive table at baseline
 pp_df_comp %>% 
+  mutate(ever_smoked = factor(ever_smoker, labels = c("Never", "Ever")),
+         educ = factor(educ, labels = c("<=12 yrs", ">12 yrs", "<=12 yrs"))) %>% 
   CreateTableOne(table_vars, strata = "group", data = .) %>% 
   print(showAllLevels = TRUE)
 
 pp_df_comp %>% 
   CreateTableOne(table_vars, strata = "group", data = .) %>% 
   print(showAllLevels = TRUE, nonnormal = c("HDL_0", "Trig_0", "hsCRP_0", "IL1_0", "IL6_0", "TNFa_0"))
+
+pp_df_comp %>% search_var("total")
+names(pp_df_comp)
+
+# Descriptive table for dietary intake
+pp_df_comp %>% 
+  CreateTableOne(vars = c("energy_kcal", oth_intk), strata = "group", data = .) %>% 
+  print(showAllLevels = TRUE)
 
 # Descriptive table of energy-adjusted intakes ----------------------------
 
