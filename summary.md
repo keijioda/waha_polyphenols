@@ -3,59 +3,59 @@ WAHA Polyphenols Study
 
 ## Datasets
 
--   A zip file receved from RA:
-    `Dietary Polyphenol Lipid and Inflammation files.zip`
-    -   Contains:
-        -   Lipid file in SPSS: `BDLab_BCNLLU1709lipids.sav`
-        -   Inflammation markers file in SPSS:
-            `WAHA_ BD_Cytokines_BCN_LLU Inflammation.sav`
-        -   Anthropometrics in Excel: `Table1Data.xlsx`
-        -   Recall files in CSV:
-            `waha-recalls-per-recalls-overlapping-foodgroups-with-pOH.csv`
+- A zip file receved from RA:
+  `Dietary Polyphenol Lipid and Inflammation files.zip`
+  - Contains:
+    - Lipid file in SPSS: `BDLab_BCNLLU1709lipids.sav`
+    - Inflammation markers file in SPSS:
+      `WAHA_ BD_Cytokines_BCN_LLU Inflammation.sav`
+    - Anthropometrics in Excel: `Table1Data.xlsx`
+    - Recall files in CSV:
+      `waha-recalls-per-recalls-overlapping-foodgroups-with-pOH.csv`
 
 ### Lipid data
 
--   Includes *n* = 369 subjects.
--   Variables: total cholesterol, LDL, HDL, triglycerides (mg/dL) at
-    baseline and year 2. HbA1c values are all missing.
+- Includes *n* = 369 subjects.
+- Variables: total cholesterol, LDL, HDL, triglycerides (mg/dL) at
+  baseline and year 2. HbA1c values are all missing.
 
 ### Inflammatory marker data
 
--   Includes *n* = 371 subjects.
--   Variables: hsCRP (mg/dL), IL-1 (pg/ml), IL-6 (pg/ml), TNF-a (pg/ml)
-    at baseline and year 2.
+- Includes *n* = 371 subjects.
+- Variables: hsCRP (mg/dL), IL-1 (pg/ml), IL-6 (pg/ml), TNF-a (pg/ml) at
+  baseline and year 2.
 
 ### Anthropometric data
 
--   Includes *n* = 356 subjects.
--   Variables: Group, age, gender, race, education, height, weight, BMI,
-    etc.
+- Includes *n* = 356 subjects.
+- Variables: Group, age, gender, race, education, height, weight, BMI,
+  etc.
 
 ### Dietary recall data
 
--   Includes 1246 observations from *n* = 334 subjects. The number of
-    recalls ranges from 1 to 6 recalls.
-    -   There is 1 subject who was not found in lipid and inflammatory
-        marker data. This subject was excluded, yielding 1242
-        observations from *n* = 333 subjects.
--   Variables: Total energy (kcal/day), total polyphenols, total
-    flavonoids, flavanols, phenolic acid, lignin, etc.
--   Dietary polyphenol variables were energy-adjusted each day using the
-    residual method and then averaged for each subject.
+- Includes 1246 observations from *n* = 334 subjects. The number of
+  recalls ranges from 1 to 6 recalls.
+  - There is 1 subject who was not found in lipid and inflammatory
+    marker data. This subject was excluded, yielding 1242 observations
+    from *n* = 333 subjects.
+- Variables: Total energy (kcal/day), total polyphenols, total
+  flavonoids, flavanols, phenolic acid, lignin, etc.
+- Dietary polyphenol variables were energy-adjusted each day using the
+  residual method and then averaged for each subject.
 
 ## Analytic dataset
 
--   All data files were inner-joined, producing *n* = 333 subjects.
--   For analysis, any subjects who has any missing on lipids and
-    inflammatory markers were excluded. This resulted in *n* = 300
-    subjects.
+- All data files were inner-joined, producing *n* = 333 subjects.
+- For analysis, any subjects who has any missing on lipids and
+  inflammatory markers were excluded. This resulted in *n* = 300
+  subjects.
 
 ## Descriptive table at baseline by treatment
 
--   Medians (and IQR) were reported for HDL, triglycerides and all
-    inflammatory marker variables, as their distributions were
-    right-skewed. Mann-Whitney tests were used for these variables for
-    comparisons between treatment (`test = nonnormal`)
+- Medians (and IQR) were reported for HDL, triglycerides and all
+  inflammatory marker variables, as their distributions were
+  right-skewed. Mann-Whitney tests were used for these variables for
+  comparisons between treatment (`test = nonnormal`)
 
 |                               | level     | Control                 | Walnut                  | p     | test    |
 |:------------------------------|:----------|:------------------------|:------------------------|:------|:--------|
@@ -80,9 +80,19 @@ WAHA Polyphenols Study
 | IL1_0 (median \[IQR\])        |           | 1.11 \[0.71, 1.47\]     | 1.02 \[0.75, 1.42\]     | 0.695 | nonnorm |
 | IL6_0 (median \[IQR\])        |           | 2.17 \[1.23, 3.41\]     | 2.13 \[1.30, 3.35\]     | 0.944 | nonnorm |
 | TNFa_0 (median \[IQR\])       |           | 5.36 \[3.91, 6.68\]     | 5.88 \[4.41, 7.01\]     | 0.086 | nonnorm |
+| bmi_cat (%)                   | undwt     | 1 ( 0.7)                | 2 ( 1.3)                | 0.778 |         |
+|                               | norm      | 45 (30.8)               | 50 (32.5)               |       |         |
+|                               | ovrwt     | 57 (39.0)               | 64 (41.6)               |       |         |
+|                               | obese     | 43 (29.5)               | 38 (24.7)               |       |         |
+| diabetes (%)                  | No        | 136 (93.2)              | 141 (91.6)              | 0.763 |         |
+|                               | Yes       | 10 ( 6.8)               | 13 ( 8.4)               |       |         |
+| statin (%)                    | No        | 98 (67.1)               | 111 (72.1)              | 0.419 |         |
+|                               | Yes       | 48 (32.9)               | 43 (27.9)               |       |         |
+| lipid_lowering (%)            | No        | 98 (67.1)               | 110 (71.4)              | 0.495 |         |
+|                               | Yes       | 48 (32.9)               | 44 (28.6)               |       |         |
 
--   Inflammatory variables appear to have very large outliers. Check
-    with RA.
+- Inflammatory variables appear to have very large outliers. Check with
+  RA.
 
 ![](summary_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
@@ -106,8 +116,8 @@ WAHA Polyphenols Study
 
 ## Descriptive table of dietary intake of polyphenols by treatment
 
--   All polyphenol intake variables were energy-adjusted as mentioned
-    above. All dietary polyphenol variabls were right-skewed.
+- All polyphenol intake variables were energy-adjusted as mentioned
+  above. All dietary polyphenol variabls were right-skewed.
 
 |                                      | Control                      | Walnut                       | p       | test    |
 |:-------------------------------------|:-----------------------------|:-----------------------------|:--------|:--------|
@@ -118,17 +128,17 @@ WAHA Polyphenols Study
 | phenolic_acid_ea (median \[IQR\])    | 242.18 \[88.76, 398.33\]     | 367.82 \[245.70, 569.17\]    | \<0.001 | nonnorm |
 | lignin_ea (median \[IQR\])           | 27.40 \[13.85, 44.81\]       | 24.14 \[13.39, 44.20\]       | 0.514   | nonnorm |
 
--   Density plots of dietary polyphenol intakes were shown below.
+- Density plots of dietary polyphenol intakes were shown below.
 
 ![](summary_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ## Descriptive table of lipid/inflammatory markers by group and year
 
--   Mean lipid and inflammator marker variables by group and year
-    (baseline and year 2).
-    -   Note that mean baseline values were higher in IL-1 and IL-6 for
-        the walnut group, but their medians were actually lower (see the
-        descriptive table at baseline above).
+- Mean lipid and inflammator marker variables by group and year
+  (baseline and year 2).
+  - Note that mean baseline values were higher in IL-1 and IL-6 for the
+    walnut group, but their medians were actually lower (see the
+    descriptive table at baseline above).
 
 |                   | 0:Control      | 2:Control      | 0:Walnut       | 2:Walnut       |
 |:------------------|:---------------|:---------------|:---------------|:---------------|
@@ -142,9 +152,9 @@ WAHA Polyphenols Study
 | IL6 (mean (SD))   | 2.69 (2.26)    | 2.68 (2.52)    | 2.86 (4.02)    | 2.73 (6.03)    |
 | TNFa (mean (SD))  | 5.35 (2.12)    | 5.39 (1.96)    | 5.84 (2.51)    | 5.60 (2.56)    |
 
--   Changes from baseline were calculated for each subject and then
-    average changes were calculated. The walnut group tended to show
-    more declines in IL-1, IL-6 and TNF-a.
+- Changes from baseline were calculated for each subject and then
+  average changes were calculated. The walnut group tended to show more
+  declines in IL-1, IL-6 and TNF-a.
 
 |                          | Control       | Walnut        |
 |:-------------------------|:--------------|:--------------|
@@ -160,62 +170,90 @@ WAHA Polyphenols Study
 
 ## Polyphenol intake by food group
 
--   Means and SDs of polyphenol intake by food group.
-    -   Note that “Misc” group have all zero.
+- Means and SDs of polyphenol intake from food groups by group.
+  - Note that “Misc” group have all zero.
 
-<!-- -->
-
-    ##                                                                             
-    ##                 Total_polyphenol          Total_flavonoids          Flavanol
-    ##  Food group     Mean             SD       Mean             SD       Mean    
-    ##  Animal protein  55.6834          93.7400   0.5713           1.3473  27.8446
-    ##  Beverage       845.7642         729.0294  28.8974          76.1575   6.4958
-    ##  Chocolates     100.3500         233.2257   0.0000           0.0000  50.9791
-    ##  Fat/oil          6.6832           6.0914   0.1916           0.3816   0.0089
-    ##  Fruits         396.6888         334.0450  15.2011          22.3603  92.2259
-    ##  Grains         126.8576         139.4146   0.7261           5.3708  17.4703
-    ##  Legumes        281.3996         619.3581   1.3550           4.0025   6.3917
-    ##  Misc             0.0000           0.0000   0.0000           0.0000   0.0000
-    ##  Nuts/seeds     343.8405         328.5734  13.2835          13.7084  17.7919
-    ##  Spices          26.2777          76.9312   0.0470           0.4948   0.0000
-    ##  Vegetables     247.9784         257.5422   8.8869           7.7332   0.1424
-    ##                                                   
-    ##           Phenolic_acid          Lignan           
-    ##  SD       Mean          SD       Mean     SD      
-    ##   53.2452   0.2359        1.0787   0.0002   0.0012
-    ##   15.7095 227.1104      270.1807   0.6786   2.0181
-    ##  121.7216   0.8035        1.9404   0.0197   0.2738
-    ##    0.0888   0.0416        0.1863   0.1908   0.3108
-    ##  120.5846  18.5902       25.2161   7.6635  11.1338
-    ##   60.7345  30.0682       24.8018   1.2692   2.7573
-    ##   48.2881   4.8506        9.1244   1.8098   4.1718
-    ##    0.0000   0.0000        0.0000   0.0000   0.0000
-    ##   19.2961  93.6667       94.8263   1.6922   5.5951
-    ##    0.0000   0.0094        0.0287   0.0417   0.1297
-    ##    1.2006   4.8368        4.8684  24.3426  38.8629
+|                                                | Control         | Walnut          | p       | test |
+|:-----------------------------------------------|:----------------|:----------------|:--------|:-----|
+| n                                              | 146             | 154             |         |      |
+| animal_protein_total_polyphenol (mean (SD))    | 51.35 (77.71)   | 59.79 (106.84)  | 0.437   |      |
+| beverage_total_polyphenol (mean (SD))          | 803.73 (674.21) | 885.61 (777.55) | 0.332   |      |
+| chocolate_product_total_polyphenol (mean (SD)) | 86.33 (180.33)  | 113.64 (274.07) | 0.311   |      |
+| fats_and_oils_total_polyphenols (mean (SD))    | 6.72 (5.99)     | 6.65 (6.21)     | 0.923   |      |
+| fruit_total_polyphenol (mean (SD))             | 350.76 (279.82) | 440.23 (374.09) | 0.020   |      |
+| grains_total_polyphenol (mean (SD))            | 123.66 (137.78) | 129.89 (141.33) | 0.700   |      |
+| legume_total_polyphenol (mean (SD))            | 243.56 (469.55) | 317.27 (733.52) | 0.304   |      |
+| miscellaneous_total_polyphenols (mean (SD))    | 0.00 (0.00)     | 0.00 (0.00)     | NaN     |      |
+| nuts_and_seeds_total_polyphenols (mean (SD))   | 39.61 (77.12)   | 632.26 (182.46) | \<0.001 |      |
+| spices_total_polyphenols (mean (SD))           | 21.81 (66.59)   | 30.51 (85.59)   | 0.329   |      |
+| vegetable_total_polyphenols (mean (SD))        | 226.33 (190.63) | 268.50 (307.10) | 0.157   |      |
+| animal_protein_total_flavonoids (mean (SD))    | 0.45 (1.05)     | 0.69 (1.57)     | 0.124   |      |
+| beverage_total_flavonoids (mean (SD))          | 27.39 (71.50)   | 30.32 (80.53)   | 0.740   |      |
+| chocolate_product_total_flavonoids (mean (SD)) | 0.00 (0.00)     | 0.00 (0.00)     | NaN     |      |
+| fats_and_oils_total_flavonoids (mean (SD))     | 0.23 (0.49)     | 0.16 (0.24)     | 0.133   |      |
+| fruit_total_flavonoids (mean (SD))             | 14.74 (22.60)   | 15.63 (22.20)   | 0.731   |      |
+| grains_total_flavonoids (mean (SD))            | 1.13 (7.55)     | 0.34 (1.41)     | 0.206   |      |
+| legume_total_flavonoid (mean (SD))             | 1.34 (5.01)     | 1.37 (2.74)     | 0.948   |      |
+| miscellaneous_total_flavonoids (mean (SD))     | 0.00 (0.00)     | 0.00 (0.00)     | NaN     |      |
+| nuts_and_seeds_total_flavonoids (mean (SD))    | 0.36 (1.21)     | 25.53 (7.45)    | \<0.001 |      |
+| spices_total_flavonoids (mean (SD))            | 0.02 (0.09)     | 0.07 (0.69)     | 0.436   |      |
+| vegetable_total_flavonoids (mean (SD))         | 8.64 (7.65)     | 9.12 (7.83)     | 0.597   |      |
+| animal_product_flavanol (mean (SD))            | 23.74 (41.55)   | 31.73 (62.23)   | 0.194   |      |
+| beverage_flavanol (mean (SD))                  | 7.13 (16.08)    | 5.89 (15.38)    | 0.494   |      |
+| chocolate_product_flavanol (mean (SD))         | 42.53 (92.99)   | 58.99 (143.62)  | 0.242   |      |
+| fats_and_oils_flavanol (mean (SD))             | 0.01 (0.07)     | 0.01 (0.11)     | 0.835   |      |
+| fruit_flavanol (mean (SD))                     | 81.42 (104.44)  | 102.47 (133.65) | 0.131   |      |
+| grains_flavanol (mean (SD))                    | 19.53 (72.39)   | 15.52 (47.27)   | 0.568   |      |
+| legume_total_flavanol (mean (SD))              | 4.15 (27.65)    | 8.51 (61.83)    | 0.435   |      |
+| miscellaneous_flavanol (mean (SD))             | 0.00 (0.00)     | 0.00 (0.00)     | NaN     |      |
+| nuts_and_seeds_flavanol (mean (SD))            | 8.54 (21.83)    | 26.57 (10.80)   | \<0.001 |      |
+| spices_flavanol (mean (SD))                    | 0.00 (0.00)     | 0.00 (0.00)     | NaN     |      |
+| vegetable_flavanol (mean (SD))                 | 0.00 (0.00)     | 0.28 (1.67)     | 0.045   |      |
+| animal_protein_phenolic_acid (mean (SD))       | 0.24 (1.18)     | 0.23 (0.98)     | 0.944   |      |
+| beverage_phenolic_acid (mean (SD))             | 213.80 (228.46) | 239.73 (304.73) | 0.407   |      |
+| chocolate_product_phenolic_acid (mean (SD))    | 0.65 (1.43)     | 0.95 (2.32)     | 0.194   |      |
+| fats_and_oils_phenolic_acid (mean (SD))        | 0.05 (0.19)     | 0.04 (0.18)     | 0.659   |      |
+| fruit_phenolic_acid (mean (SD))                | 16.03 (24.70)   | 21.02 (25.54)   | 0.087   |      |
+| grains_phenolic_acids (mean (SD))              | 29.61 (22.91)   | 30.50 (26.54)   | 0.756   |      |
+| legume_phenolic_acid (mean (SD))               | 4.27 (7.79)     | 5.40 (10.23)    | 0.282   |      |
+| miscellaneous_phenolic_acid (mean (SD))        | 0.00 (0.00)     | 0.00 (0.00)     | NaN     |      |
+| nuts_and_seeds_phenolic_acid (mean (SD))       | 5.00 (16.23)    | 177.73 (52.04)  | \<0.001 |      |
+| spices_phenolic_acid (mean (SD))               | 0.01 (0.04)     | 0.01 (0.02)     | 0.151   |      |
+| vegetable_phenolic_acid (mean (SD))            | 4.32 (3.93)     | 5.33 (5.58)     | 0.071   |      |
+| animal_protein_lignan (mean (SD))              | 0.00 (0.00)     | 0.00 (0.00)     | 0.578   |      |
+| beverage_lignan (mean (SD))                    | 0.73 (2.09)     | 0.63 (1.95)     | 0.699   |      |
+| chocolate_product_lignan (mean (SD))           | 0.04 (0.39)     | 0.00 (0.01)     | 0.275   |      |
+| fats_and_oils_lignan (mean (SD))               | 0.19 (0.27)     | 0.19 (0.34)     | 0.893   |      |
+| fruit_lignan (mean (SD))                       | 6.97 (11.54)    | 8.32 (10.73)    | 0.292   |      |
+| grains_lignan (mean (SD))                      | 1.48 (3.25)     | 1.07 (2.18)     | 0.197   |      |
+| legume_lignan (mean (SD))                      | 1.75 (3.71)     | 1.87 (4.58)     | 0.813   |      |
+| miscellaneous_lignan (mean (SD))               | 0.00 (0.00)     | 0.00 (0.00)     | NaN     |      |
+| nuts_and_seeds_lignan (mean (SD))              | 1.91 (5.69)     | 1.49 (5.52)     | 0.513   |      |
+| spices_lignan (mean (SD))                      | 0.05 (0.16)     | 0.03 (0.09)     | 0.141   |      |
+| vegetable_lignan (mean (SD))                   | 22.25 (31.70)   | 26.33 (44.62)   | 0.365   |      |
 
 ## Association b/w dietary polyphenol and the change in lipids
 
--   For each of lipids (total cholesterol and LDL), a linear models were
-    fitted using the change (year 2 - baseline) as the dependent
-    variable and the dietary total polyphenols (energy-adjusted) as the
-    main independent variable of interest.
-    -   The unit of dietary total polyphenols was changed to 100 mg/day,
-        due to small beta estimates.
-    -   The model adjusted for the baseline value of the lipid being
-        modeled, as well as: gender (female as reference), age, BMI and
-        the use of lipid lowering medications (yes/no, no as reference)
-        at the baseline.
+- For each of lipids (total cholesterol and LDL), a linear models were
+  fitted using the change (year 2 - baseline) as the dependent variable
+  and the dietary total polyphenols (energy-adjusted) as the main
+  independent variable of interest.
+  - The unit of dietary total polyphenols was changed to 100 mg/day, due
+    to small beta estimates.
+  - The model adjusted for the baseline value of the lipid being
+    modeled, as well as: gender (female as reference), age, BMI and the
+    use of lipid lowering medications (yes/no, no as reference) at the
+    baseline.
 
 ### Change in TC vs total polyphenol
 
--   A scatterplot indicated that there is no association between the
-    change in TC and dietary polyphenols.
+- A scatterplot indicated that there is no association between the
+  change in TC and dietary polyphenols.
 
 ![](summary_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
--   There was no significant association between the change in TC and
-    dietary polyphenol intake:
+- There was no significant association between the change in TC and
+  dietary polyphenol intake:
 
 <!-- -->
 
@@ -233,13 +271,13 @@ WAHA Polyphenols Study
 
 ### Change in LDL vs total polyphenol
 
--   A scatterplot indicated that there is no association between the
-    change in TC and dietary polyphenols.
+- A scatterplot indicated that there is no association between the
+  change in TC and dietary polyphenols.
 
 ![](summary_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
--   There was no significant association between the change in LDL and
-    dietary polyphenol intake:
+- There was no significant association between the change in LDL and
+  dietary polyphenol intake:
 
 <!-- -->
 
@@ -257,31 +295,31 @@ WAHA Polyphenols Study
 
 ## Association b/w dietary polyphenol and lipids using mixed models
 
--   To examine if there are any associations between dietary total
-    polyphenols (energy-adjusted) and blood lipids (total cholesterol
-    and LDL), scatterplots were produced. Lowess smoothed curves were
-    fitted for for both years of measurements (Year 0 and Year 2).
+- To examine if there are any associations between dietary total
+  polyphenols (energy-adjusted) and blood lipids (total cholesterol and
+  LDL), scatterplots were produced. Lowess smoothed curves were fitted
+  for for both years of measurements (Year 0 and Year 2).
 
--   Scatterplots of TC and LDL (y-axis) against dietary total
-    polyphenols (x-axis):
+- Scatterplots of TC and LDL (y-axis) against dietary total polyphenols
+  (x-axis):
 
-    -   Note that the x-axis is on the log scale
+  - Note that the x-axis is on the log scale
 
 ![](summary_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
--   To see if the association between dietary total polyphenols and
-    lipids is significant or not, mixed models were fitted using lipids
-    (TC or LDL) as the dependent variable and log of energy-adjusted
-    dietary total polyphenols as the main independent variable. The
-    models included: year (0 or 2), its interaction with dietary
-    polyphenol, age, gender and BMI as fixed-effects terms and subjects
-    as a random-effects term.
-    -   From the mixed model, an estimated slope associated with log
-        dietary polyphenol was calculated for each year.
--   Estimated slope for dietary total polyphenol on TC (1st table below)
-    and LDL (2nd table) by year:
-    -   There was no significant association with TC or LDL at baseline
-        or Year 2
+- To see if the association between dietary total polyphenols and lipids
+  is significant or not, mixed models were fitted using lipids (TC or
+  LDL) as the dependent variable and log of energy-adjusted dietary
+  total polyphenols as the main independent variable. The models
+  included: year (0 or 2), its interaction with dietary polyphenol, age,
+  gender and BMI as fixed-effects terms and subjects as a random-effects
+  term.
+  - From the mixed model, an estimated slope associated with log dietary
+    polyphenol was calculated for each year.
+- Estimated slope for dietary total polyphenol on TC (1st table below)
+  and LDL (2nd table) by year:
+  - There was no significant association with TC or LDL at baseline or
+    Year 2
 
 <!-- -->
 
@@ -301,9 +339,9 @@ WAHA Polyphenols Study
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger
 
--   Similarly, a mixed model was fitted using log dietary total
-    flavonoids, flavanols, and phenolic acid (all energy-adjusted) on TC
-    and LDL.
+- Similarly, a mixed model was fitted using log dietary total
+  flavonoids, flavanols, and phenolic acid (all energy-adjusted) on TC
+  and LDL.
 
 <!-- -->
 
@@ -357,24 +395,23 @@ WAHA Polyphenols Study
 
 ## Association b/w dietary polyphenol and the change in inflammatory markers
 
--   For each of inflammatory markers (hsCRP, IL-1, IL-6, TNF-a), a
-    linear models were fitted using the change (year 2 - baseline) as
-    the dependent variable and the dietary total polyphenols
-    (energy-adjusted) as the main independent variable of interest. The
-    model adjusted for the baseline value of the inflammatory marker
-    being modeld, as well as: gender (female as reference), age, BMI and
-    the use of lipid lowering medications (yes/no, no as reference) at
-    the baseline.
+- For each of inflammatory markers (hsCRP, IL-1, IL-6, TNF-a), a linear
+  models were fitted using the change (year 2 - baseline) as the
+  dependent variable and the dietary total polyphenols (energy-adjusted)
+  as the main independent variable of interest. The model adjusted for
+  the baseline value of the inflammatory marker being modeld, as well
+  as: gender (female as reference), age, BMI and the use of lipid
+  lowering medications (yes/no, no as reference) at the baseline.
 
 ### Change in hsCRP vs total polyphenol
 
--   A scatterplot showed there are several outliers in change in hsCRP.
-    Check with RA.
+- A scatterplot showed there are several outliers in change in hsCRP.
+  Check with RA.
 
 ![](summary_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
--   There was no significant association between the change in LDL and
-    dietary polyphenol intake:
+- There was no significant association between the change in LDL and
+  dietary polyphenol intake:
 
 <!-- -->
 
@@ -392,13 +429,13 @@ WAHA Polyphenols Study
 
 ### Change in IL-1 vs total polyphenol
 
--   A scatterplot showed there are several outliers in change in IL-1.
-    Check with RA.
+- A scatterplot showed there are several outliers in change in IL-1.
+  Check with RA.
 
 ![](summary_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
 
--   There was no significant association between the change in IL-1 and
-    dietary polyphenol intake:
+- There was no significant association between the change in IL-1 and
+  dietary polyphenol intake:
 
 <!-- -->
 
@@ -416,13 +453,13 @@ WAHA Polyphenols Study
 
 ### Change in IL-6 vs total polyphenol
 
--   A scatterplot showed there are several outliers in change in IL-6.
-    Check with RA.
+- A scatterplot showed there are several outliers in change in IL-6.
+  Check with RA.
 
 ![](summary_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
 
--   There was no significant association between the change in IL-6 and
-    dietary polyphenol intake:
+- There was no significant association between the change in IL-6 and
+  dietary polyphenol intake:
 
 <!-- -->
 
@@ -440,13 +477,13 @@ WAHA Polyphenols Study
 
 ### Change in TNF-a vs total polyphenol
 
--   A scatterplot indicated that there is no association between the
-    change in TNF-a and dietary polyphenols.
+- A scatterplot indicated that there is no association between the
+  change in TNF-a and dietary polyphenols.
 
 ![](summary_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
 
--   There was no significant association between the change in TNF-a and
-    dietary polyphenol intake:
+- There was no significant association between the change in TNF-a and
+  dietary polyphenol intake:
 
 <!-- -->
 
@@ -464,30 +501,30 @@ WAHA Polyphenols Study
 
 ## Association b/w dietary polyphenol and inflammatory markers using mixed models
 
--   To examine if there are any associations between dietary total
-    polyphenols (energy-adjusted) and inflammatory markers (hsCRP, IL-1,
-    IL-6, TNFa), scatterplots were produced. Lowess smoothed curves were
-    fitted for for both years of measurements (Year 0 and Year 2).
+- To examine if there are any associations between dietary total
+  polyphenols (energy-adjusted) and inflammatory markers (hsCRP, IL-1,
+  IL-6, TNFa), scatterplots were produced. Lowess smoothed curves were
+  fitted for for both years of measurements (Year 0 and Year 2).
 
--   Scatterplots against dietary total polyphenols (x-axis):
+- Scatterplots against dietary total polyphenols (x-axis):
 
-    -   Note that the both x- and y-axis are on the log scale
+  - Note that the both x- and y-axis are on the log scale
 
 ![](summary_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
 
--   To see if the association between dietary total polyphenols and
-    inflammatory markers is significant or not, mixed models were fitted
-    using inflammatory markers as the dependent variable and log of
-    energy-adjusted dietary total polyphenols as the main independent
-    variable. The models included: year (0 or 2), its interaction with
-    dietary polyphenol, age, gender and BMI as fixed-effects terms and
-    subjects as a random-effects term.
-    -   From the mixed model, an estimated slope associated with log
-        dietary polyphenol was calculated for each year.
--   Estimated slope for dietary total polyphenol on each inflammatory
-    marker by year:
-    -   There was no significant association with any of inflammatory
-        markers at baseline or Year 2
+- To see if the association between dietary total polyphenols and
+  inflammatory markers is significant or not, mixed models were fitted
+  using inflammatory markers as the dependent variable and log of
+  energy-adjusted dietary total polyphenols as the main independent
+  variable. The models included: year (0 or 2), its interaction with
+  dietary polyphenol, age, gender and BMI as fixed-effects terms and
+  subjects as a random-effects term.
+  - From the mixed model, an estimated slope associated with log dietary
+    polyphenol was calculated for each year.
+- Estimated slope for dietary total polyphenol on each inflammatory
+  marker by year:
+  - There was no significant association with any of inflammatory
+    markers at baseline or Year 2
 
 <!-- -->
 
@@ -523,9 +560,9 @@ WAHA Polyphenols Study
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger
 
--   Similarly, a mixed model was fitted using log dietary total
-    flavonoids, flavanols, and phenolic acid (all energy-adjusted) on
-    the inflammatory markers.
+- Similarly, a mixed model was fitted using log dietary total
+  flavonoids, flavanols, and phenolic acid (all energy-adjusted) on the
+  inflammatory markers.
 
 <!-- -->
 
@@ -629,9 +666,8 @@ WAHA Polyphenols Study
 
 ### Descriptive analysis by treatment and time
 
--   Means (SD) by treatment and time are shown below for urine
-    polyphenol (`ur_tot_pp`) and urine polyphenol / creatinine
-    (`ur_tot_pp_cr`):
+- Means (SD) by treatment and time are shown below for urine polyphenol
+  (`ur_tot_pp`) and urine polyphenol / creatinine (`ur_tot_pp_cr`):
 
 <!-- -->
 
@@ -646,18 +682,18 @@ WAHA Polyphenols Study
 
 ### Comparisons of urine polyphenol between treatment groups over time
 
--   To compare urine polyphenol between two treatment groups over time,
-    mixed models were fitted for both variables (`ur_tot_pp` and
-    `ur_tot_pp_cr`). The mixed model included treatment, time, treatment
-    x time interaction, age, gender, and BMI as fixed-effects terms and
-    subjects as a random-effects term.
+- To compare urine polyphenol between two treatment groups over time,
+  mixed models were fitted for both variables (`ur_tot_pp` and
+  `ur_tot_pp_cr`). The mixed model included treatment, time, treatment x
+  time interaction, age, gender, and BMI as fixed-effects terms and
+  subjects as a random-effects term.
 
-    -   From the mixed model, marginal means were estimated for the two
-        treatment groups at each time point and then compared, by
-        testing for the simple effects of treatment at each time point.
+  - From the mixed model, marginal means were estimated for the two
+    treatment groups at each time point and then compared, by testing
+    for the simple effects of treatment at each time point.
 
--   **Urine total polyphenol**: Estimated marginal means by treatment
-    group at each time point
+- **Urine total polyphenol**: Estimated marginal means by treatment
+  group at each time point
 
 | group   | time |   emmean |       SE |       df | lower.CL | upper.CL |
 |:--------|:-----|---------:|---------:|---------:|---------:|---------:|
@@ -668,8 +704,8 @@ WAHA Polyphenols Study
 | Control | 2    | 282.8348 | 9.180779 | 403.3223 | 264.7866 | 300.8829 |
 | Walnut  | 2    | 295.4536 | 8.807782 | 407.9137 | 278.1393 | 312.7679 |
 
--   Comparisons between treatments by time:
-    -   There were no significant differences at any time point:
+- Comparisons between treatments by time:
+  - There were no significant differences at any time point:
 
 | contrast         | time |  estimate |       SE |       df |   t.ratio |   p.value |
 |:-----------------|:-----|----------:|---------:|---------:|----------:|----------:|
@@ -677,8 +713,8 @@ WAHA Polyphenols Study
 | Walnut - Control | 1    | 23.010434 | 12.49182 | 412.2459 |  1.842040 | 0.0661874 |
 | Walnut - Control | 2    | 12.618831 | 12.48198 | 411.1682 |  1.010964 | 0.3126282 |
 
--   **Urine total polyphenol adjusted for creatinine**: Estimated
-    marginal means by treatment group at each time point
+- **Urine total polyphenol adjusted for creatinine**: Estimated marginal
+  means by treatment group at each time point
 
 | group   | time |   emmean |       SE |       df | lower.CL | upper.CL |
 |:--------|:-----|---------:|---------:|---------:|---------:|---------:|
@@ -689,8 +725,8 @@ WAHA Polyphenols Study
 | Control | 2    | 336.7158 | 11.98908 | 399.9791 | 313.1463 | 360.2853 |
 | Walnut  | 2    | 355.2142 | 11.52944 | 401.9323 | 332.5486 | 377.8797 |
 
--   Comparisons between treatments by time:
-    -   There were no significant differences at any time point:
+- Comparisons between treatments by time:
+  - There were no significant differences at any time point:
 
 | contrast         | time |  estimate |       SE |       df |   t.ratio |   p.value |
 |:-----------------|:-----|----------:|---------:|---------:|----------:|----------:|
@@ -700,32 +736,32 @@ WAHA Polyphenols Study
 
 ### Association between dietary polyphenol intake and urine polyphenol excretion
 
--   To examine if there are any associations between dietary polyphenol
-    intake and urine polyphenol at Year 2, scatterplots were produced.
-    ~~Dietary intakes (total, flavonoids, flavanols, phenonic acids)
-    were energy-adjusted as described above.~~ Note that in the
-    scatterplots below the x-axis is on the log-scale. A lowess smoothed
-    curve was fitted for each plot.
+- To examine if there are any associations between dietary polyphenol
+  intake and urine polyphenol at Year 2, scatterplots were produced.
+  ~~Dietary intakes (total, flavonoids, flavanols, phenonic acids) were
+  energy-adjusted as described above.~~ Note that in the scatterplots
+  below the x-axis is on the log-scale. A lowess smoothed curve was
+  fitted for each plot.
 
--   Scatterplots against **urine total polyphenol**:
+- Scatterplots against **urine total polyphenol**:
 
 ![](summary_files/figure-gfm/unnamed-chunk-35-1.png)<!-- -->
 
--   Scatterplots against **urine total polyphenol adjusted for
-    creatinine**:
+- Scatterplots against **urine total polyphenol adjusted for
+  creatinine**:
 
 ![](summary_files/figure-gfm/unnamed-chunk-36-1.png)<!-- -->
 
--   A linear model was fitted for each combination of urine polyphenol
-    (as a dependent variable) and log dietary polyphenol (an independent
-    variable), while adjusting for age, gender and BMI.
+- A linear model was fitted for each combination of urine polyphenol (as
+  a dependent variable) and log dietary polyphenol (an independent
+  variable), while adjusting for age, gender and BMI.
 
--   Linear models for **urine total polyphenol**:
+- Linear models for **urine total polyphenol**:
 
-    -   There was a significantly **negative** association between urine
-        total polyphenol and the log of dietary total flavonoids (p =
-        0.0316). There were no significant associations with any other
-        dietary polyphenols.
+  - There was a significantly **negative** association between urine
+    total polyphenol and the log of dietary total flavonoids (p =
+    0.0316). There were no significant associations with any other
+    dietary polyphenols.
 
 <!-- -->
 
@@ -761,9 +797,9 @@ WAHA Polyphenols Study
     ## genderM             10.2964    13.2290  0.7783   0.4370
     ## BMI                  0.4005     1.2811  0.3126   0.7548
 
--   Linear models for **urine total polyphenol / creatinine**:
-    -   There were no significant associations with any of dietary
-        polyphenols.
+- Linear models for **urine total polyphenol / creatinine**:
+  - There were no significant associations with any of dietary
+    polyphenols.
 
 <!-- -->
 
@@ -801,35 +837,35 @@ WAHA Polyphenols Study
 
 ### Association between urine polyphenol and blood lipids
 
--   To examine if there are any associations between urine polyphenol
-    and blood lipids (total cholesterol and LDL), scatterplots were
-    produced. Lowess smoothed curves were fitted for for both years of
-    measurements (Year 0 and Year 2).
+- To examine if there are any associations between urine polyphenol and
+  blood lipids (total cholesterol and LDL), scatterplots were produced.
+  Lowess smoothed curves were fitted for for both years of measurements
+  (Year 0 and Year 2).
 
--   Scatterplots of TC and LDL (y-axis) against **urine total
-    polyphenol** (x-axis):
+- Scatterplots of TC and LDL (y-axis) against **urine total polyphenol**
+  (x-axis):
 
 ![](summary_files/figure-gfm/unnamed-chunk-39-1.png)<!-- -->
 
--   Scatterplots of TC and LDL (y-axis) against **urine total polyphenol
-    / creatinine** (x-axis):
+- Scatterplots of TC and LDL (y-axis) against **urine total polyphenol /
+  creatinine** (x-axis):
 
 ![](summary_files/figure-gfm/unnamed-chunk-40-1.png)<!-- -->
 
--   To see if the association between urine polyphenol and lipids is
-    significant or not, mixed models were fitted using lipids (TC or
-    LDL) as the dependent variable and urine polyphenol (with or without
-    creatinine adjustment) as the main independent variable. The models
-    included: year (0 or 2), its interaction with urine polyphenol, age,
-    gender and BMI as fixed-effects terms and subjects as a
-    random-effects term.
-    -   From the mixed model, an estimated slope associated with urine
-        polyphenol (divided by 100) was calculated for each year.
--   Estimated slope for **urine total polyphenol** on TC (1st table
-    below) and LDL (2nd table) by year:
-    -   There was a significant negative association with TC at Year 2
-        (p = 0.048).
-    -   No significant association was found with LDL.
+- To see if the association between urine polyphenol and lipids is
+  significant or not, mixed models were fitted using lipids (TC or LDL)
+  as the dependent variable and urine polyphenol (with or without
+  creatinine adjustment) as the main independent variable. The models
+  included: year (0 or 2), its interaction with urine polyphenol, age,
+  gender and BMI as fixed-effects terms and subjects as a random-effects
+  term.
+  - From the mixed model, an estimated slope associated with urine
+    polyphenol (divided by 100) was calculated for each year.
+- Estimated slope for **urine total polyphenol** on TC (1st table below)
+  and LDL (2nd table) by year:
+  - There was a significant negative association with TC at Year 2 (p =
+    0.048).
+  - No significant association was found with LDL.
 
 <!-- -->
 
@@ -849,11 +885,11 @@ WAHA Polyphenols Study
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger
 
--   Estimated slope for **urine total polyphenol / creatinine** on TC
-    (1st table below) and LDL (2nd table) by year:
-    -   There was a significant negative association with TC at both
-        Year 0 (p = 0.024) and Year 2 (p = 0.0028).
-    -   No significant association was found with LDL.
+- Estimated slope for **urine total polyphenol / creatinine** on TC (1st
+  table below) and LDL (2nd table) by year:
+  - There was a significant negative association with TC at both Year 0
+    (p = 0.024) and Year 2 (p = 0.0028).
+  - No significant association was found with LDL.
 
 <!-- -->
 
@@ -875,34 +911,34 @@ WAHA Polyphenols Study
 
 ### Association between urine polyphenol and inflammatory markers
 
--   To examine if there are any associations between urine polyphenol
-    and inflammatory markers (CRP, IL-1, IL-6, TNF-a), scatterplots were
-    produced. lowess smoothed curves was fitted for for both years of
-    measurements (Year 0 and Year 2).
+- To examine if there are any associations between urine polyphenol and
+  inflammatory markers (CRP, IL-1, IL-6, TNF-a), scatterplots were
+  produced. lowess smoothed curves was fitted for for both years of
+  measurements (Year 0 and Year 2).
 
--   Scatterplots of inflammatory markers (y-axis) against **urine total
-    polyphenol** (x-axis):
+- Scatterplots of inflammatory markers (y-axis) against **urine total
+  polyphenol** (x-axis):
 
 ![](summary_files/figure-gfm/unnamed-chunk-44-1.png)<!-- -->
 
--   Scatterplots of inflammatory markers (y-axis) against **urine total
-    polyphenol / creatinine** (x-axis):
+- Scatterplots of inflammatory markers (y-axis) against **urine total
+  polyphenol / creatinine** (x-axis):
 
 ![](summary_files/figure-gfm/unnamed-chunk-45-1.png)<!-- -->
 
--   To see if the association between urine polyphenol and inflammatory
-    marker is significant or not, mixed models were fitted using each
-    inflammatory marker as the dependent variable and urine polyphenol
-    (with or without creatinine adjustment) as the main independent
-    variable. The models included: year (0 or 2), its interaction with
-    urine polyphenol, age, gender and BMI as fixed-effects terms and
-    subjects as a random-effects term.
-    -   From the mixed model, an estimated slope associated with urine
-        polyphenol (divided by 100) was calculated for each year.
--   Estimated slope for **urine total polyphenol** on inflammatory
-    markers by year:
-    -   There were no significant association with any of inflmmatory
-        markers.
+- To see if the association between urine polyphenol and inflammatory
+  marker is significant or not, mixed models were fitted using each
+  inflammatory marker as the dependent variable and urine polyphenol
+  (with or without creatinine adjustment) as the main independent
+  variable. The models included: year (0 or 2), its interaction with
+  urine polyphenol, age, gender and BMI as fixed-effects terms and
+  subjects as a random-effects term.
+  - From the mixed model, an estimated slope associated with urine
+    polyphenol (divided by 100) was calculated for each year.
+- Estimated slope for **urine total polyphenol** on inflammatory markers
+  by year:
+  - There were no significant association with any of inflmmatory
+    markers.
 
 <!-- -->
 
@@ -938,10 +974,10 @@ WAHA Polyphenols Study
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger
 
--   Estimated slope for **urine total polyphenol / creatinine** on
-    inflammatory markers by year:
-    -   There were no significant association with any of inflmmatory
-        markers.
+- Estimated slope for **urine total polyphenol / creatinine** on
+  inflammatory markers by year:
+  - There were no significant association with any of inflmmatory
+    markers.
 
 <!-- -->
 

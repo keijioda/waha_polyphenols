@@ -281,11 +281,18 @@ pp_df_comp %>%
   geom_histogram(bins = 30) +
   facet_wrap(~ variable, scales = "free", ncol = 4)
 
+names(pp_df_comp)
+
 # Descriptive table at baseline
 pp_df_comp %>% 
   mutate(ever_smoked = factor(ever_smoker, labels = c("Never", "Ever")),
-         educ = factor(educ, labels = c("<=12 yrs", ">12 yrs", "<=12 yrs"))) %>% 
-  CreateTableOne(table_vars, strata = "group", data = .) %>% 
+         educ = factor(educ, labels = c("<=12 yrs", ">12 yrs", "<=12 yrs")),
+         bmi_cat = cut(BMI, breaks = c(0, 18.5, 25, 30, Inf), right = FALSE),
+         bmi_cat = factor(bmi_cat, labels = c("undwt", "norm", "ovrwt", "obese")),
+         diabetes = factor(diabetes, labels = c("No", "Yes")),
+         statin = factor(statin, labels = c("No", "Yes")),
+         lipid_lowering = factor(lipid_lowering, labels = c("No", "Yes"))) %>% 
+  CreateTableOne(c(table_vars, "bmi_cat", "diabetes", "statin", "lipid_lowering"), strata = "group", data = .) %>% 
   print(showAllLevels = TRUE)
 
 pp_df_comp %>% 
@@ -355,6 +362,10 @@ pp_df_comp %>%
     fg = factor(fg))  %>% 
   tabular(Heading("Food group") * fg ~ Heading() * value * Heading() * pp * Format(digits = 1) * (Mean + SD), data = .)
 options(scipen = 0)
+
+pp_df_comp %>% 
+  CreateTableOne(fg, strata = "group", data =.)
+
 
 # Lipid/inflammation: Table by group & year -------------------------------
 
@@ -479,6 +490,7 @@ library(lme4); library(emmeans); library(lmerTest)
 
 fit_lmer <- function(y, x) {
   fm <- paste(y, "~", x, "* year + age + gender + BMI + (1|patient_id)")
+  # fm <- paste(y, "~", x, "* year + age + gender + (1|patient_id)")
   lmer(fm, data = pp_df_long)
 }
 
@@ -489,7 +501,8 @@ sum_lmer <- function(xvar){
 }
 
 # Mixed models for TC and LDL
-dv <- c("TC", "LDL")
+dv <- c("TC", "LDL", "HDL", "Trig")
+# dv <- c("TC", "LDL", "BMI")
 sum_lmer(x = "log(total_polyphenol_ea)")
 sum_lmer(x = "log(total_flavonoids_ea)")
 sum_lmer(x = "log(flavanols_ea + 1)")

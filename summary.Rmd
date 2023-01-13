@@ -213,8 +213,13 @@ table_vars <- c("gender", "age", "Race2", "educ", "ever_smoked", "BMI", "waist_p
 
 pp_df_comp %>% 
   mutate(ever_smoked = factor(ever_smoker, labels = c("Never", "Ever")),
-         educ = factor(educ, labels = c("<=12 yrs", ">12 yrs", "<=12 yrs"))) %>% 
-  CreateTableOne(table_vars, strata = "group", data = .) %>% 
+         educ = factor(educ, labels = c("<=12 yrs", ">12 yrs", "<=12 yrs")),
+         bmi_cat = cut(BMI, breaks = c(0, 18.5, 25, 30, Inf), right = FALSE),
+         bmi_cat = factor(bmi_cat, labels = c("undwt", "norm", "ovrwt", "obese")),
+         diabetes = factor(diabetes, labels = c("No", "Yes")),
+         statin = factor(statin, labels = c("No", "Yes")),
+         lipid_lowering = factor(lipid_lowering, labels = c("No", "Yes"))) %>% 
+  CreateTableOne(c(table_vars, "bmi_cat", "diabetes", "statin", "lipid_lowering"), strata = "group", data = .) %>% 
   print(showAllLevels = TRUE, nonnormal = c("HDL_0", "Trig_0", "hsCRP_0", "IL1_0", "IL6_0", "TNFa_0")) %>%  
   kableone()
 ```
@@ -299,41 +304,13 @@ pp_df_comp %>%
 
 ## Polyphenol intake by food group
 
-* Means and SDs of polyphenol intake by food group.
+* Means and SDs of polyphenol intake from food groups by group.
   * Note that "Misc" group have all zero.
 
 ```{r echo = FALSE}
-
-Mean <- function(x) mean(x, na.rm = TRUE)
-SD <- function(x) sd(x, na.rm = TRUE)
-
-options(scipen = 999)
 pp_df_comp %>% 
-  select(all_of(fg)) %>% 
-  pivot_longer(1:55, names_to = "variable", values_to = "value") %>% 
-  mutate(
-    pp = case_when(
-      grepl("_total_polyphenol", variable) == TRUE ~ "Total_polyphenol",
-      grepl("_total_flavonoid",  variable) == TRUE ~ "Total_flavonoids",
-      grepl("_flavanol", variable) == TRUE ~ "Flavanol",
-      grepl("_phenolic_acid", variable) == TRUE ~ "Phenolic_acid",
-      grepl("_lignan", variable) == TRUE ~ "Lignan"),
-    pp = factor(pp, levels = c("Total_polyphenol", "Total_flavonoids", "Flavanol", "Phenolic_acid", "Lignan")),
-    fg = case_when(
-      grepl("animal", variable) == TRUE ~ "Animal protein",
-      grepl("beverage", variable) == TRUE ~ "Beverage",
-      grepl("chocolate", variable) == TRUE ~ "Chocolates",
-      grepl("fats_and_oil", variable) == TRUE ~ "Fat/oil",
-      grepl("fruit", variable) == TRUE ~ "Fruits",
-      grepl("grains", variable) == TRUE ~ "Grains",
-      grepl("legume", variable) == TRUE ~ "Legumes",
-      grepl("misc", variable) == TRUE ~ "Misc",
-      grepl("nuts", variable) == TRUE ~ "Nuts/seeds",
-      grepl("spices", variable) == TRUE ~ "Spices",
-      grepl("vegetable", variable) == TRUE ~ "Vegetables"),
-    fg = factor(fg))  %>% 
-  tabular(Heading("Food group") * fg ~ Heading() * value * Heading() * pp * Format(digits = 1) * (Mean + SD), data = .)
-options(scipen = 0)
+  CreateTableOne(fg, strata = "group", data =.) %>% 
+  kableone()
 ```
 
 ## Association b/w dietary polyphenol and the change in lipids
@@ -581,6 +558,9 @@ sum_lmer(x = "log(phenolic_acid_ea)")
 * Means (SD) by treatment and time are shown below for urine polyphenol (`ur_tot_pp`) and urine polyphenol / creatinine (`ur_tot_pp_cr`):
 
 ```{r echo = FALSE}
+Mean <- function(x) mean(x, na.rm = TRUE)
+SD <- function(x) sd(x, na.rm = TRUE)
+
 # When merged with lipid/diet wide format data, 295 unique subjects
 urine_comp <- urine %>% 
   rename(ur_tot_pp = polyphenol_yield_correction_factor_2,
