@@ -42,17 +42,27 @@ lipid %>%
 
 # Select variables and rename
 lipid2 <- lipid %>% 
-  select(-contains("hb"), -total_cholesterol1, -triglycerides1) %>%
+  # select(-contains("hb"), -total_cholesterol1, -triglycerides1) %>%
+  select(-contains("hb")) %>%
   rename(TC_0 = total_cholesterol,
+         TC_1 = total_cholesterol1,
          TC_2 = total_cholesterol2,
          Trig_0 = triglycerides,
+         Trig_1 = triglycerides1,
          Trig_2 = triglycerides2,
          VLDL_0 = vldl_c_b,
          VLDL_2 = vldl_c_f,
          LDL_0 = ldl_c_b,
          LDL_2 = ldl_c_f,
          HDL_0 = hdl_c_b,
-         HDL_2 = hdl_c_f)
+         HDL_2 = hdl_c_f,
+         LDLa_0 = ldl,
+         LDLa_1 = ldl1,
+         LDLa_2 = ldl2,
+         HDLa_0 = hdl,
+         HDLa_1 = hdl1,
+         HDLa_2 = hdl2
+  )
 
 names(lipid2)
 
@@ -72,16 +82,21 @@ inflm %>%
   filter(lipid_lowering != statin)
 
 # Rename variables
-inflm2 <- inflm %>% 
+inflm2 <- inflm %>%
+  # select(-high_sensitivity_crp1) %>% 
   rename(hsCRP_0 = high_sensitivity_crp,
+         hsCRP_1 = high_sensitivity_crp1,
          hsCRP_2 = high_sensitivity_crp2,
          IL1_0 = il_1ss_1,
          IL1_2 = il_1ss_2,
          IL6_0 = il_6_1,
          IL6_2 = il_6_2,
          TNFa_0 = tnf_a_1,
-         TNFa_2 = tnf_a_2) %>% 
-  select(-high_sensitivity_crp1)
+         TNFa_2 = tnf_a_2,
+         gmcs_0 = gm_csf_1,
+         gmcs_2 = gm_csf_2,
+         esel_0 = s_e_selectin_1,
+         esel_2 = s_e_selectin_2)
 
 # Check treatment group and demographics
 inflm2 %>% 
@@ -258,7 +273,7 @@ names(pp_df_comp)
 
 # Descriptive table at baseline -------------------------------------------
 
-table_vars <- c("gender", "age", "Race2", "educ", "ever_smoked", "BMI", "waist_perimeter", "hip_circumference",
+table_vars <- c("gender", "age", "Race2", "educ", "BMI", "waist_perimeter", "hip_circumference",
                 "TC_0", "HDL_0", "LDL_0", "Trig_0", "hsCRP_0", "IL1_0", "IL6_0", "TNFa_0")
 
 pp_df_comp %>% 
@@ -371,10 +386,22 @@ pp_df_comp %>%
 
 table(pp_df_comp$group)
 
-# Transform to long format
 pp_df_long <- pp_df_comp %>% 
   pivot_longer(c(all_of(lipid_vars), all_of(infl_vars)), names_pattern = "(.*)_(.*)", names_to = c(".value", "year")) %>% 
   mutate(year = as.numeric(year)) 
+
+# Transform to long format
+lipid_vars_a <- c("TC_0", "TC_1", "TC_2", "Trig_0", "Trig_1", "Trig_2", "LDLa_0", "LDLa_1", "LDLa_2", "HDLa_0", "HDLa_1", "HDLa_2")
+infl_vars_a  <- c("hsCRP_0", "hsCRP_1",  "hsCRP_2", "IL1_0", "IL1_2", "IL6_0", "IL6_2", "TNFa_0", "TNFa_2", "esel_0", "esel_2", 
+                  "gmcs_0", "gmcs_2")
+
+pp_df_long_a <- pp_df_comp %>% 
+  pivot_longer(c(all_of(lipid_vars_a), all_of(infl_vars_a)), names_pattern = "(.*)_(.*)", names_to = c(".value", "year")) %>% 
+  mutate(year = as.numeric(year)) 
+
+# Check the data
+pp_df_long_a %>% select(patient_id, year, TC, Trig, HDLa, LDLa, hsCRP) %>% print(n = Inf)
+pp_df_long_a %>% filter(year != 1) %>% select(patient_id, year, esel, gmcs)
 
 # Check distribution
 pp_df_long %>% 
@@ -488,10 +515,16 @@ pp_df_long %>%
 # Mixed model analysis
 library(lme4); library(emmeans); library(lmerTest)
 
+# fit_lmer <- function(y, x) {
+#   fm <- paste(y, "~", x, "* factor(year) + age + gender + BMI + (1|patient_id)")
+#   # fm <- paste(y, "~", x, "* year + age + gender + (1|patient_id)")
+#   lmer(fm, data = pp_df_long)
+# }
+
 fit_lmer <- function(y, x) {
-  fm <- paste(y, "~", x, "* year + age + gender + BMI + (1|patient_id)")
+  fm <- paste(y, "~", x, "* factor(year) + age + gender + BMI + (1|patient_id)")
   # fm <- paste(y, "~", x, "* year + age + gender + (1|patient_id)")
-  lmer(fm, data = pp_df_long)
+  lmer(fm, data = pp_df_long_a)
 }
 
 sum_lmer <- function(xvar){
@@ -501,15 +534,17 @@ sum_lmer <- function(xvar){
 }
 
 # Mixed models for TC and LDL
-dv <- c("TC", "LDL", "HDL", "Trig")
+dv <- c("TC", "LDLa", "HDLa", "Trig")
+# dv <- c("TC", "LDL",  "HDL",  "Trig")
 # dv <- c("TC", "LDL", "BMI")
+
 sum_lmer(x = "log(total_polyphenol_ea)")
 sum_lmer(x = "log(total_flavonoids_ea)")
 sum_lmer(x = "log(flavanols_ea + 1)")
 sum_lmer(x = "log(phenolic_acid_ea)")
 
 # Mixed models for inflammatory markers
-dv <- c("log(hsCRP)", "log(IL1)", "log(IL6)", "log(TNFa)")
+dv <- c("log(hsCRP)", "log(IL1)", "log(IL6)", "log(TNFa)", "log(gmcs)", "log(esel)")
 sum_lmer(x = "log(total_polyphenol_ea)")
 sum_lmer(x = "log(total_flavonoids_ea)")
 sum_lmer(x = "log(flavanols_ea + 1)")
@@ -621,6 +656,14 @@ urine_comp_long <- urine %>%
   mutate(year = factor(year)) %>% 
   arrange(patient_id, year)
 
+urine_comp_long_a <- urine %>% 
+  rename(ur_tot_pp = polyphenol_yield_correction_factor_2,
+         ur_tot_pp_cr = final_polyphenol_yield_mg_g_creatinine) %>%
+  mutate(year = as.numeric(time) - 1) %>% 
+  inner_join(pp_df_long_a, by = c("patient_id", "year")) %>%
+  mutate(year = factor(year)) %>% 
+  arrange(patient_id, year)
+
 # Check data
 urine_comp_long %>% 
   select(patient_id, year, TC, LDL, starts_with("ur_"))
@@ -655,13 +698,24 @@ mod1 %>% map(summary)
 mod1 %>% map(function(x) test(emtrends(x, "year", var = "I(ur_tot_pp)/100")))
 
 # With creatinine adjustment
-mod2a <- lmer(TC ~ I(ur_tot_pp_cr/100) * year + age + gender + BMI + (1|patient_id), data = urine_comp_long)
-mod2b <- update(mod2a, LDL ~ .)
+# mod2a <- lmer(TC ~ I(ur_tot_pp_cr/100) * year + age + gender + BMI + (1|patient_id), data = urine_comp_long)
+# mod2b <- update(mod2a, LDL ~ .)
+# 
+# mod2 <- list(mod2a, mod2b)
+# names(mod2) <- c("TC", "LDL")
+# mod2 %>% map(summary)
+# mod2 %>% map(function(x) test(emtrends(x, "year", var = "I(ur_tot_pp_cr)/100")))
 
-mod2 <- list(mod2a, mod2b)
-names(mod2) <- c("TC", "LDL")
+mod2a <- lmer(TC ~ I(ur_tot_pp_cr/100) * year + age + gender + BMI + (1|patient_id), data = urine_comp_long_a)
+mod2b <- update(mod2a, LDLa ~ .)
+mod2c <- update(mod2a, HDLa ~ .)
+mod2d <- update(mod2a, Trig ~ .)
+
+mod2 <- list(mod2a, mod2b, mod2c, mod2d)
+names(mod2) <- c("TC", "LDL", "HDL", "Trig")
 mod2 %>% map(summary)
 mod2 %>% map(function(x) test(emtrends(x, "year", var = "I(ur_tot_pp_cr)/100")))
+
 
 # Urine polyphenol and inflamamtory markers
 # Check data
@@ -704,12 +758,14 @@ mod1 %>% map(summary)
 mod1 %>% map(function(x) test(emtrends(x, "year", var = "I(ur_tot_pp)/100")))
 
 # With creatinine adjustment
-mod2a <- lmer(log(hsCRP) ~ I(ur_tot_pp_cr/100) * year + age + gender + BMI + (1|patient_id), data = urine_comp_long)
+mod2a <- lmer(log(hsCRP) ~ I(ur_tot_pp_cr/100) * year + age + gender + BMI + (1|patient_id), data = urine_comp_long_a)
 mod2b <- update(mod2a, log(IL1) ~ .)
 mod2c <- update(mod2a, log(IL6) ~ .)
 mod2d <- update(mod2a, log(TNFa) ~ .)
+mod2e <- update(mod2a, log(gmcs) ~ .)
+mod2f <- update(mod2a, log(esel) ~ .)
 
-mod2 <- list(mod2a, mod2b, mod2c, mod2d)
-names(mod2) <- c("log_hsCRP", "log_IL1", "log_IL6", "log_TNFa")
+mod2 <- list(mod2a, mod2b, mod2c, mod2d, mod2e, mod2f)
+names(mod2) <- c("log_hsCRP", "log_IL1", "log_IL6", "log_TNFa", "log_GM_CSF", "log_eselection")
 mod2 %>% map(summary)
 mod2 %>% map(function(x) test(emtrends(x, "year", var = "I(ur_tot_pp_cr)/100")))

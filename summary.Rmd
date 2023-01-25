@@ -30,31 +30,46 @@ source("dataprep.R")
 # n = 369
 # Select variables and rename
 lipid2 <- lipid %>% 
-  select(-contains("hb"), -total_cholesterol1, -triglycerides1) %>%
+  # select(-contains("hb"), -total_cholesterol1, -triglycerides1) %>%
+  select(-contains("hb")) %>%
   rename(TC_0 = total_cholesterol,
+         TC_1 = total_cholesterol1,
          TC_2 = total_cholesterol2,
          Trig_0 = triglycerides,
+         Trig_1 = triglycerides1,
          Trig_2 = triglycerides2,
          VLDL_0 = vldl_c_b,
          VLDL_2 = vldl_c_f,
          LDL_0 = ldl_c_b,
          LDL_2 = ldl_c_f,
          HDL_0 = hdl_c_b,
-         HDL_2 = hdl_c_f)
+         HDL_2 = hdl_c_f,
+         LDLa_0 = ldl,
+         LDLa_1 = ldl1,
+         LDLa_2 = ldl2,
+         HDLa_0 = hdl,
+         HDLa_1 = hdl1,
+         HDLa_2 = hdl2
+  )
 
 # inflammatory marker data ------------------------------------------------
 # n = 371
 # Rename variables
-inflm2 <- inflm %>% 
+inflm2 <- inflm %>%
+  # select(-high_sensitivity_crp1) %>% 
   rename(hsCRP_0 = high_sensitivity_crp,
+         hsCRP_1 = high_sensitivity_crp1,
          hsCRP_2 = high_sensitivity_crp2,
          IL1_0 = il_1ss_1,
          IL1_2 = il_1ss_2,
          IL6_0 = il_6_1,
          IL6_2 = il_6_2,
          TNFa_0 = tnf_a_1,
-         TNFa_2 = tnf_a_2) %>% 
-  select(-high_sensitivity_crp1)
+         TNFa_2 = tnf_a_2,
+         gmcs_0 = gm_csf_1,
+         gmcs_2 = gm_csf_2,
+         esel_0 = s_e_selectin_1,
+         esel_2 = s_e_selectin_2)
 
 # Merge lipid and inflammation data, exlucding missing group
 # n = 356
@@ -281,10 +296,18 @@ pp_df_comp %>%
   * Note that mean baseline values were higher in IL-1 and IL-6 for the walnut group, but their medians were actually lower (see the descriptive table at baseline above). 
 
 ```{r echo = FALSE}
-
 # Transform to long format
 pp_df_long <- pp_df_comp %>% 
   pivot_longer(c(all_of(lipid_vars), all_of(infl_vars)), names_pattern = "(.*)_(.*)", names_to = c(".value", "year")) %>% 
+  mutate(year = as.numeric(year)) 
+
+# Transform to long format
+lipid_vars_a <- c("TC_0", "TC_1", "TC_2", "Trig_0", "Trig_1", "Trig_2", "LDLa_0", "LDLa_1", "LDLa_2", "HDLa_0", "HDLa_1", "HDLa_2")
+infl_vars_a  <- c("hsCRP_0", "hsCRP_1",  "hsCRP_2", "IL1_0", "IL1_2", "IL6_0", "IL6_2", "TNFa_0", "TNFa_2", "esel_0", "esel_2", 
+                  "gmcs_0", "gmcs_2")
+
+pp_df_long_a <- pp_df_comp %>% 
+  pivot_longer(c(all_of(lipid_vars_a), all_of(infl_vars_a)), names_pattern = "(.*)_(.*)", names_to = c(".value", "year")) %>% 
   mutate(year = as.numeric(year)) 
 
 # Descriptive table of lipids and inflammatory markers by year and group
@@ -405,20 +428,21 @@ pp_df_long %>%
 
 ```
 
-* To see if the association between dietary total polyphenols and lipids is significant or not, mixed models were fitted using lipids (TC or LDL) as the dependent variable and log of energy-adjusted dietary total polyphenols as the main independent variable. The models included: year (0 or 2), its interaction with dietary polyphenol, age, gender and BMI as fixed-effects terms and subjects as a random-effects term.
+* To see if the association between dietary total polyphenols and lipids is significant or not, mixed models were fitted using lipids (TC or LDL) as the dependent variable and log of energy-adjusted dietary total polyphenols as the main independent variable. The models included: year, its interaction with dietary polyphenol, age, gender and BMI as fixed-effects terms and subjects as a random-effects term.
   * From the mixed model, an estimated slope associated with log dietary polyphenol was calculated for each year.
 
-* Estimated slope for dietary total polyphenol on TC (1st table below) and LDL (2nd table) by year:
-  * There was no significant association with TC or LDL at baseline or Year 2
+* Estimated slope for dietary total polyphenol on lipids by year:
+  * There was no significant association with any lipids at any year
 
 ``` {r include = FALSE}
 # Mixed model analysis
 library(lme4); library(emmeans); library(lmerTest)
 
 fit_lmer <- function(y, x) {
-  fm <- paste(y, "~", x, "* year + age + gender + BMI + (1|patient_id)")
-  lmer(fm, data = pp_df_long)
+  fm <- paste(y, "~", x, "* factor(year) + age + gender + BMI + (1|patient_id)")
+  lmer(fm, data = pp_df_long_a)
 }
+
 
 sum_lmer <- function(xvar){
   out <- lapply(dv, fit_lmer, x = xvar)
@@ -429,11 +453,12 @@ sum_lmer <- function(xvar){
 
 ``` {r echo = FALSE}
 # Mixed models for TC and LDL
-dv <- c("TC", "LDL")
+# dv <- c("TC", "LDL")
+dv <- c("TC", "LDLa", "HDLa", "Trig")
 sum_lmer(x = "log(total_polyphenol_ea)")
 ```
 
-* Similarly, a mixed model was fitted using log dietary total flavonoids, flavanols, and phenolic acid (all energy-adjusted) on TC and LDL.
+* Similarly, a mixed model was fitted using log dietary total flavonoids, flavanols, and phenolic acid (all energy-adjusted) on these lipids.
 
 ``` {r echo = FALSE}
 sum_lmer(x = "log(total_flavonoids_ea)")
@@ -532,15 +557,15 @@ pp_df_long %>%
   facet_wrap(~ variable, scales = "free", ncol = 2)
 ```
 
-* To see if the association between dietary total polyphenols and inflammatory markers is significant or not, mixed models were fitted using inflammatory markers as the dependent variable and log of energy-adjusted dietary total polyphenols as the main independent variable. The models included: year (0 or 2), its interaction with dietary polyphenol, age, gender and BMI as fixed-effects terms and subjects as a random-effects term.
+* To see if the association between dietary total polyphenols and inflammatory markers is significant or not, mixed models were fitted using inflammatory markers as the dependent variable and log of energy-adjusted dietary total polyphenols as the main independent variable. The models included: year, its interaction with dietary polyphenol, age, gender and BMI as fixed-effects terms and subjects as a random-effects term.
   * From the mixed model, an estimated slope associated with log dietary polyphenol was calculated for each year.
 
 * Estimated slope for dietary total polyphenol on each inflammatory marker by year:
-  * There was no significant association with any of inflammatory markers at baseline or Year 2
+  * There was no significant association with any of inflammatory markers at any time point
 
 ``` {r echo = FALSE}
 # Mixed models for inflammatory markers
-dv <- c("log(hsCRP)", "log(IL1)", "log(IL6)", "log(TNFa)")
+dv <- c("log(hsCRP)", "log(IL1)", "log(IL6)", "log(TNFa)", "log(gmcs)", "log(esel)")
 sum_lmer(x = "log(total_polyphenol_ea)")
 ```
 * Similarly, a mixed model was fitted using log dietary total flavonoids, flavanols, and phenolic acid (all energy-adjusted) on the inflammatory markers.
@@ -693,6 +718,14 @@ urine_comp_long <- urine %>%
   mutate(year = factor(year)) %>% 
   arrange(patient_id, year)
 
+urine_comp_long_a <- urine %>% 
+  rename(ur_tot_pp = polyphenol_yield_correction_factor_2,
+         ur_tot_pp_cr = final_polyphenol_yield_mg_g_creatinine) %>%
+  mutate(year = as.numeric(time) - 1) %>% 
+  inner_join(pp_df_long_a, by = c("patient_id", "year")) %>%
+  mutate(year = factor(year)) %>% 
+  arrange(patient_id, year)
+
 # Scatterplots
 urine_comp_long %>% 
   pivot_longer(TC:LDL, names_to = "variable", values_to = "value") %>% 
@@ -715,7 +748,7 @@ urine_comp_long %>%
   facet_grid(~ variable, scales = "free")
 ```
 
-* To see if the association between urine polyphenol and lipids is significant or not, mixed models were fitted using lipids (TC or LDL) as the dependent variable and urine polyphenol (with or without creatinine adjustment) as the main independent variable. The models included: year (0 or 2), its interaction with urine polyphenol, age, gender and BMI as fixed-effects terms and subjects as a random-effects term.
+* To see if the association between urine polyphenol and lipids is significant or not, mixed models were fitted using lipids (TC or LDL) as the dependent variable and urine polyphenol (with or without creatinine adjustment) as the main independent variable. The models included: year, its interaction with urine polyphenol, age, gender and BMI as fixed-effects terms and subjects as a random-effects term.
   * From the mixed model, an estimated slope associated with urine polyphenol (divided by 100) was calculated for each year.  
 
 * Estimated slope for **urine total polyphenol** on TC (1st table below) and LDL (2nd table) by year:
@@ -737,17 +770,18 @@ names(mod1) <- c("TC", "LDL")
 mod1 %>% map(function(x) test(emtrends(x, "year", var = "I(ur_tot_pp)/100")))
 ```
 
-* Estimated slope for **urine total polyphenol / creatinine** on TC (1st table below) and LDL (2nd table) by year:
-  * There was a significant negative association with TC at both Year 0 (p = 0.024) and Year 2 (p = 0.0028).
-  * No significant association was found with LDL.
-  
+* Estimated slope for **urine total polyphenol / creatinine** on blood lipids by year:
+
 ``` {r echo = FALSE}
 # With creatinine adjustment
-mod2a <- lmer(TC ~ I(ur_tot_pp_cr/100) * year + age + gender + BMI + (1|patient_id), data = urine_comp_long)
-mod2b <- update(mod2a, LDL ~ .)
+mod2a <- lmer(TC ~ I(ur_tot_pp_cr/100) * year + age + gender + BMI + (1|patient_id), data = urine_comp_long_a)
+mod2b <- update(mod2a, LDLa ~ .)
+mod2c <- update(mod2a, HDLa ~ .)
+mod2d <- update(mod2a, Trig ~ .)
 
-mod2 <- list(mod2a, mod2b)
-names(mod2) <- c("TC", "LDL")
+mod2 <- list(mod2a, mod2b, mod2c, mod2d)
+names(mod2) <- c("TC", "LDL", "HDL", "Trig")
+mod2 %>% map(summary)
 mod2 %>% map(function(x) test(emtrends(x, "year", var = "I(ur_tot_pp_cr)/100")))
 ```
 
@@ -784,7 +818,7 @@ urine_comp_long %>%
   facet_grid(~ variable, scale = "free")
 ```
 
-* To see if the association between urine polyphenol and inflammatory marker is significant or not, mixed models were fitted using each inflammatory marker as the dependent variable and urine polyphenol (with or without creatinine adjustment) as the main independent variable. The models included: year (0 or 2), its interaction with urine polyphenol, age, gender and BMI as fixed-effects terms and subjects as a random-effects term.
+* To see if the association between urine polyphenol and inflammatory marker is significant or not, mixed models were fitted using each inflammatory marker as the dependent variable and urine polyphenol (with or without creatinine adjustment) as the main independent variable. The models included: year, its interaction with urine polyphenol, age, gender and BMI as fixed-effects terms and subjects as a random-effects term.
   * From the mixed model, an estimated slope associated with urine polyphenol (divided by 100) was calculated for each year.  
 
 * Estimated slope for **urine total polyphenol** on inflammatory markers by year:
@@ -809,12 +843,14 @@ mod1 %>% map(function(x) test(emtrends(x, "year", var = "I(ur_tot_pp)/100")))
 ``` {r echo = FALSE}
 
 # With creatinine adjustment
-mod2a <- lmer(log(hsCRP) ~ I(ur_tot_pp_cr/100) * year + age + gender + BMI + (1|patient_id), data = urine_comp_long)
+mod2a <- lmer(log(hsCRP) ~ I(ur_tot_pp_cr/100) * year + age + gender + BMI + (1|patient_id), data = urine_comp_long_a)
 mod2b <- update(mod2a, log(IL1) ~ .)
 mod2c <- update(mod2a, log(IL6) ~ .)
 mod2d <- update(mod2a, log(TNFa) ~ .)
+mod2e <- update(mod2a, log(gmcs) ~ .)
+mod2f <- update(mod2a, log(esel) ~ .)
 
-mod2 <- list(mod2a, mod2b, mod2c, mod2d)
-names(mod2) <- c("log_hsCRP", "log_IL1", "log_IL6", "log_TNFa")
+mod2 <- list(mod2a, mod2b, mod2c, mod2d, mod2e, mod2f)
+names(mod2) <- c("log_hsCRP", "log_IL1", "log_IL6", "log_TNFa", "log_GM_CSF", "log_eselection")
 mod2 %>% map(function(x) test(emtrends(x, "year", var = "I(ur_tot_pp_cr)/100")))
 ```  

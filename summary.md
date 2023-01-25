@@ -311,84 +311,161 @@ WAHA Polyphenols Study
   is significant or not, mixed models were fitted using lipids (TC or
   LDL) as the dependent variable and log of energy-adjusted dietary
   total polyphenols as the main independent variable. The models
-  included: year (0 or 2), its interaction with dietary polyphenol, age,
-  gender and BMI as fixed-effects terms and subjects as a random-effects
-  term.
+  included: year, its interaction with dietary polyphenol, age, gender
+  and BMI as fixed-effects terms and subjects as a random-effects term.
   - From the mixed model, an estimated slope associated with log dietary
     polyphenol was calculated for each year.
-- Estimated slope for dietary total polyphenol on TC (1st table below)
-  and LDL (2nd table) by year:
-  - There was no significant association with TC or LDL at baseline or
-    Year 2
+- Estimated slope for dietary total polyphenol on lipids by year:
+  - There was no significant association with any lipids at any year
 
 <!-- -->
 
     ## $TC
     ##  year log(total_polyphenol_ea).trend   SE  df t.ratio p.value
-    ##     0                           2.03 4.88 454   0.417  0.6771
-    ##     2                          -2.53 4.88 454  -0.519  0.6043
+    ##     0                           2.05 4.78 515   0.428  0.6690
+    ##     1                           2.87 4.78 515   0.601  0.5479
+    ##     2                          -2.52 4.78 515  -0.527  0.5984
     ## 
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger 
     ## 
-    ## $LDL
+    ## $LDLa
     ##  year log(total_polyphenol_ea).trend   SE  df t.ratio p.value
-    ##     0                         -0.955 2.58 440  -0.370  0.7119
-    ##     2                         -1.093 2.58 440  -0.423  0.6726
+    ##     0                         -1.333 4.02 500  -0.332  0.7404
+    ##     1                         -0.744 4.02 500  -0.185  0.8533
+    ##     2                         -3.696 4.13 537  -0.895  0.3710
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $HDLa
+    ##  year log(total_polyphenol_ea).trend   SE  df t.ratio p.value
+    ##     0                           1.91 1.73 391   1.102  0.2709
+    ##     1                           2.65 1.73 391   1.532  0.1264
+    ##     2                           1.10 1.73 391   0.636  0.5254
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $Trig
+    ##  year log(total_polyphenol_ea).trend   SE  df t.ratio p.value
+    ##     0                           1.14 6.71 434   0.169  0.8656
+    ##     1                          -2.22 6.71 434  -0.330  0.7413
+    ##     2                          -1.30 6.71 434  -0.194  0.8461
     ## 
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger
 
 - Similarly, a mixed model was fitted using log dietary total
-  flavonoids, flavanols, and phenolic acid (all energy-adjusted) on TC
-  and LDL.
+  flavonoids, flavanols, and phenolic acid (all energy-adjusted) on
+  these lipids.
 
 <!-- -->
 
     ## $TC
     ##  year log(total_flavonoids_ea).trend   SE  df t.ratio p.value
-    ##     0                           2.36 2.34 453   1.010  0.3130
-    ##     2                           0.93 2.34 453   0.398  0.6910
+    ##     0                           2.36 2.29 513   1.031  0.3028
+    ##     1                           1.51 2.29 513   0.658  0.5111
+    ##     2                           0.93 2.29 513   0.406  0.6848
     ## 
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger 
     ## 
-    ## $LDL
+    ## $LDLa
     ##  year log(total_flavonoids_ea).trend   SE  df t.ratio p.value
-    ##     0                          0.217 1.24 439   0.175  0.8610
-    ##     2                         -0.403 1.24 439  -0.325  0.7452
+    ##     0                          0.766 1.90 498   0.402  0.6876
+    ##     1                          0.604 1.90 498   0.317  0.7511
+    ##     2                          0.793 1.94 521   0.410  0.6823
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $HDLa
+    ##  year log(total_flavonoids_ea).trend   SE  df t.ratio p.value
+    ##     0                          1.191 0.83 390   1.435  0.1520
+    ##     1                          1.290 0.83 390   1.555  0.1208
+    ##     2                          0.901 0.83 390   1.085  0.2784
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $Trig
+    ##  year log(total_flavonoids_ea).trend   SE  df t.ratio p.value
+    ##     0                          1.386 3.22 432   0.431  0.6668
+    ##     1                         -2.722 3.22 432  -0.846  0.3980
+    ##     2                         -0.436 3.22 432  -0.135  0.8924
     ## 
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger
 
     ## $TC
     ##  year log(flavanols_ea + 1).trend   SE  df t.ratio p.value
-    ##     0                       -2.83 1.87 455  -1.510  0.1317
-    ##     2                       -1.21 1.87 455  -0.644  0.5199
+    ##     0                      -2.822 1.84 514  -1.536  0.1251
+    ##     1                       0.225 1.84 514   0.122  0.9026
+    ##     2                      -1.199 1.84 514  -0.653  0.5142
     ## 
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger 
     ## 
-    ## $LDL
+    ## $LDLa
+    ##  year log(flavanols_ea + 1).trend   SE  df t.ratio p.value
+    ##     0                      -2.385 1.52 499  -1.564  0.1185
+    ##     1                      -0.083 1.52 499  -0.054  0.9566
+    ##     2                      -1.129 1.53 507  -0.736  0.4620
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $HDLa
     ##  year log(flavanols_ea + 1).trend    SE  df t.ratio p.value
-    ##     0                      -1.446 0.992 441  -1.458  0.1455
-    ##     2                      -0.952 0.992 441  -0.960  0.3375
+    ##     0                       0.471 0.667 390   0.706  0.4809
+    ##     1                       0.711 0.667 390   1.066  0.2873
+    ##     2                      -0.202 0.667 390  -0.302  0.7626
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $Trig
+    ##  year log(flavanols_ea + 1).trend   SE  df t.ratio p.value
+    ##     0                       -4.76 2.58 433  -1.848  0.0653
+    ##     1                       -2.28 2.58 433  -0.886  0.3760
+    ##     2                       -1.24 2.58 433  -0.480  0.6317
     ## 
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger
 
     ## $TC
     ##  year log(phenolic_acid_ea).trend   SE  df t.ratio p.value
-    ##     0                       1.175 2.54 455   0.463  0.6436
-    ##     2                       0.979 2.54 455   0.386  0.7000
+    ##     0                       1.171 2.49 515   0.471  0.6380
+    ##     1                       0.456 2.49 515   0.183  0.8545
+    ##     2                       0.975 2.49 515   0.392  0.6953
     ## 
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger 
     ## 
-    ## $LDL
+    ## $LDLa
     ##  year log(phenolic_acid_ea).trend   SE  df t.ratio p.value
-    ##     0                       0.116 1.34 440   0.086  0.9311
-    ##     2                      -0.268 1.34 440  -0.199  0.8422
+    ##     0                      -0.311 2.10 500  -0.148  0.8821
+    ##     1                      -0.460 2.10 500  -0.219  0.8266
+    ##     2                      -0.303 2.13 522  -0.142  0.8871
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $HDLa
+    ##  year log(phenolic_acid_ea).trend    SE  df t.ratio p.value
+    ##     0                       0.657 0.902 391   0.728  0.4669
+    ##     1                       0.766 0.902 391   0.849  0.3964
+    ##     2                       1.049 0.902 391   1.164  0.2453
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $Trig
+    ##  year log(phenolic_acid_ea).trend   SE  df t.ratio p.value
+    ##     0                       0.635 3.49 433   0.182  0.8558
+    ##     1                      -3.352 3.49 433  -0.960  0.3376
+    ##     2                      -0.063 3.49 433  -0.018  0.9856
     ## 
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger
@@ -516,22 +593,23 @@ WAHA Polyphenols Study
   inflammatory markers is significant or not, mixed models were fitted
   using inflammatory markers as the dependent variable and log of
   energy-adjusted dietary total polyphenols as the main independent
-  variable. The models included: year (0 or 2), its interaction with
-  dietary polyphenol, age, gender and BMI as fixed-effects terms and
-  subjects as a random-effects term.
+  variable. The models included: year, its interaction with dietary
+  polyphenol, age, gender and BMI as fixed-effects terms and subjects as
+  a random-effects term.
   - From the mixed model, an estimated slope associated with log dietary
     polyphenol was calculated for each year.
 - Estimated slope for dietary total polyphenol on each inflammatory
   marker by year:
   - There was no significant association with any of inflammatory
-    markers at baseline or Year 2
+    markers at any time point
 
 <!-- -->
 
     ## $`log(hsCRP)`
     ##  year log(total_polyphenol_ea).trend    SE  df t.ratio p.value
-    ##     0                         -0.128 0.133 465  -0.962  0.3364
-    ##     2                          0.105 0.133 465   0.786  0.4323
+    ##     0                        -0.1308 0.129 523  -1.014  0.3111
+    ##     1                         0.0267 0.130 533   0.206  0.8370
+    ##     2                         0.1018 0.129 523   0.790  0.4302
     ## 
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger 
@@ -558,6 +636,22 @@ WAHA Polyphenols Study
     ##     2                       -0.00780 0.0637 421  -0.122  0.9026
     ## 
     ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $`log(gmcs)`
+    ##  year log(total_polyphenol_ea).trend   SE  df t.ratio p.value
+    ##     0                         0.0454 0.12 325   0.377  0.7062
+    ##     2                         0.0286 0.12 325   0.238  0.8123
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $`log(esel)`
+    ##  year log(total_polyphenol_ea).trend     SE  df t.ratio p.value
+    ##     0                        -0.0628 0.0626 323  -1.004  0.3161
+    ##     2                        -0.0814 0.0626 323  -1.300  0.1946
+    ## 
+    ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger
 
 - Similarly, a mixed model was fitted using log dietary total
@@ -568,8 +662,9 @@ WAHA Polyphenols Study
 
     ## $`log(hsCRP)`
     ##  year log(total_flavonoids_ea).trend     SE  df t.ratio p.value
-    ##     0                        -0.0120 0.0638 465  -0.188  0.8513
-    ##     2                         0.0354 0.0638 465   0.554  0.5796
+    ##     0                        -0.0137 0.0619 521  -0.222  0.8247
+    ##     1                         0.0133 0.0623 531   0.213  0.8315
+    ##     2                         0.0337 0.0619 521   0.544  0.5866
     ## 
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger 
@@ -596,12 +691,29 @@ WAHA Polyphenols Study
     ##     2                       -0.04658 0.0305 419  -1.528  0.1273
     ## 
     ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $`log(gmcs)`
+    ##  year log(total_flavonoids_ea).trend     SE  df t.ratio p.value
+    ##     0                         0.0169 0.0578 324   0.293  0.7695
+    ##     2                         0.0239 0.0578 324   0.414  0.6792
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $`log(esel)`
+    ##  year log(total_flavonoids_ea).trend   SE  df t.ratio p.value
+    ##     0                        -0.0260 0.03 323  -0.867  0.3868
+    ##     2                        -0.0468 0.03 323  -1.558  0.1203
+    ## 
+    ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger
 
     ## $`log(hsCRP)`
     ##  year log(flavanols_ea + 1).trend     SE  df t.ratio p.value
-    ##     0                     -0.0323 0.0512 466  -0.630  0.5289
-    ##     2                      0.0450 0.0512 466   0.878  0.3804
+    ##     0                     -0.0337 0.0496 523  -0.680  0.4969
+    ##     1                      0.0230 0.0496 523   0.464  0.6431
+    ##     2                      0.0435 0.0496 523   0.876  0.3813
     ## 
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger 
@@ -628,12 +740,29 @@ WAHA Polyphenols Study
     ##     2                    -0.02880 0.0245 420  -1.177  0.2399
     ## 
     ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $`log(gmcs)`
+    ##  year log(flavanols_ea + 1).trend     SE  df t.ratio p.value
+    ##     0                      0.0266 0.0463 325   0.574  0.5662
+    ##     2                      0.0233 0.0463 325   0.503  0.6152
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $`log(esel)`
+    ##  year log(flavanols_ea + 1).trend     SE  df t.ratio p.value
+    ##     0                     0.00292 0.0241 323   0.121  0.9038
+    ##     2                    -0.02277 0.0241 323  -0.944  0.3458
+    ## 
+    ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger
 
     ## $`log(hsCRP)`
     ##  year log(phenolic_acid_ea).trend     SE  df t.ratio p.value
-    ##     0                     -0.0650 0.0692 466  -0.939  0.3484
-    ##     2                      0.0326 0.0692 466   0.471  0.6377
+    ##     0                     -0.0644 0.0671 523  -0.960  0.3376
+    ##     1                      0.0108 0.0674 529   0.161  0.8725
+    ##     2                      0.0332 0.0671 523   0.495  0.6209
     ## 
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger 
@@ -658,6 +787,22 @@ WAHA Polyphenols Study
     ##  year log(phenolic_acid_ea).trend     SE  df t.ratio p.value
     ##     0                      0.0139 0.0331 421   0.418  0.6761
     ##     2                      0.0108 0.0331 421   0.325  0.7453
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $`log(gmcs)`
+    ##  year log(phenolic_acid_ea).trend     SE  df t.ratio p.value
+    ##     0                     0.00972 0.0627 325   0.155  0.8768
+    ##     2                    -0.02036 0.0627 325  -0.325  0.7455
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $`log(esel)`
+    ##  year log(phenolic_acid_ea).trend     SE  df t.ratio p.value
+    ##     0                      0.0137 0.0326 323   0.420  0.6751
+    ##     2                      0.0287 0.0326 323   0.880  0.3794
     ## 
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger
@@ -856,9 +1001,8 @@ WAHA Polyphenols Study
   significant or not, mixed models were fitted using lipids (TC or LDL)
   as the dependent variable and urine polyphenol (with or without
   creatinine adjustment) as the main independent variable. The models
-  included: year (0 or 2), its interaction with urine polyphenol, age,
-  gender and BMI as fixed-effects terms and subjects as a random-effects
-  term.
+  included: year, its interaction with urine polyphenol, age, gender and
+  BMI as fixed-effects terms and subjects as a random-effects term.
   - From the mixed model, an estimated slope associated with urine
     polyphenol (divided by 100) was calculated for each year.
 - Estimated slope for **urine total polyphenol** on TC (1st table below)
@@ -885,26 +1029,219 @@ WAHA Polyphenols Study
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger
 
-- Estimated slope for **urine total polyphenol / creatinine** on TC (1st
-  table below) and LDL (2nd table) by year:
-  - There was a significant negative association with TC at both Year 0
-    (p = 0.024) and Year 2 (p = 0.0028).
-  - No significant association was found with LDL.
+- Estimated slope for **urine total polyphenol / creatinine** on blood
+  lipids by year:
 
 <!-- -->
 
     ## $TC
+    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+    ## lmerModLmerTest]
+    ## Formula: 
+    ## TC ~ I(ur_tot_pp_cr/100) * year + age + gender + BMI + (1 | patient_id)
+    ##    Data: urine_comp_long_a
+    ## 
+    ## REML criterion at convergence: 8170.7
+    ## 
+    ## Scaled residuals: 
+    ##     Min      1Q  Median      3Q     Max 
+    ## -3.0643 -0.4578 -0.0100  0.4602  3.9201 
+    ## 
+    ## Random effects:
+    ##  Groups     Name        Variance Std.Dev.
+    ##  patient_id (Intercept) 772.0    27.78   
+    ##  Residual               527.9    22.98   
+    ## Number of obs: 848, groups:  patient_id, 285
+    ## 
+    ## Fixed effects:
+    ##                            Estimate Std. Error        df t value Pr(>|t|)    
+    ## (Intercept)               259.10669   35.46629 289.17260   7.306  2.7e-12 ***
+    ## I(ur_tot_pp_cr/100)        -3.70541    1.35096 828.65780  -2.743  0.00622 ** 
+    ## year1                      -5.52832    5.35015 581.46668  -1.033  0.30189    
+    ## year2                      -3.98075    4.98892 576.82264  -0.798  0.42525    
+    ## age                        -0.32999    0.47634 281.60493  -0.693  0.48902    
+    ## genderM                   -26.27531    3.93291 292.32800  -6.681  1.2e-10 ***
+    ## BMI                        -1.03717    0.37423 281.51768  -2.772  0.00595 ** 
+    ## I(ur_tot_pp_cr/100):year1   2.12790    1.53540 582.06853   1.386  0.16631    
+    ## I(ur_tot_pp_cr/100):year2  -0.02769    1.38709 584.98513  -0.020  0.98408    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Correlation of Fixed Effects:
+    ##              (Intr) I(r___/100) year1  year2  age    gendrM BMI    I(___/100):1
+    ## I(r___/100)  -0.129                                                            
+    ## year1        -0.067  0.439                                                     
+    ## year2        -0.071  0.524       0.487                                         
+    ## age          -0.948  0.009       0.002 -0.002                                  
+    ## genderM       0.052  0.148      -0.016  0.006 -0.081                           
+    ## BMI          -0.326 -0.016       0.011 -0.004  0.045 -0.112                    
+    ## I(___/100):1  0.065 -0.507      -0.931 -0.461 -0.001  0.010 -0.011             
+    ## I(___/100):2  0.074 -0.643      -0.470 -0.918  0.002 -0.024  0.007  0.524      
+    ## 
+    ## $LDL
+    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+    ## lmerModLmerTest]
+    ## Formula: LDLa ~ I(ur_tot_pp_cr/100) + year + age + gender + BMI + (1 |  
+    ##     patient_id) + I(ur_tot_pp_cr/100):year
+    ##    Data: urine_comp_long_a
+    ## 
+    ## REML criterion at convergence: 7696.2
+    ## 
+    ## Scaled residuals: 
+    ##     Min      1Q  Median      3Q     Max 
+    ## -2.9911 -0.4717 -0.0284  0.4384  4.0631 
+    ## 
+    ## Random effects:
+    ##  Groups     Name        Variance Std.Dev.
+    ##  patient_id (Intercept) 555.6    23.57   
+    ##  Residual               358.9    18.94   
+    ## Number of obs: 830, groups:  patient_id, 284
+    ## 
+    ## Fixed effects:
+    ##                           Estimate Std. Error       df t value Pr(>|t|)    
+    ## (Intercept)               163.7949    30.1525 287.9838   5.432 1.19e-07 ***
+    ## I(ur_tot_pp_cr/100)        -2.8725     1.1234 808.2513  -2.557   0.0107 *  
+    ## year1                      -8.7720     4.4174 564.2796  -1.986   0.0475 *  
+    ## year2                      -0.3968     4.1839 561.4936  -0.095   0.9245    
+    ## age                        -0.3277     0.4058 281.6117  -0.808   0.4200    
+    ## genderM                   -13.4195     3.3397 291.2692  -4.018 7.47e-05 ***
+    ## BMI                        -0.5555     0.3166 280.5421  -1.755   0.0804 .  
+    ## I(ur_tot_pp_cr/100):year1   2.5193     1.2684 564.9294   1.986   0.0475 *  
+    ## I(ur_tot_pp_cr/100):year2   0.5173     1.1590 569.0304   0.446   0.6556    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Correlation of Fixed Effects:
+    ##              (Intr) I(r___/100) year1  year2  age    gendrM BMI    I(___/100):1
+    ## I(r___/100)  -0.123                                                            
+    ## year1        -0.066  0.434                                                     
+    ## year2        -0.067  0.512       0.479                                         
+    ## age          -0.949  0.005       0.003 -0.003                                  
+    ## genderM       0.063  0.150      -0.017  0.008 -0.092                           
+    ## BMI          -0.323 -0.015       0.012 -0.001  0.043 -0.112                    
+    ## I(___/100):1  0.062 -0.501      -0.931 -0.454 -0.001  0.010 -0.012             
+    ## I(___/100):2  0.069 -0.634      -0.464 -0.917  0.005 -0.027  0.006  0.517      
+    ## 
+    ## $HDL
+    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+    ## lmerModLmerTest]
+    ## Formula: HDLa ~ I(ur_tot_pp_cr/100) + year + age + gender + BMI + (1 |  
+    ##     patient_id) + I(ur_tot_pp_cr/100):year
+    ##    Data: urine_comp_long_a
+    ## 
+    ## REML criterion at convergence: 6162.5
+    ## 
+    ## Scaled residuals: 
+    ##     Min      1Q  Median      3Q     Max 
+    ## -2.7801 -0.4715 -0.0157  0.4047  5.7833 
+    ## 
+    ## Random effects:
+    ##  Groups     Name        Variance Std.Dev.
+    ##  patient_id (Intercept) 132.20   11.498  
+    ##  Residual                37.26    6.104  
+    ## Number of obs: 848, groups:  patient_id, 285
+    ## 
+    ## Fixed effects:
+    ##                            Estimate Std. Error        df t value Pr(>|t|)    
+    ## (Intercept)                88.47453   13.78579 284.94727   6.418 5.75e-10 ***
+    ## I(ur_tot_pp_cr/100)        -0.25369    0.39322 767.77468  -0.645   0.5190    
+    ## year1                       2.45238    1.42946 569.49167   1.716   0.0868 .  
+    ## year2                      -2.04284    1.33105 565.86600  -1.535   0.1254    
+    ## age                        -0.05314    0.18591 280.23816  -0.286   0.7752    
+    ## genderM                   -12.51152    1.52463 289.30542  -8.206 7.59e-15 ***
+    ## BMI                        -0.94315    0.14606 280.23646  -6.457 4.69e-10 ***
+    ## I(ur_tot_pp_cr/100):year1  -0.22578    0.41022 568.97756  -0.550   0.5823    
+    ## I(ur_tot_pp_cr/100):year2  -0.55140    0.37093 571.27596  -1.487   0.1377    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Correlation of Fixed Effects:
+    ##              (Intr) I(r___/100) year1  year2  age    gendrM BMI    I(___/100):1
+    ## I(r___/100)  -0.098                                                            
+    ## year1        -0.044  0.383                                                     
+    ## year2        -0.049  0.482       0.487                                         
+    ## age          -0.951  0.007       0.001 -0.001                                  
+    ## genderM       0.060  0.123      -0.015  0.004 -0.082                           
+    ## BMI          -0.328 -0.014       0.008 -0.003  0.044 -0.110                    
+    ## I(___/100):1  0.043 -0.451      -0.932 -0.462 -0.001  0.009 -0.008             
+    ## I(___/100):2  0.053 -0.611      -0.468 -0.917  0.001 -0.020  0.005  0.522      
+    ## 
+    ## $Trig
+    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+    ## lmerModLmerTest]
+    ## Formula: Trig ~ I(ur_tot_pp_cr/100) + year + age + gender + BMI + (1 |  
+    ##     patient_id) + I(ur_tot_pp_cr/100):year
+    ##    Data: urine_comp_long_a
+    ## 
+    ## REML criterion at convergence: 8595.8
+    ## 
+    ## Scaled residuals: 
+    ##     Min      1Q  Median      3Q     Max 
+    ## -4.7954 -0.4260 -0.0918  0.3522  4.7854 
+    ## 
+    ## Random effects:
+    ##  Groups     Name        Variance Std.Dev.
+    ##  patient_id (Intercept) 1944     44.09   
+    ##  Residual                742     27.24   
+    ## Number of obs: 848, groups:  patient_id, 285
+    ## 
+    ## Fixed effects:
+    ##                           Estimate Std. Error       df t value Pr(>|t|)    
+    ## (Intercept)                58.7248    53.7434 286.5328   1.093   0.2754    
+    ## I(ur_tot_pp_cr/100)        -2.8668     1.7057 795.4389  -1.681   0.0932 .  
+    ## year1                       0.1498     6.3686 573.2249   0.024   0.9812    
+    ## year2                      -3.3173     5.9329 569.1641  -0.559   0.5763    
+    ## age                        -0.1037     0.7239 280.9123  -0.143   0.8861    
+    ## genderM                     1.2375     5.9498 290.8695   0.208   0.8354    
+    ## BMI                         2.3179     0.5687 280.8903   4.076 5.98e-05 ***
+    ## I(ur_tot_pp_cr/100):year1   0.3702     1.8277 572.9265   0.203   0.8396    
+    ## I(ur_tot_pp_cr/100):year2  -0.1673     1.6522 575.4947  -0.101   0.9194    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Correlation of Fixed Effects:
+    ##              (Intr) I(r___/100) year1  year2  age    gendrM BMI    I(___/100):1
+    ## I(r___/100)  -0.108                                                            
+    ## year1        -0.051  0.400                                                     
+    ## year2        -0.056  0.495       0.487                                         
+    ## age          -0.950  0.008       0.002 -0.001                                  
+    ## genderM       0.057  0.133      -0.016  0.005 -0.082                           
+    ## BMI          -0.327 -0.015       0.009 -0.003  0.044 -0.111                    
+    ## I(___/100):1  0.050 -0.468      -0.932 -0.462 -0.001  0.010 -0.009             
+    ## I(___/100):2  0.060 -0.621      -0.469 -0.917  0.001 -0.022  0.006  0.522
+
+    ## $TC
     ##  year I(ur_tot_pp_cr)/100.trend   SE  df t.ratio p.value
-    ##  0                        -3.42 1.51 557  -2.261  0.0242
-    ##  2                        -3.86 1.29 557  -3.000  0.0028
+    ##  0                        -3.71 1.35 829  -2.738  0.0063
+    ##  1                        -1.58 1.44 832  -1.092  0.2753
+    ##  2                        -3.73 1.16 832  -3.222  0.0013
     ## 
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger 
     ## 
     ## $LDL
     ##  year I(ur_tot_pp_cr)/100.trend    SE  df t.ratio p.value
-    ##  0                        -1.28 0.796 555  -1.612  0.1076
-    ##  2                        -0.28 0.677 555  -0.413  0.6795
+    ##  0                       -2.873 1.125 808  -2.553  0.0109
+    ##  1                       -0.353 1.204 812  -0.293  0.7693
+    ##  2                       -2.355 0.978 809  -2.408  0.0163
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $HDL
+    ##  year I(ur_tot_pp_cr)/100.trend    SE  df t.ratio p.value
+    ##  0                       -0.254 0.394 768  -0.644  0.5196
+    ##  1                       -0.479 0.422 773  -1.137  0.2560
+    ##  2                       -0.805 0.338 773  -2.381  0.0175
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $Trig
+    ##  year I(ur_tot_pp_cr)/100.trend   SE  df t.ratio p.value
+    ##  0                        -2.87 1.71 795  -1.678  0.0937
+    ##  1                        -2.50 1.83 801  -1.366  0.1724
+    ##  2                        -3.03 1.47 800  -2.070  0.0388
     ## 
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger
@@ -930,9 +1267,9 @@ WAHA Polyphenols Study
   marker is significant or not, mixed models were fitted using each
   inflammatory marker as the dependent variable and urine polyphenol
   (with or without creatinine adjustment) as the main independent
-  variable. The models included: year (0 or 2), its interaction with
-  urine polyphenol, age, gender and BMI as fixed-effects terms and
-  subjects as a random-effects term.
+  variable. The models included: year, its interaction with urine
+  polyphenol, age, gender and BMI as fixed-effects terms and subjects as
+  a random-effects term.
   - From the mixed model, an estimated slope associated with urine
     polyphenol (divided by 100) was calculated for each year.
 - Estimated slope for **urine total polyphenol** on inflammatory markers
@@ -983,8 +1320,9 @@ WAHA Polyphenols Study
 
     ## $log_hsCRP
     ##  year I(ur_tot_pp_cr)/100.trend     SE  df t.ratio p.value
-    ##  0                      -0.0335 0.0429 558  -0.781  0.4350
-    ##  2                      -0.0035 0.0364 558  -0.096  0.9236
+    ##  0                     -0.04230 0.0374 831  -1.132  0.2581
+    ##  1                     -0.01942 0.0399 834  -0.487  0.6267
+    ##  2                     -0.00137 0.0320 834  -0.043  0.9658
     ## 
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger 
@@ -1009,6 +1347,22 @@ WAHA Polyphenols Study
     ##  year I(ur_tot_pp_cr)/100.trend     SE  df t.ratio p.value
     ##  0                     -0.00479 0.0191 548  -0.251  0.8020
     ##  2                     -0.01466 0.0162 548  -0.904  0.3665
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $log_GM_CSF
+    ##  year I(ur_tot_pp_cr)/100.trend     SE  df t.ratio p.value
+    ##  0                     0.028316 0.0237 410   1.194  0.2332
+    ##  2                    -0.000726 0.0202 410  -0.036  0.9713
+    ## 
+    ## Results are averaged over the levels of: gender 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## 
+    ## $log_eselection
+    ##  year I(ur_tot_pp_cr)/100.trend     SE  df t.ratio p.value
+    ##  0                      -0.0173 0.0120 401  -1.450  0.1478
+    ##  2                      -0.0204 0.0102 401  -2.008  0.0453
     ## 
     ## Results are averaged over the levels of: gender 
     ## Degrees-of-freedom method: kenward-roger
